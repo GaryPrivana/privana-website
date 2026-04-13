@@ -1,0 +1,46 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+html,
+body {
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+
+body {
+  @apply bg-base-50 text-base-900 antialiased;
+  font-family: var(--font-sans), ui-sans-serif, system-ui, -apple-system, Segoe UI,
+    Roboto, Helvetica, Arial, sans-serif;
+}
+
+::selection {
+  background: rgba(184, 154, 107, 0.35);
+}
+
+.container-shell {
+  @apply mx-auto w-full max-w-7xl px-6 sm:px-8 lg:px-10;
+}
+
+.section-pad {
+  @apply py-20 sm:py-24 lg:py-28;
+}
+
+.card-glass {
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02));
+  border: 1px solid rgba(255, 255, 255, 0.13);
+  backdrop-filter: blur(8px);
+}
+
+.font-display {
+  font-family: var(--font-display), ui-serif, Georgia, Cambria, 'Times New Roman', Times, serif;
+  letter-spacing: -0.01em;
+}
