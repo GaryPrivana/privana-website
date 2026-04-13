@@ -16,7 +16,10 @@ export function middleware(request: NextRequest) {
 
   if (isUnlockPath) {
     if (hasValidUnlockCookie) {
-      return NextResponse.redirect(new URL('/', request.url));
+      const requestedPath = request.nextUrl.searchParams.get('next');
+      const redirectTarget =
+        requestedPath && requestedPath.startsWith('/') ? requestedPath : '/';
+      return NextResponse.redirect(new URL(redirectTarget, request.url));
     }
 
     return NextResponse.next();
@@ -24,6 +27,8 @@ export function middleware(request: NextRequest) {
 
   if (!hasValidUnlockCookie) {
     const unlockUrl = new URL('/unlock', request.url);
+    const originalPath = `${pathname}${request.nextUrl.search}`;
+    unlockUrl.searchParams.set('next', originalPath);
     return NextResponse.redirect(unlockUrl);
   }
 

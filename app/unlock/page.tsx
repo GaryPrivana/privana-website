@@ -1,18 +1,25 @@
 'use client';
 
 import { FormEvent, KeyboardEvent, useMemo, useRef, useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 const CODE_LENGTH = 6;
 
 export default function UnlockPage() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const inputRefs = useRef<Array<HTMLInputElement | null>>([]);
   const [digits, setDigits] = useState<string[]>(Array.from({ length: CODE_LENGTH }, () => ''));
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState('');
 
   const code = useMemo(() => digits.join(''), [digits]);
+  const redirectPath = useMemo(() => {
+    const nextPath = searchParams.get('next');
+    if (!nextPath || !nextPath.startsWith('/')) return '/';
+    return nextPath;
+  }, [searchParams]);
+
 
   const focusInput = (index: number) => {
     const target = inputRefs.current[index];
@@ -24,9 +31,15 @@ export default function UnlockPage() {
 
   const updateDigit = (index: number, value: string) => {
     const numeric = value.replace(/\D/g, '');
-    if (!numeric) return;
-
     const nextDigits = [...digits];
+
+    if (!numeric) {
+      nextDigits[index] = '';
+      setDigits(nextDigits);
+      setError('');
+      return;
+    }
+
     nextDigits[index] = numeric[0];
     setDigits(nextDigits);
     setError('');
@@ -70,7 +83,7 @@ export default function UnlockPage() {
         return;
       }
 
-      router.replace('/');
+      router.replace(redirectPath);
       router.refresh();
     } catch {
       setError('Unable to validate code. Try again.');
@@ -151,6 +164,7 @@ export default function UnlockPage() {
                 type="text"
                 inputMode="numeric"
                 autoComplete={index === 0 ? 'one-time-code' : 'off'}
+                autoFocus={index === 0}
                 pattern="[0-9]*"
                 maxLength={1}
                 value={digit}
