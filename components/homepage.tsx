@@ -185,16 +185,15 @@ export function Homepage() {
                     src={segment.image}
                     alt={segment.title}
                     fill
-                    className="object-cover transition duration-700 ease-out group-hover:scale-105"
+                    className="object-cover transition duration-700 ease-out group-hover:scale-[1.03]"
                     sizes="(max-width: 768px) 100vw, 50vw"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
-                  <div className="absolute inset-0 bg-black/20 opacity-0 transition duration-500 ease-out group-hover:opacity-100" />
-                  <div className="absolute bottom-0 left-0 p-6 sm:p-7">
-                    <h4 className="font-display text-2xl font-semibold tracking-[-0.01em] text-white sm:text-[1.85rem]">
+                  <div className="absolute inset-0 bg-black/8 transition duration-500 ease-out group-hover:bg-black/55" />
+                  <div className="absolute inset-0 flex flex-col items-center justify-center px-6 py-8 text-center sm:px-10">
+                    <h4 className="max-w-[22rem] translate-y-1 font-display text-[1.35rem] font-medium tracking-[-0.01em] text-white/20 opacity-20 transition duration-500 ease-out group-hover:-translate-y-3 group-hover:text-white group-hover:opacity-100 sm:text-[1.55rem]">
                       {segment.title}
                     </h4>
-                    <ul className="mt-4 space-y-1 text-sm leading-relaxed text-white/80 sm:text-[0.95rem]">
+                    <ul className="mt-3 space-y-1 text-sm font-light leading-relaxed text-white/0 opacity-0 transition duration-500 ease-out group-hover:opacity-100 group-hover:text-white/88 sm:text-[0.92rem]">
                       {segment.examples.map((example) => (
                         <li key={example}>{example}</li>
                       ))}
