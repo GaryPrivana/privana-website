@@ -9,7 +9,7 @@ import {
   OperationsIcon,
   ReservationsIcon
 } from './icons';
-import { aiChips, clubSegments, navItems, platformModules } from './site-data';
+import { aiChips, navItems, platformModules } from './site-data';
 
 const demoLink = '#demo';
 
@@ -23,8 +23,6 @@ const iconMap = {
 } as const;
 
 export function Homepage() {
-  const featuredSegments = clubSegments.slice(0, 4);
-
   return (
     <>
       <header className="fixed inset-x-0 top-0 z-30">
@@ -126,42 +124,82 @@ export function Homepage() {
         </section>
 
         <section id="solutions" className="section-pad bg-white">
-          <div className="container-shell space-y-10">
+          <div className="container-shell space-y-10 sm:space-y-12">
             <h3 className="font-display text-3xl font-medium tracking-[-0.01em] text-[#131118] sm:text-4xl">
               Tailored Exclusively for Your Club
             </h3>
-            <div className="grid gap-4 sm:grid-cols-2 sm:grid-rows-2">
-              {featuredSegments.map((segment, index) => (
+            <div className="grid gap-5 md:grid-cols-2">
+              {[
+                {
+                  title: 'Sporting & Lifestyle Clubs',
+                  image:
+                    'https://privana-website-images.s3.amazonaws.com/GRID_Sporting+and+Lifestyle+Clubs.png',
+                  examples: [
+                    'Golf Clubs',
+                    'Athletic Clubs',
+                    'Equestrian Clubs',
+                    'Shooting Clubs',
+                    'Wellness Retreats'
+                  ]
+                },
+                {
+                  title: 'City Clubs',
+                  image: 'https://privana-website-images.s3.amazonaws.com/GRID_city+clubs.png',
+                  examples: [
+                    'Business Clubs',
+                    'Private Dining Clubs',
+                    'Executive Clubs',
+                    'Members Lounges',
+                    'Networking Clubs'
+                  ]
+                },
+                {
+                  title: 'Arts & Culture Clubs',
+                  image:
+                    'https://privana-website-images.s3.amazonaws.com/GRID_arts+and+culture+clubs.png',
+                  examples: [
+                    'Creative Clubs',
+                    'Museum Societies',
+                    'Arts Foundations',
+                    'Literary Clubs',
+                    'Performance Venues'
+                  ]
+                },
+                {
+                  title: 'Beach & Leisure Clubs',
+                  image: 'https://privana-website-images.s3.amazonaws.com/GRID_beach+clubs.png',
+                  examples: [
+                    'Beach Clubs',
+                    'Coastal Resorts',
+                    'Private Retreats',
+                    'Leisure Clubs',
+                    'Wellness Resorts'
+                  ]
+                }
+              ].map((segment) => (
                 <article
                   key={segment.title}
-                  className={`group relative min-h-[240px] overflow-hidden rounded-[24px] ${
-                    index === 0 ? 'sm:row-span-2 sm:min-h-[500px]' : 'sm:min-h-[240px]'
-                  }`}
+                  className="group relative aspect-[6/5] overflow-hidden rounded-[24px]"
                 >
                   <Image
                     src={segment.image}
                     alt={segment.title}
                     fill
-                    className="object-cover transition duration-700 group-hover:scale-105"
-                    sizes="(max-width: 640px) 100vw, 50vw"
+                    className="object-cover transition duration-700 ease-out group-hover:scale-105"
+                    sizes="(max-width: 768px) 100vw, 50vw"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
-                  {index === 0 ? (
-                    <div className="absolute inset-x-5 bottom-5 rounded-2xl border border-white/20 bg-black/35 p-5 backdrop-blur-[1px]">
-                      <h4 className="text-lg font-medium text-white sm:text-xl">{segment.title}</h4>
-                      <p className="mt-1 text-sm text-white/80">{segment.subtitle}</p>
-                      <ul className="mt-4 space-y-1.5 text-xs uppercase tracking-[0.12em] text-white/72">
-                        {clubSegments.slice(1).map((club) => (
-                          <li key={club.title}>{club.title}</li>
-                        ))}
-                      </ul>
-                    </div>
-                  ) : (
-                    <div className="absolute inset-x-5 bottom-5">
-                      <h4 className="text-lg font-medium text-white sm:text-xl">{segment.title}</h4>
-                      <p className="mt-1 text-sm text-white/80">{segment.subtitle}</p>
-                    </div>
-                  )}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
+                  <div className="absolute inset-0 bg-black/20 opacity-0 transition duration-500 ease-out group-hover:opacity-100" />
+                  <div className="absolute bottom-0 left-0 p-6 sm:p-7">
+                    <h4 className="font-display text-2xl font-semibold tracking-[-0.01em] text-white sm:text-[1.85rem]">
+                      {segment.title}
+                    </h4>
+                    <ul className="mt-4 space-y-1 text-sm leading-relaxed text-white/80 sm:text-[0.95rem]">
+                      {segment.examples.map((example) => (
+                        <li key={example}>{example}</li>
+                      ))}
+                    </ul>
+                  </div>
                 </article>
               ))}
             </div>
