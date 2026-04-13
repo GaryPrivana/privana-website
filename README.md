@@ -1,2 +1,78 @@
-# Privana Website
-Marketing website for Privana.
+# Privana Marketing Website
+
+Production-ready Next.js marketing site for **Privana**, designed as a premium, responsive, single-page homepage.
+
+## Stack
+
+- Next.js (App Router) + TypeScript
+- Tailwind CSS
+- Semantic HTML and accessible component structure
+- Optimized for deployment on Vercel
+
+## Project Structure
+
+```text
+app/
+  layout.tsx           # Global metadata/SEO and root layout
+  page.tsx             # Homepage entry
+  globals.css          # Global styles + utilities
+components/
+  homepage.tsx         # Main homepage sections
+  site-data.ts         # Copy/image/module content arrays
+  icons.tsx            # Reusable SVG icons
+public/assets/clubs/   # Replaceable club segment imagery
+```
+
+## Run Locally
+
+1. Install dependencies:
+   ```bash
+   npm install
+   ```
+2. Start dev server:
+   ```bash
+   npm run dev
+   ```
+3. Open [http://localhost:3000](http://localhost:3000).
+
+## Production Build
+
+```bash
+npm run build
+npm run start
+```
+
+## Deploy to Vercel
+
+### Option 1: Vercel CLI
+
+```bash
+npm i -g vercel
+vercel
+```
+
+### Option 2: Git Integration
+
+1. Push this repo to GitHub/GitLab/Bitbucket.
+2. Import project in Vercel dashboard.
+3. Accept defaults (Framework Preset: Next.js).
+4. Deploy.
+
+## Swapping Images and Copy
+
+- Replace club segment image files in `public/assets/clubs/` and keep filenames, or update paths in `components/site-data.ts`.
+- Update headlines, descriptions, nav labels, chips, and footer links in `components/homepage.tsx`.
+- Update metadata and SEO copy in `app/layout.tsx`.
+
+## Notes
+
+- Primary navigation and CTAs are wired to section anchors plus a demo booking placeholder URL for quick replacement.
+- No backend or CMS dependency yet; content is code-based for speed and deployment simplicity.
+
+
+## Quick Content Wiring
+
+- In-page nav targets are configured in `components/site-data.ts` (`navItems`) and section IDs in `components/homepage.tsx`.
+- Demo CTA currently points to `https://example.com/book-demo` and can be replaced in one place via `demoLink` / CTA hrefs in `components/homepage.tsx`.
+- Social links are real anchors with aria labels and currently use placeholder brand URLs that should be swapped before launch.
+- OG sharing graphic placeholder is `public/og-image.svg` and metadata references are in `app/layout.tsx`.
