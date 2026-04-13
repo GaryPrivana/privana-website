@@ -156,7 +156,7 @@ export function Homepage() {
                 {
                   title: 'Arts & Culture Clubs',
                   image:
-                    'https://privana-website-images.s3.amazonaws.com/GRID_arts+and+culture+clubs.png',
+                    'https://privana-website-images.s3.amazonaws.com/GRID_arts+and+culture+clubs+V2.png',
                   examples: [
                     'Creative Clubs',
                     'Museum Societies',
@@ -167,7 +167,7 @@ export function Homepage() {
                 },
                 {
                   title: 'Beach & Leisure Clubs',
-                  image: 'https://privana-website-images.s3.amazonaws.com/GRID_beach+clubs.png',
+                  image: 'https://privana-website-images.s3.amazonaws.com/GRID_beach+clubs+V2.png',
                   examples: [
                     'Beach Clubs',
                     'Coastal Resorts',
