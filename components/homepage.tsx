@@ -193,7 +193,9 @@ export function Homepage() {
 
         <section id="solutions" className="section-pad bg-white">
           <div className="container-shell space-y-10 sm:space-y-12">
-            <h3 className="font-display text-3xl font-medium tracking-[-0.01em] text-[#131118] sm:text-4xl">
+            <h3
+              className={`${heroFont.className} mx-auto max-w-4xl text-center text-4xl font-semibold leading-[1.04] tracking-[-0.02em] text-[#111017] sm:text-6xl`}
+            >
               Tailored Exclusively for Your Club
             </h3>
             <div className="grid gap-5 md:grid-cols-2">
