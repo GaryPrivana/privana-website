@@ -72,12 +72,12 @@ export function HomepageHeader({
   const hasFrostedStyle = !isOverHero;
 
   const headerModeClass = hasFrostedStyle
-    ? 'border-b border-black/10 bg-white/92 shadow-[0_10px_30px_rgba(16,19,26,0.14)] backdrop-blur-xl'
+    ? 'border-b border-black/10 bg-white/90 shadow-[0_8px_24px_rgba(15,23,42,0.08)] backdrop-blur-xl'
     : 'border-b border-transparent bg-transparent';
 
   const navTextClass = hasFrostedStyle
     ? 'text-[#1a1f2a]/82 hover:text-[#10131a]'
-    : 'text-white/68 hover:text-white';
+    : 'text-white/85 hover:text-white';
   const navFocusOffsetClass = hasFrostedStyle
     ? 'focus-visible:ring-offset-white/90'
     : 'focus-visible:ring-offset-black';
