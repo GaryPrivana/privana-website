@@ -47,8 +47,10 @@ export function ContactFormSection() {
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    const form = event.currentTarget;
+    let requestSucceeded = false;
 
-    const formData = new FormData(event.currentTarget);
+    const formData = new FormData(form);
     const sanitizedData = sanitizeContactInput(
       Object.fromEntries(
         contactFieldOrder.map((fieldName) => [fieldName, formData.get(fieldName)])
@@ -88,11 +90,15 @@ export function ContactFormSection() {
         return;
       }
 
+      requestSucceeded = true;
       setStatus('success');
       setStatusMessage(SUCCESS_MESSAGE);
       setFormValues(emptyContactFormInput());
-      event.currentTarget.reset();
+      form.reset();
     } catch {
+      if (requestSucceeded) {
+        return;
+      }
       setStatus('error');
       setStatusMessage('Something went wrong. Please try again shortly.');
     }
