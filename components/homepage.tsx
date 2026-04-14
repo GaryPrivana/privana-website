@@ -17,6 +17,7 @@ import {
   ReservationsIcon
 } from './icons';
 import { aiChips, navItems, platformModules } from './site-data';
+import { ContactFormSection } from './contact-form-section';
 
 const demoLink = '#demo';
 
@@ -467,6 +468,8 @@ export function Homepage() {
           </div>
         </section>
       </main>
+
+      <ContactFormSection />
 
       <footer id="contact" className="bg-black pb-20 pt-16 text-white">
         <div className="container-shell grid gap-12 border-t border-white/10 pt-10 sm:grid-cols-2 lg:grid-cols-5">

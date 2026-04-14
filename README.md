@@ -64,6 +64,19 @@ vercel
 - Update headlines, descriptions, nav labels, chips, and footer links in `components/homepage.tsx`.
 - Update metadata and SEO copy in `app/layout.tsx`.
 
+
+## Contact Form (Resend)
+
+The homepage includes a premium contact form section that submits to `POST /api/contact` and sends emails via Resend.
+
+Set these environment variables in Vercel (Project Settings → Environment Variables):
+
+- `RESEND_API_KEY` (required)
+- `CONTACT_FORM_TO` (optional, defaults to `admin@privana.club`)
+- `CONTACT_FORM_FROM` (optional, defaults to `Privana Website <noreply@your-verified-domain.com>`)
+
+Before going live, verify your sender domain/email in Resend and set `CONTACT_FORM_FROM` to that verified identity.
+
 ## Notes
 
 - Primary navigation and CTAs are wired to section anchors plus a demo booking placeholder URL for quick replacement.
