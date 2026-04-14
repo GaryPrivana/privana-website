@@ -157,18 +157,13 @@ export function Homepage() {
 
           <div className="container-shell relative z-10 flex flex-1 items-center">
             <div className="mx-auto w-full max-w-5xl text-center">
-              <p className="text-sm font-semibold uppercase tracking-[0.2em] text-white/70">
-                Introducing
-              </p>
-              <h1 className="mx-auto mt-6 max-w-4xl text-balance text-5xl font-semibold leading-[1.04] tracking-[-0.03em] sm:text-7xl lg:text-8xl">
-                The Private Club
-                <br className="hidden sm:block" /> Intelligence Suite
+              <h1 className="mx-auto text-5xl font-medium uppercase tracking-[0.34em] text-white/90 sm:text-7xl lg:text-[6.4rem]">
+                PRIVANA
               </h1>
-              <p className="mx-auto mt-7 max-w-3xl text-pretty text-base font-medium leading-relaxed text-white/72 sm:text-lg">
-                Orchestrate operations, service, and member journeys through one elevated command
-                layer—designed for clubs where discretion and excellence define every detail.
+              <p className="mx-auto mt-10 max-w-4xl text-balance text-3xl font-semibold leading-[1.16] tracking-[-0.01em] text-white/94 sm:text-4xl lg:text-5xl">
+                Built for the World’s Most Exceptional Clubs
               </p>
-              <div className="mt-12">
+              <div className="mt-14">
                 <Link
                   href={demoLink}
                   className="inline-flex items-center gap-3 rounded-full border border-white/35 bg-white/[0.05] px-8 py-3.5 text-xs font-semibold tracking-[0.16em] text-white transition duration-300 hover:border-white hover:bg-white/[0.12] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:ring-offset-2 focus-visible:ring-offset-black"
