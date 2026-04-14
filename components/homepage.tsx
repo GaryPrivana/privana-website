@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import { Manrope } from 'next/font/google';
 import {
   DeviceFramePlaceholder,
   FeatureMediaPlaceholder,
@@ -18,8 +19,14 @@ import {
 } from './icons';
 import { aiChips, navItems, platformModules } from './site-data';
 import { ContactFormSection } from './contact-form-section';
+import { HeroScrollPrompt } from './hero-scroll-prompt';
 
 const demoLink = '#demo';
+const heroFont = Manrope({
+  subsets: ['latin'],
+  weight: ['500', '600', '700'],
+  display: 'swap'
+});
 
 const iconMap = {
   operations: OperationsIcon,
@@ -72,18 +79,18 @@ const comparisonRows = [
 export function Homepage() {
   return (
     <>
-      <header className="fixed inset-x-0 top-0 z-30">
+      <header className={`fixed inset-x-0 top-0 z-30 ${heroFont.className}`}>
         <div className="container-shell py-5">
           <nav
-            className="rounded-full border border-white/15 bg-black/60 px-4 py-3 text-white backdrop-blur-xl sm:px-5"
+            className="rounded-full border border-white/15 bg-black/45 px-4 py-3 text-white shadow-[0_8px_30px_rgba(0,0,0,0.35)] backdrop-blur-2xl sm:px-5"
             aria-label="Primary"
           >
             <div className="flex items-center justify-between gap-4">
-              <Link href="#top" className="text-sm font-semibold tracking-[0.2em] text-[#66d7d1]">
+              <Link href="#top" className="text-sm font-semibold tracking-[0.2em] text-[#7fdfd9]">
                 PRIVANA
               </Link>
 
-              <ul className="hidden items-center gap-8 text-sm md:flex">
+              <ul className="hidden items-center gap-8 text-sm font-medium md:flex">
                 {navItems.map((item) => (
                   <li key={item.label}>
                     <Link
@@ -99,7 +106,7 @@ export function Homepage() {
               <div className="hidden md:block">
                 <Link
                   href={demoLink}
-                  className="rounded-full border border-white/35 px-5 py-2 text-xs font-medium tracking-[0.12em] text-white transition hover:border-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:ring-offset-2 focus-visible:ring-offset-black"
+                  className="rounded-full border border-white/35 bg-white/[0.04] px-6 py-2.5 text-xs font-semibold tracking-[0.14em] text-white transition hover:border-white hover:bg-white/[0.08] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:ring-offset-2 focus-visible:ring-offset-black"
                 >
                   BOOK A DEMO
                 </Link>
@@ -137,28 +144,47 @@ export function Homepage() {
       </header>
 
       <main id="top" className="bg-[#f5f3f8]">
-        <section id="hero" className="relative overflow-hidden bg-black px-6 pb-24 pt-36 text-white sm:pt-44">
-          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(98,213,206,0.22),transparent_45%),radial-gradient(circle_at_80%_20%,rgba(175,139,218,0.18),transparent_40%)]" />
-          <div className="container-shell relative z-10">
-            <div className="mx-auto mb-10 h-5 w-5 rotate-45 rounded-sm border border-[#62d5ce] bg-[#62d5ce]/20" />
-            <div className="text-center">
-              <h1 className="mx-auto max-w-3xl text-balance font-display text-5xl font-medium leading-[1.08] tracking-[-0.02em] sm:text-7xl">
-                Hi, I&apos;m <span className="text-[#62d5ce]">Privana</span>.
-              </h1>
-              <p className="mx-auto mt-7 max-w-2xl text-pretty text-base font-light leading-relaxed text-white/72 sm:text-lg">
-                Operational Excellence for the World&apos;s Finest Clubs.
+        <section
+          id="hero"
+          className={`relative isolate flex min-h-screen overflow-hidden bg-[#020304] px-6 pb-16 pt-36 text-white sm:pb-20 sm:pt-44 ${heroFont.className}`}
+        >
+          {/* Future cinematic media slot:
+             Replace this backdrop layer with an absolute <video> or <Image> to run full-bleed behind the hero copy.
+             Keep object-cover + inset-0 positioning so the section remains media-ready. */}
+          <div className="pointer-events-none absolute inset-0 bg-[#020304]" />
+          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_12%,rgba(101,215,206,0.16),transparent_42%),radial-gradient(circle_at_85%_22%,rgba(142,106,198,0.14),transparent_38%),linear-gradient(180deg,rgba(0,0,0,0.2)_0%,rgba(0,0,0,0.68)_100%)]" />
+          <div className="pointer-events-none absolute inset-x-0 bottom-[-18rem] h-[28rem] bg-[radial-gradient(ellipse_at_center,rgba(101,215,206,0.08),transparent_65%)]" />
+
+          <div className="container-shell relative z-10 flex flex-1 items-center">
+            <div className="mx-auto w-full max-w-5xl text-center">
+              <p className="text-sm font-semibold uppercase tracking-[0.2em] text-white/70">
+                Introducing
               </p>
-              <div className="mt-11">
+              <h1 className="mx-auto mt-6 max-w-4xl text-balance text-5xl font-semibold leading-[1.04] tracking-[-0.03em] sm:text-7xl lg:text-8xl">
+                The Private Club
+                <br className="hidden sm:block" /> Intelligence Suite
+              </h1>
+              <p className="mx-auto mt-7 max-w-3xl text-pretty text-base font-medium leading-relaxed text-white/72 sm:text-lg">
+                Orchestrate operations, service, and member journeys through one elevated command
+                layer—designed for clubs where discretion and excellence define every detail.
+              </p>
+              <div className="mt-12">
                 <Link
                   href={demoLink}
-                  className="inline-flex items-center gap-3 rounded-full border border-white/40 px-7 py-3 text-xs font-medium tracking-[0.14em] text-white transition hover:border-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:ring-offset-2 focus-visible:ring-offset-black"
+                  className="inline-flex items-center gap-3 rounded-full border border-white/35 bg-white/[0.05] px-8 py-3.5 text-xs font-semibold tracking-[0.16em] text-white transition duration-300 hover:border-white hover:bg-white/[0.12] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:ring-offset-2 focus-visible:ring-offset-black"
                 >
                   BOOK A DEMO <span aria-hidden="true">↗</span>
                 </Link>
               </div>
             </div>
+          </div>
 
-            <div className="mt-16 grid gap-5 lg:grid-cols-[1fr_260px]">
+          <HeroScrollPrompt targetId="hero-showcase" className={heroFont.className} />
+        </section>
+
+        <section id="hero-showcase" className="bg-black px-6 pb-20 pt-8 text-white sm:pt-10">
+          <div className="container-shell">
+            <div className="grid gap-5 lg:grid-cols-[1fr_260px]">
               <HeroProductPlaceholder
                 title="Privana Command Dashboard"
                 label="Hero Product Showcase"
