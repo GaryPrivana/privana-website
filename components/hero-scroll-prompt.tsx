@@ -30,7 +30,7 @@ export function HeroScrollPrompt({ targetId, className }: HeroScrollPromptProps)
       } ${className ?? ''}`}
     >
       <span className="hero-scroll-drift inline-flex items-center gap-2">
-        <span>See the future of club operations</span>
+        <span>Explore the future of club operations</span>
         <span aria-hidden="true">↓</span>
       </span>
     </button>
