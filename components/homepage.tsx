@@ -176,6 +176,30 @@ export function Homepage() {
           <HeroScrollPrompt targetId="hero-showcase" className={heroFont.className} />
         </section>
 
+        <section id="about" className={`section-pad bg-[#fbfafe] ${heroFont.className}`}>
+          <div className="container-shell grid gap-12 lg:grid-cols-[1.3fr_1fr] lg:gap-20">
+            <h2 className="max-w-4xl text-4xl font-semibold leading-[1.04] tracking-[-0.02em] text-[#111017] sm:text-6xl">
+              <span className="text-[#af8bda]">Privana</span> is the
+              <br className="hidden lg:block" />
+              <span className="lg:hidden"> </span>
+              world leading, fully
+              <br className="hidden lg:block" />
+              <span className="lg:hidden"> </span>
+              <span className="text-[#5888d9]">AI powered</span> Club
+              <br className="hidden lg:block" />
+              <span className="lg:hidden"> </span>
+              Management
+              <br className="hidden lg:block" />
+              <span className="lg:hidden"> </span>
+              Software
+            </h2>
+            <p className="max-w-xl self-end justify-self-end text-pretty text-lg leading-relaxed text-[#201a2d]/92">
+              Connect departments, elevate hospitality, and make better decisions with one modern
+              system built for premium clubs, private hospitality, and lifestyle-driven communities.
+            </p>
+          </div>
+        </section>
+
         <section id="hero-showcase" className="bg-black px-6 pb-20 pt-8 text-white sm:pt-10">
           <div className="container-shell">
             <div className="grid gap-5 lg:grid-cols-[1fr_260px]">
@@ -216,19 +240,6 @@ export function Homepage() {
                 {item}
               </div>
             ))}
-          </div>
-        </section>
-
-        <section id="about" className="section-pad bg-[#fbfafe]">
-          <div className="container-shell grid gap-12 lg:grid-cols-[1.3fr_1fr] lg:gap-20">
-            <h2 className="max-w-4xl text-balance font-display text-4xl font-medium leading-[1.08] tracking-[-0.02em] text-[#15131b] sm:text-6xl">
-              <span className="text-[#af8bda]">Privana</span> is the world leading, fully{' '}
-              <span className="text-[#5888d9]">AI powered</span> Club Management Software.
-            </h2>
-            <p className="max-w-xl self-end justify-self-end text-pretty text-lg leading-relaxed text-[#363042]/75">
-              Connect departments, elevate hospitality, and make better decisions with one modern
-              system built for premium clubs, private hospitality, and lifestyle-driven communities.
-            </p>
           </div>
         </section>
 
