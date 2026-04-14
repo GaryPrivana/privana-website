@@ -13,13 +13,13 @@ import {
   HotelIcon,
   InventoryIcon,
   MembershipIcon,
-  MenuIcon,
   OperationsIcon,
   ReservationsIcon
 } from './icons';
-import { aiChips, navItems, platformModules } from './site-data';
+import { aiChips, platformModules } from './site-data';
 import { ContactFormSection } from './contact-form-section';
 import { HeroScrollPrompt } from './hero-scroll-prompt';
+import { HomepageHeader } from './homepage-header';
 
 const demoLink = '#demo';
 const heroFont = Manrope({
@@ -81,63 +81,11 @@ const comparisonRows = [
 export function Homepage() {
   return (
     <>
-      <header className={`fixed inset-x-0 top-0 z-30 ${heroFont.className}`}>
-        <div className="container-shell py-6 sm:py-7">
-          <nav className="px-1 text-white" aria-label="Primary">
-            <div className="flex items-center justify-between gap-4">
-              <Link href="#top" className="text-sm font-semibold tracking-[0.2em] text-[#74cbc5]">
-                PRIVANA
-              </Link>
-
-              <ul className="hidden items-center gap-10 text-sm font-medium md:flex">
-                {navItems.map((item) => (
-                  <li key={item.label}>
-                    <Link
-                      href={item.href}
-                      className="text-white/68 transition hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60 focus-visible:ring-offset-2 focus-visible:ring-offset-black"
-                    >
-                      {item.label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-
-              <div className="hidden md:block">
-                <Link href={demoLink} className={sharedDemoCtaClass}>
-                  BOOK A DEMO
-                </Link>
-              </div>
-
-              <details className="group relative md:hidden">
-                <summary className="flex cursor-pointer list-none items-center gap-2 rounded-full border border-white/20 px-3 py-2 text-sm text-white/90 transition hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70">
-                  <MenuIcon className="h-4 w-4" />
-                  Menu
-                </summary>
-                <div className="absolute right-0 mt-3 w-64 overflow-hidden rounded-2xl border border-white/20 bg-black/90 p-3 shadow-premium">
-                  <ul className="space-y-1">
-                    {navItems.map((item) => (
-                      <li key={item.label}>
-                        <Link
-                          href={item.href}
-                          className="block rounded-xl px-3 py-2 text-sm text-white/80 transition hover:bg-white/10 hover:text-white"
-                        >
-                          {item.label}
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
-                  <Link
-                    href={demoLink}
-                    className={`${sharedDemoCtaClass} mt-3 flex w-full`}
-                  >
-                    BOOK A DEMO
-                  </Link>
-                </div>
-              </details>
-            </div>
-          </nav>
-        </div>
-      </header>
+      <HomepageHeader
+        demoLink={demoLink}
+        heroFontClassName={heroFont.className}
+        heroDemoCtaClass={sharedDemoCtaClass}
+      />
 
       <main id="top" className="bg-[#f5f3f8]">
         <section
