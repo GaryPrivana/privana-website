@@ -1,6 +1,13 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import {
+  DeviceFramePlaceholder,
+  FeatureMediaPlaceholder,
+  HeroProductPlaceholder,
+  ProductShowcasePlaceholder,
+  VideoPreviewPlaceholder
+} from './media-placeholders';
+import {
   CrmIcon,
   HotelIcon,
   InventoryIcon,
@@ -21,6 +28,45 @@ const iconMap = {
   hotel: HotelIcon,
   inventory: InventoryIcon
 } as const;
+
+const authorityPillars = [
+  'AI Powered Automation',
+  'Unified Club Operations',
+  'Membership, CRM & Reservations',
+  'Built for Premium Clubs'
+];
+
+const valuePillars = [
+  'AI Concierge & Automation',
+  'CRM & Lead Intelligence',
+  'Reservations & Experience Management',
+  'Membership Lifecycle Management',
+  'Hospitality & Revenue Operations',
+  'Finance, Reporting & Insights'
+];
+
+const comparisonRows = [
+  {
+    legacy: 'Fragmented tools and disconnected teams',
+    modern: 'One connected platform across every department'
+  },
+  {
+    legacy: 'Manual workflows and repetitive admin',
+    modern: 'Intelligent automation with AI assistance'
+  },
+  {
+    legacy: 'Static monthly reporting',
+    modern: 'Real-time operational and member insight'
+  },
+  {
+    legacy: 'Generic software not built for clubs',
+    modern: 'Hospitality-first product design for premium clubs'
+  },
+  {
+    legacy: 'Systems optimized for admin tasks',
+    modern: 'Operations designed around member experience'
+  }
+];
 
 export function Homepage() {
   return (
@@ -90,23 +136,65 @@ export function Homepage() {
       </header>
 
       <main id="top" className="bg-[#f5f3f8]">
-        <section id="hero" className="bg-black px-6 pb-24 pt-36 text-white sm:pt-44">
-          <div className="container-shell text-center">
+        <section id="hero" className="relative overflow-hidden bg-black px-6 pb-24 pt-36 text-white sm:pt-44">
+          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(98,213,206,0.22),transparent_45%),radial-gradient(circle_at_80%_20%,rgba(175,139,218,0.18),transparent_40%)]" />
+          <div className="container-shell relative z-10">
             <div className="mx-auto mb-10 h-5 w-5 rotate-45 rounded-sm border border-[#62d5ce] bg-[#62d5ce]/20" />
-            <h1 className="mx-auto max-w-3xl text-balance font-display text-5xl font-medium leading-[1.08] tracking-[-0.02em] sm:text-7xl">
-              Hi, I&apos;m <span className="text-[#62d5ce]">Privana</span>.
-            </h1>
-            <p className="mx-auto mt-7 max-w-2xl text-pretty text-base font-light leading-relaxed text-white/72 sm:text-lg">
-              Operational Excellence for the World&apos;s Finest Clubs.
-            </p>
-            <div className="mt-11">
-              <Link
-                href={demoLink}
-                className="inline-flex items-center gap-3 rounded-full border border-white/40 px-7 py-3 text-xs font-medium tracking-[0.14em] text-white transition hover:border-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:ring-offset-2 focus-visible:ring-offset-black"
-              >
-                BOOK A DEMO <span aria-hidden="true">↗</span>
-              </Link>
+            <div className="text-center">
+              <h1 className="mx-auto max-w-3xl text-balance font-display text-5xl font-medium leading-[1.08] tracking-[-0.02em] sm:text-7xl">
+                Hi, I&apos;m <span className="text-[#62d5ce]">Privana</span>.
+              </h1>
+              <p className="mx-auto mt-7 max-w-2xl text-pretty text-base font-light leading-relaxed text-white/72 sm:text-lg">
+                Operational Excellence for the World&apos;s Finest Clubs.
+              </p>
+              <div className="mt-11">
+                <Link
+                  href={demoLink}
+                  className="inline-flex items-center gap-3 rounded-full border border-white/40 px-7 py-3 text-xs font-medium tracking-[0.14em] text-white transition hover:border-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:ring-offset-2 focus-visible:ring-offset-black"
+                >
+                  BOOK A DEMO <span aria-hidden="true">↗</span>
+                </Link>
+              </div>
             </div>
+
+            <div className="mt-16 grid gap-5 lg:grid-cols-[1fr_260px]">
+              <HeroProductPlaceholder
+                title="Privana Command Dashboard"
+                label="Hero Product Showcase"
+                aspectRatio="16 / 9"
+                previewLabel="Replace with imageSrc or videoSrc"
+                className="w-full"
+              />
+              <div className="space-y-5">
+                <DeviceFramePlaceholder
+                  title="Live Operations Pulse"
+                  label="Floating Widget"
+                  aspectRatio="4 / 3"
+                  glowMode="teal"
+                  previewLabel="Replace with AWS image URL"
+                />
+                <DeviceFramePlaceholder
+                  title="AI Concierge Queue"
+                  label="Floating Widget"
+                  aspectRatio="4 / 3"
+                  glowMode="lilac"
+                  previewLabel="Replace with AWS image URL"
+                />
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="border-y border-[#ded7ea] bg-[#f3eff9] py-5">
+          <div className="container-shell grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+            {authorityPillars.map((item) => (
+              <div
+                key={item}
+                className="rounded-2xl border border-[#ddd3ee] bg-white/75 px-4 py-3 text-center text-xs font-medium uppercase tracking-[0.13em] text-[#2f2741]/82"
+              >
+                {item}
+              </div>
+            ))}
           </div>
         </section>
 
@@ -205,6 +293,34 @@ export function Homepage() {
           </div>
         </section>
 
+        <section id="product-showcase" className="section-pad bg-[#121018] text-white">
+          <div className="container-shell grid items-center gap-12 lg:grid-cols-[1.15fr_0.85fr]">
+            <ProductShowcasePlaceholder
+              title="Primary Platform Experience"
+              label="Enterprise Product Showcase"
+              aspectRatio="16 / 10"
+              previewLabel="Swap with dashboard screenshot or video"
+            />
+            <div className="space-y-7">
+              <h3 className="text-balance font-display text-4xl font-medium leading-[1.08] tracking-[-0.02em] sm:text-5xl">
+                The Most Powerful Club Management Platform Ever Built.
+              </h3>
+              <p className="text-base leading-relaxed text-white/72">
+                Privana unifies every operational layer of a premium club into one intelligent
+                control system built for leadership teams, hospitality teams, and member-facing
+                teams.
+              </p>
+              <ul className="grid gap-3 text-sm sm:grid-cols-2">
+                {valuePillars.map((pillar) => (
+                  <li key={pillar} className="rounded-xl border border-white/15 bg-white/[0.04] px-4 py-3">
+                    {pillar}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </section>
+
         <section id="intelligence" className="section-pad bg-[#f4f0fa]">
           <div className="container-shell grid gap-12 lg:grid-cols-[1fr_1.1fr]">
             <div>
@@ -229,7 +345,13 @@ export function Homepage() {
                   </span>
                 ))}
               </div>
-              <aside className="max-w-xl rounded-[28px] bg-[#13111a] p-7 text-[#efebf8] shadow-[0_18px_55px_rgba(21,14,39,0.28)]">
+              <FeatureMediaPlaceholder
+                title="AI Assistant & Insight Workspace"
+                label="AI Product Preview"
+                aspectRatio="16 / 9"
+                previewLabel="Drop in AI screenshot / short recording"
+              />
+              <aside className="max-w-xl rounded-[28px] border border-[#d7cee8] bg-[#13111a] p-7 text-[#efebf8] shadow-[0_18px_55px_rgba(21,14,39,0.28)]">
                 <p className="text-sm leading-relaxed text-[#efebf8]/90 sm:text-base">
                   Give club leaders real-time insight into member behaviour, operational
                   performance, and retention opportunities — without adding manual reporting
@@ -251,13 +373,20 @@ export function Homepage() {
                 return (
                   <article
                     key={module.title}
-                    className="rounded-[24px] border border-[#ddd2ef] bg-[#f8f4ff] px-7 pb-8 pt-8 transition hover:-translate-y-0.5 hover:shadow-[0_16px_36px_rgba(72,45,112,0.12)]"
+                    className="rounded-[24px] border border-[#ddd2ef] bg-[#f8f4ff] px-7 pb-7 pt-7 transition hover:-translate-y-0.5 hover:shadow-[0_16px_36px_rgba(72,45,112,0.12)]"
                   >
-                    <Icon className="mb-6 h-6 w-6 text-[#c6b3e2]" />
+                    <Icon className="mb-5 h-6 w-6 text-[#a68ed0]" />
                     <h4 className="mb-3 text-[1.15rem] font-medium tracking-[-0.01em] text-[#201a2b]">
                       {module.title}
                     </h4>
-                    <p className="text-sm leading-7 text-[#3d3550]/75">{module.description}</p>
+                    <p className="mb-5 text-sm leading-7 text-[#3d3550]/75">{module.description}</p>
+                    <FeatureMediaPlaceholder
+                      title={`${module.title} Preview`}
+                      label="Module Preview"
+                      aspectRatio="16 / 10"
+                      glowMode="neutral"
+                      previewLabel="Replace with module screenshot"
+                    />
                   </article>
                 );
               })}
@@ -265,28 +394,84 @@ export function Homepage() {
           </div>
         </section>
 
-        <section id="demo" className="section-pad bg-black text-white">
-          <div className="container-shell flex flex-col gap-8 rounded-[32px] border border-white/15 bg-white/[0.03] p-10 text-center sm:p-14">
-            <h3 className="text-balance font-display text-3xl font-medium tracking-[-0.01em] sm:text-4xl">
-              Built for clubs that expect more from their software.
+        <section id="comparison" className="section-pad bg-white">
+          <div className="container-shell space-y-9">
+            <h3 className="max-w-3xl text-balance font-display text-4xl font-medium leading-[1.08] tracking-[-0.02em] text-[#191522] sm:text-5xl">
+              Built for the Next Generation of Club Operations.
             </h3>
-            <p className="text-white/72">Request a personalised walkthrough of Privana.</p>
-            <div>
-              <Link
-                href="https://example.com/book-demo"
-                className="inline-flex items-center gap-2 rounded-full border border-white/35 px-7 py-3 text-xs font-medium tracking-[0.14em] text-white transition hover:border-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:ring-offset-2 focus-visible:ring-offset-black"
-              >
-                BOOK A DEMO <span aria-hidden="true">↗</span>
-              </Link>
+            <div className="overflow-hidden rounded-[28px] border border-[#ded7ea] bg-[#fbfafe]">
+              <div className="grid grid-cols-2 border-b border-[#e3dded] text-xs uppercase tracking-[0.15em] text-[#3a324b]/75">
+                <div className="px-6 py-4">Legacy Systems</div>
+                <div className="bg-[#f2ecfa] px-6 py-4 text-[#272035]">Privana</div>
+              </div>
+              <div>
+                {comparisonRows.map((row) => (
+                  <div key={row.legacy} className="grid grid-cols-1 border-t border-[#e8e2f1] sm:grid-cols-2">
+                    <div className="px-6 py-4 text-sm text-[#4f455f]/82">{row.legacy}</div>
+                    <div className="bg-[#f7f3fd] px-6 py-4 text-sm font-medium text-[#1f1a2b]">
+                      {row.modern}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="experience-preview" className="section-pad bg-[#121018] text-white">
+          <div className="container-shell grid items-center gap-12 lg:grid-cols-[0.9fr_1.1fr]">
+            <div className="space-y-6">
+              <h3 className="text-balance font-display text-4xl font-medium leading-[1.08] tracking-[-0.02em] sm:text-5xl">
+                Member Journeys, Booking Flows, and Revenue Operations — In Motion.
+              </h3>
+              <p className="text-base leading-relaxed text-white/72">
+                Use this section for a full screen recording of your booking experience, member app,
+                CRM workflow, or executive reporting sequence.
+              </p>
+              <ul className="space-y-2 text-sm text-white/80">
+                <li>• Perfect placement for future high-impact product film.</li>
+                <li>• Supports AWS-hosted MP4 recording and poster frame.</li>
+                <li>• Works for both desktop and mobile workflow demonstrations.</li>
+              </ul>
+            </div>
+            <VideoPreviewPlaceholder
+              title="Screen Recording Showcase"
+              label="Motion Product Preview"
+              aspectRatio="16 / 10"
+              previewLabel="Attach videoSrc + posterSrc from AWS"
+            />
+          </div>
+        </section>
+
+        <section id="demo" className="section-pad bg-black text-white">
+          <div className="container-shell">
+            <div className="relative overflow-hidden rounded-[34px] border border-white/15 bg-[radial-gradient(circle_at_15%_15%,rgba(98,213,206,0.2),transparent_45%),radial-gradient(circle_at_85%_10%,rgba(175,139,218,0.2),transparent_35%),linear-gradient(160deg,#0f0f15,#0a0a0f)] p-10 text-center shadow-[0_32px_80px_rgba(8,8,12,0.45)] sm:p-14">
+              <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-white/5 via-transparent to-transparent" />
+              <div className="relative z-10 flex flex-col gap-7">
+                <h3 className="text-balance font-display text-3xl font-medium tracking-[-0.01em] sm:text-5xl">
+                  Your Club Deserves Better Software.
+                </h3>
+                <p className="mx-auto max-w-2xl text-white/72">
+                  Built for clubs that expect more from technology, hospitality, and execution.
+                </p>
+                <div>
+                  <Link
+                    href="https://example.com/book-demo"
+                    className="inline-flex items-center gap-2 rounded-full border border-white/35 px-7 py-3 text-xs font-medium tracking-[0.14em] text-white transition hover:border-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:ring-offset-2 focus-visible:ring-offset-black"
+                  >
+                    BOOK A DEMO <span aria-hidden="true">↗</span>
+                  </Link>
+                </div>
+              </div>
             </div>
           </div>
         </section>
       </main>
 
-      <footer id="contact" className="bg-black py-16 text-white">
-        <div className="container-shell grid gap-10 sm:grid-cols-2 lg:grid-cols-5">
+      <footer id="contact" className="bg-black pb-20 pt-16 text-white">
+        <div className="container-shell grid gap-12 border-t border-white/10 pt-10 sm:grid-cols-2 lg:grid-cols-5">
           <div>
-            <h4 className="mb-3 text-base font-semibold tracking-[0.14em] text-[#62d5ce]">PRIVANA</h4>
+            <h4 className="mb-4 text-base font-semibold tracking-[0.16em] text-[#62d5ce]">PRIVANA</h4>
             <p className="max-w-md text-sm leading-relaxed text-white/55">
               Premium operations infrastructure for modern member-led clubs.
             </p>
@@ -320,8 +505,8 @@ export function Homepage() {
             ]}
           />
           <div>
-            <h4 className="mb-3 text-xs uppercase tracking-[0.18em] text-white/55">Follow Us</h4>
-            <ul className="space-y-2">
+            <h4 className="mb-4 text-xs uppercase tracking-[0.18em] text-white/55">Follow Us</h4>
+            <ul className="space-y-2.5">
               <li>
                 <a
                   href="https://www.linkedin.com/company/privana"
@@ -359,8 +544,8 @@ type FooterColumnProps = {
 function FooterColumn({ title, links }: FooterColumnProps) {
   return (
     <div>
-      <h4 className="mb-3 text-xs uppercase tracking-[0.18em] text-white/55">{title}</h4>
-      <ul className="space-y-2">
+      <h4 className="mb-4 text-xs uppercase tracking-[0.18em] text-white/55">{title}</h4>
+      <ul className="space-y-2.5">
         {links.map((link) => (
           <li key={link.label}>
             <Link href={link.href} className="text-sm text-white/68 transition hover:text-white">
