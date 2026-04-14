@@ -27,6 +27,8 @@ const heroFont = Manrope({
   weight: ['500', '600', '700'],
   display: 'swap'
 });
+const sharedDemoCtaClass =
+  'inline-flex items-center justify-center rounded-full bg-white px-8 py-3 text-xs font-semibold tracking-[0.1em] text-[#10131a] transition duration-300 hover:bg-white/92 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/80 focus-visible:ring-offset-2 focus-visible:ring-offset-black';
 
 const iconMap = {
   operations: OperationsIcon,
@@ -80,22 +82,19 @@ export function Homepage() {
   return (
     <>
       <header className={`fixed inset-x-0 top-0 z-30 ${heroFont.className}`}>
-        <div className="container-shell py-5">
-          <nav
-            className="rounded-full border border-white/15 bg-black/45 px-4 py-3 text-white shadow-[0_8px_30px_rgba(0,0,0,0.35)] backdrop-blur-2xl sm:px-5"
-            aria-label="Primary"
-          >
+        <div className="container-shell py-6 sm:py-7">
+          <nav className="px-1 text-white" aria-label="Primary">
             <div className="flex items-center justify-between gap-4">
-              <Link href="#top" className="text-sm font-semibold tracking-[0.2em] text-[#7fdfd9]">
+              <Link href="#top" className="text-sm font-semibold tracking-[0.2em] text-[#74cbc5]">
                 PRIVANA
               </Link>
 
-              <ul className="hidden items-center gap-8 text-sm font-medium md:flex">
+              <ul className="hidden items-center gap-10 text-sm font-medium md:flex">
                 {navItems.map((item) => (
                   <li key={item.label}>
                     <Link
                       href={item.href}
-                      className="text-white/75 transition hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60 focus-visible:ring-offset-2 focus-visible:ring-offset-black"
+                      className="text-white/68 transition hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60 focus-visible:ring-offset-2 focus-visible:ring-offset-black"
                     >
                       {item.label}
                     </Link>
@@ -104,10 +103,7 @@ export function Homepage() {
               </ul>
 
               <div className="hidden md:block">
-                <Link
-                  href={demoLink}
-                  className="rounded-full border border-white/35 bg-white/[0.04] px-6 py-2.5 text-xs font-semibold tracking-[0.14em] text-white transition hover:border-white hover:bg-white/[0.08] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:ring-offset-2 focus-visible:ring-offset-black"
-                >
+                <Link href={demoLink} className={sharedDemoCtaClass}>
                   BOOK A DEMO
                 </Link>
               </div>
@@ -132,7 +128,7 @@ export function Homepage() {
                   </ul>
                   <Link
                     href={demoLink}
-                    className="mt-3 block rounded-xl border border-white/35 px-3 py-2 text-center text-xs font-medium tracking-[0.12em] text-white"
+                    className={`${sharedDemoCtaClass} mt-3 flex w-full`}
                   >
                     BOOK A DEMO
                   </Link>
@@ -166,15 +162,12 @@ export function Homepage() {
                 <span>N</span>
                 <span>A</span>
               </h1>
-              <p className="mx-auto mt-10 max-w-4xl text-balance text-2xl font-medium leading-[1.16] tracking-[-0.01em] text-white/94 sm:text-3xl lg:max-w-none lg:text-[2.85rem] lg:whitespace-nowrap">
+              <p className="mx-auto mt-11 max-w-4xl text-balance text-lg font-normal leading-[1.24] tracking-[-0.008em] text-white/84 sm:text-[1.65rem] lg:max-w-none lg:text-[2.08rem] lg:whitespace-nowrap">
                 Built for the World’s Most Exceptional Clubs
               </p>
-              <div className="mt-14">
-                <Link
-                  href={demoLink}
-                  className="inline-flex items-center gap-3 rounded-full border border-white/35 bg-white/[0.05] px-8 py-3.5 text-xs font-semibold tracking-[0.16em] text-white transition duration-300 hover:border-white hover:bg-white/[0.12] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:ring-offset-2 focus-visible:ring-offset-black"
-                >
-                  BOOK A DEMO <span aria-hidden="true">↗</span>
+              <div className="mt-16">
+                <Link href={demoLink} className={sharedDemoCtaClass}>
+                  BOOK A DEMO
                 </Link>
               </div>
             </div>
