@@ -157,10 +157,16 @@ export function Homepage() {
 
           <div className="container-shell relative z-10 flex flex-1 items-center">
             <div className="mx-auto w-full max-w-5xl text-center">
-              <h1 className="mx-auto text-5xl font-medium uppercase tracking-[0.34em] text-white/90 sm:text-7xl lg:text-[6.4rem]">
-                PRIVANA
+              <h1 className="mx-auto flex w-fit items-center gap-[0.34em] text-5xl font-normal uppercase text-white/90 sm:text-7xl lg:text-[6.4rem]">
+                <span>P</span>
+                <span>R</span>
+                <span>I</span>
+                <span>V</span>
+                <span>A</span>
+                <span>N</span>
+                <span>A</span>
               </h1>
-              <p className="mx-auto mt-10 max-w-4xl text-balance text-3xl font-semibold leading-[1.16] tracking-[-0.01em] text-white/94 sm:text-4xl lg:text-5xl">
+              <p className="mx-auto mt-10 max-w-4xl text-balance text-2xl font-medium leading-[1.16] tracking-[-0.01em] text-white/94 sm:text-3xl lg:max-w-none lg:text-[2.85rem] lg:whitespace-nowrap">
                 Built for the World’s Most Exceptional Clubs
               </p>
               <div className="mt-14">
