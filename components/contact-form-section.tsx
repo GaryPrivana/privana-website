@@ -105,7 +105,7 @@ export function ContactFormSection() {
   }
 
   return (
-    <section aria-labelledby="private-walkthrough" className="section-pad bg-black text-white">
+    <section aria-labelledby="private-walkthrough" className="bg-black py-12 text-white sm:py-16">
       <div className="container-shell">
         <div className="grid gap-10 rounded-[34px] border border-white/10 bg-[radial-gradient(circle_at_12%_12%,rgba(98,213,206,0.13),transparent_48%),radial-gradient(circle_at_90%_5%,rgba(175,139,218,0.2),transparent_35%),linear-gradient(165deg,#0d0c14,#07070b)] p-7 shadow-[0_36px_84px_rgba(6,6,10,0.55)] sm:p-10 lg:grid-cols-[0.95fr_1.05fr] lg:gap-14">
           <div className="self-center">
