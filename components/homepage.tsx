@@ -177,7 +177,7 @@ export function Homepage() {
         </section>
 
         <section id="about" className={`section-pad bg-[#fbfafe] ${heroFont.className}`}>
-          <div className="container-shell grid gap-12 lg:grid-cols-[1.3fr_1fr] lg:gap-20">
+          <div className="container-shell grid items-center gap-12 lg:grid-cols-[1.3fr_1fr] lg:gap-20">
             <h2 className="max-w-4xl text-4xl font-semibold leading-[1.04] tracking-[-0.02em] text-[#111017] sm:text-6xl">
               <span className="text-[#af8bda]">Privana</span> is the
               <br className="hidden lg:block" />
@@ -193,7 +193,7 @@ export function Homepage() {
               <span className="lg:hidden"> </span>
               Software
             </h2>
-            <p className="max-w-xl self-end justify-self-end text-pretty text-lg leading-relaxed text-[#201a2d]/92">
+            <p className="max-w-xl justify-self-end text-pretty text-xl leading-relaxed text-[#201a2d]/92">
               Connect departments, elevate hospitality, and make better decisions with one modern
               system built for premium clubs, private hospitality, and lifestyle-driven communities.
             </p>
