@@ -11,7 +11,6 @@ type HomepageHeaderProps = {
   heroDemoCtaClass: string;
 };
 
-const TOP_THRESHOLD = 20;
 const DIRECTION_THRESHOLD = 6;
 
 export function HomepageHeader({
@@ -19,7 +18,7 @@ export function HomepageHeader({
   heroFontClassName,
   heroDemoCtaClass
 }: HomepageHeaderProps) {
-  const [isAtTop, setIsAtTop] = useState(true);
+  const [isOverHero, setIsOverHero] = useState(true);
   const [scrollDirection, setScrollDirection] = useState<'up' | 'down'>('up');
 
   useEffect(() => {
@@ -29,11 +28,13 @@ export function HomepageHeader({
     const updateHeader = () => {
       const currentScrollY = window.scrollY;
       const delta = currentScrollY - lastScrollY;
-      const atTop = currentScrollY <= TOP_THRESHOLD;
+      const heroSection = document.getElementById('hero');
+      const heroBottom = heroSection?.getBoundingClientRect().bottom ?? 0;
+      const overHero = heroBottom > 0;
 
-      setIsAtTop(atTop);
+      setIsOverHero(overHero);
 
-      if (atTop) {
+      if (overHero) {
         setScrollDirection('up');
         lastScrollY = currentScrollY;
         return;
@@ -58,15 +59,17 @@ export function HomepageHeader({
     };
 
     window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
     updateHeader();
 
     return () => {
       window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('resize', onScroll);
     };
   }, []);
 
-  const isVisible = isAtTop || scrollDirection === 'up';
-  const hasFrostedStyle = !isAtTop;
+  const isVisible = isOverHero || scrollDirection === 'up';
+  const hasFrostedStyle = !isOverHero;
 
   const headerModeClass = hasFrostedStyle
     ? 'border-b border-black/10 bg-white/92 shadow-[0_10px_30px_rgba(16,19,26,0.14)] backdrop-blur-xl'
