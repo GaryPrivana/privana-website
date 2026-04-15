@@ -115,7 +115,7 @@ export function ContactFormSection() {
               </p>
             <h3
               id="private-walkthrough"
-              className="max-w-[16ch] text-pretty font-display text-3xl font-medium leading-[1.05] tracking-[-0.018em] sm:text-[3.15rem]"
+              className="max-w-[16ch] text-pretty text-[2.35rem] font-semibold leading-[1.03] tracking-[-0.03em] sm:text-[3.15rem]"
             >
               Book Your Private Walkthrough
             </h3>
