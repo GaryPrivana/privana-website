@@ -39,11 +39,22 @@ const iconMap = {
   inventory: InventoryIcon
 } as const;
 
-const authorityPillars = [
-  'AI Powered Automation',
-  'Unified Club Operations',
-  'Membership, CRM & Reservations',
-  'Built for Premium Clubs'
+const authorityValueCards = [
+  {
+    label: 'Up to',
+    headline: '80% less admin time',
+    description: 'Automate member communication, reporting and operational workflows.'
+  },
+  {
+    label: 'Over',
+    headline: '25+ modules unified',
+    description: 'Run your entire club from one connected ecosystem.'
+  },
+  {
+    label: 'Built for',
+    headline: 'Modern Private Clubs',
+    description: 'Designed for the world’s leading golf, country and lifestyle clubs.'
+  }
 ];
 
 const valuePillars = [
@@ -178,15 +189,19 @@ export function Homepage() {
           </div>
         </section>
 
-        <section className="border-y border-[#ded7ea] bg-[#f3eff9] py-5">
-          <div className="container-shell grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-            {authorityPillars.map((item) => (
-              <div
-                key={item}
-                className="rounded-2xl border border-[#ddd3ee] bg-white/75 px-4 py-3 text-center text-xs font-medium uppercase tracking-[0.13em] text-[#2f2741]/82"
+        <section className="border-y border-[#e0dbea] bg-[#f3eff9] py-16 sm:py-20">
+          <div className="container-shell grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+            {authorityValueCards.map((card) => (
+              <article
+                key={card.headline}
+                className="group flex h-full min-h-[22rem] flex-col rounded-[1.85rem] border border-[#e5dfeb] bg-[#f6f4f8] p-8 shadow-[0_1px_0_rgba(17,16,23,0.04)] transition-all duration-300 ease-out hover:-translate-y-1 hover:border-[#ddd5e6] hover:shadow-[0_18px_42px_rgba(16,12,25,0.11)] sm:p-10"
               >
-                {item}
-              </div>
+                <p className="text-sm font-medium tracking-[-0.01em] text-[#4a4356]/65">{card.label}</p>
+                <h3 className="mt-7 max-w-[16ch] text-[2.35rem] font-semibold leading-[1.03] tracking-[-0.03em] text-[#111017] sm:text-[2.65rem]">
+                  {card.headline}
+                </h3>
+                <p className="mt-auto pt-10 text-lg leading-relaxed text-[#2f2a3c]/72">{card.description}</p>
+              </article>
             ))}
           </div>
         </section>
