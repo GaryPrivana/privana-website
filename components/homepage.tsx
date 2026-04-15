@@ -445,7 +445,7 @@ export function Homepage() {
             <div className="relative overflow-hidden rounded-[34px] border border-white/15 bg-[radial-gradient(circle_at_15%_15%,rgba(98,213,206,0.2),transparent_45%),radial-gradient(circle_at_85%_10%,rgba(175,139,218,0.2),transparent_35%),linear-gradient(160deg,#0f0f15,#0a0a0f)] p-10 text-center shadow-[0_32px_80px_rgba(8,8,12,0.45)] sm:p-14">
               <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-white/5 via-transparent to-transparent" />
               <div className="relative z-10 flex flex-col gap-7">
-                <h3 className="text-balance font-display text-3xl font-medium tracking-[-0.01em] sm:text-5xl">
+                <h3 className="max-w-[16ch] self-center text-pretty text-[2.35rem] font-semibold leading-[1.03] tracking-[-0.03em] sm:text-[3.15rem]">
                   Your Club Deserves Better Software.
                 </h3>
                 <p className="mx-auto max-w-2xl text-white/72">
