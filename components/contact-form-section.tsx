@@ -108,18 +108,25 @@ export function ContactFormSection() {
     <section aria-labelledby="private-walkthrough" className="bg-black py-12 text-white sm:py-16">
       <div className="container-shell">
         <div className="grid gap-10 rounded-[34px] border border-white/10 bg-[radial-gradient(circle_at_12%_12%,rgba(98,213,206,0.13),transparent_48%),radial-gradient(circle_at_90%_5%,rgba(175,139,218,0.2),transparent_35%),linear-gradient(165deg,#0d0c14,#07070b)] p-7 shadow-[0_36px_84px_rgba(6,6,10,0.55)] sm:p-10 lg:grid-cols-[0.95fr_1.05fr] lg:gap-14">
-          <div className="self-center">
-            <p className="text-xs uppercase tracking-[0.2em] text-[#62d5ce]/90">Private Walkthrough</p>
+          <div className="flex self-center lg:min-h-[420px] lg:items-center">
+            <div className="max-w-[33rem] space-y-5">
+              <p className="text-[0.68rem] uppercase tracking-[0.24em] text-[#62d5ce]/85">
+                Personalised Walkthrough
+              </p>
             <h3
               id="private-walkthrough"
-              className="mt-4 max-w-md text-balance font-display text-3xl font-medium leading-tight tracking-[-0.01em] sm:text-5xl"
+              className="max-w-[16ch] text-pretty font-display text-3xl font-medium leading-[1.05] tracking-[-0.018em] sm:text-[3.15rem]"
             >
-              Request a Private Walkthrough
+              Book Your Private Walkthrough
             </h3>
-            <p className="mt-6 max-w-md text-sm leading-relaxed text-white/70 sm:text-base">
-              Speak directly with our team about how Privana can elevate operations, hospitality,
-              and member experience for your club.
-            </p>
+              <p className="max-w-[34ch] text-sm leading-relaxed text-white/74 sm:text-[1.015rem]">
+                See how Privana can unify operations, elevate hospitality, and improve the member
+                experience across your club.
+              </p>
+              <p className="pt-2 text-xs tracking-[0.08em] text-white/45 sm:text-[0.8rem]">
+                Built for modern golf, country, racquet and lifestyle clubs.
+              </p>
+            </div>
           </div>
 
           <form
