@@ -2,6 +2,7 @@
 
 import { FormEvent, KeyboardEvent, useMemo, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { PrivanaLogo } from '../../components/privana-logo';
 
 const CODE_LENGTH = 6;
 
@@ -144,10 +145,12 @@ export function UnlockScreen({ redirectPath }: UnlockScreenProps) {
       />
 
       <section className="relative z-10 w-full max-w-3xl text-center">
-        <p className="mb-9 text-[11px] tracking-[0.6em] text-[#86b8db]/90">PRIVANA</p>
+        <div className="mx-auto mb-9 h-7 w-36 sm:h-8 sm:w-40">
+          <PrivanaLogo variant="white" priority sizes="160px" />
+        </div>
 
         <h1 className="mx-auto mb-11 max-w-[22ch] text-balance text-3xl font-semibold text-white sm:text-5xl">
-          Enter one-time code from manager
+          Enter website access code
         </h1>
 
         <form onSubmit={onSubmit} className="space-y-7" noValidate>
@@ -179,7 +182,6 @@ export function UnlockScreen({ redirectPath }: UnlockScreenProps) {
           </div>
 
           <div className="space-y-3">
-            <p className="text-sm text-[#9fc7e2]">Terminal access required</p>
             {error ? (
               <p className="text-xs tracking-wide text-red-300" role="alert">
                 {error}
