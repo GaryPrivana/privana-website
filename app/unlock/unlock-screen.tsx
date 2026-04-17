@@ -154,7 +154,7 @@ export function UnlockScreen({ redirectPath }: UnlockScreenProps) {
           />
         </div>
 
-        <h1 className="mx-auto mb-11 max-w-[22ch] text-balance text-3xl font-semibold text-white sm:text-5xl">
+        <h1 className="mx-auto mb-10 max-w-[22ch] text-balance text-xl font-semibold text-white sm:text-2xl">
           Enter website access code
         </h1>
 
