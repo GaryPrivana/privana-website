@@ -20,6 +20,7 @@ import { aiChips, platformModules } from './site-data';
 import { ContactFormSection } from './contact-form-section';
 import { HeroScrollPrompt } from './hero-scroll-prompt';
 import { HomepageHeader } from './homepage-header';
+import { PrivanaLogo } from './privana-logo';
 
 const demoLink = '#demo';
 const heroFont = Manrope({
@@ -112,15 +113,13 @@ export function Homepage() {
 
           <div className="container-shell relative z-10 flex flex-1 items-center">
             <div className="mx-auto w-full max-w-5xl text-center">
-              <h1 className="mx-auto flex w-fit items-center gap-[0.34em] text-5xl font-normal uppercase text-white/90 sm:text-7xl lg:text-[6.4rem]">
-                <span>P</span>
-                <span>R</span>
-                <span>I</span>
-                <span>V</span>
-                <span>A</span>
-                <span>N</span>
-                <span>A</span>
-              </h1>
+              <div className="mx-auto h-[clamp(3.4rem,10vw,6.4rem)] w-full max-w-[780px]">
+                <PrivanaLogo
+                  variant="white"
+                  priority
+                  sizes="(max-width: 640px) 88vw, (max-width: 1024px) 66vw, 780px"
+                />
+              </div>
               <p className="mx-auto mt-11 max-w-4xl text-balance text-lg font-normal leading-[1.24] tracking-[-0.008em] text-white/84 sm:text-[1.65rem] lg:max-w-none lg:text-[2.08rem] lg:whitespace-nowrap">
                 Built for the World’s Most Exceptional Clubs
               </p>
