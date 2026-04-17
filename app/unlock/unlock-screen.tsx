@@ -145,8 +145,13 @@ export function UnlockScreen({ redirectPath }: UnlockScreenProps) {
       />
 
       <section className="relative z-10 w-full max-w-3xl text-center">
-        <div className="mx-auto mb-12 h-24 w-[520px] sm:h-28 sm:w-[640px]">
-          <PrivanaLogo variant="white" priority sizes="640px" />
+        <div className="mx-auto mb-14 h-[clamp(12rem,20vw,20rem)] w-full max-w-[1900px]">
+          <PrivanaLogo
+            variant="white"
+            priority
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 95vw, 1900px"
+            scale={2.4}
+          />
         </div>
 
         <h1 className="mx-auto mb-11 max-w-[22ch] text-balance text-3xl font-semibold text-white sm:text-5xl">
