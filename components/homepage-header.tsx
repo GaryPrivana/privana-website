@@ -105,12 +105,12 @@ export function HomepageHeader({
         isVisible ? 'translate-y-0 opacity-100 pointer-events-auto' : '-translate-y-[118%] opacity-0 pointer-events-none'
       }`}
     >
-      <div className="container-shell py-4 sm:py-5">
+      <div className="container-shell py-5 sm:py-6">
         <nav className="px-1" aria-label="Primary">
           <div className="flex items-center justify-between gap-4">
             <Link
               href="#top"
-              className="relative block h-7 w-[158px] shrink-0 sm:h-8 sm:w-[176px]"
+              className="relative block h-10 w-[220px] shrink-0 sm:h-12 sm:w-[270px] lg:h-[3.35rem] lg:w-[300px]"
               aria-label="Privana"
             >
               <div
@@ -119,7 +119,11 @@ export function HomepageHeader({
                 }`}
                 aria-hidden={!isOverHero}
               >
-                <PrivanaLogo variant="white" priority sizes="(max-width: 640px) 158px, 176px" />
+                <PrivanaLogo
+                  variant="white"
+                  priority
+                  sizes="(max-width: 640px) 220px, (max-width: 1024px) 270px, 300px"
+                />
               </div>
               <div
                 className={`absolute inset-0 transition-opacity duration-300 ${
@@ -127,7 +131,11 @@ export function HomepageHeader({
                 }`}
                 aria-hidden={isOverHero}
               >
-                <PrivanaLogo variant="black" priority sizes="(max-width: 640px) 158px, 176px" />
+                <PrivanaLogo
+                  variant="black"
+                  priority
+                  sizes="(max-width: 640px) 220px, (max-width: 1024px) 270px, 300px"
+                />
               </div>
             </Link>
 
