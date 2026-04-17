@@ -8,6 +8,7 @@ type PrivanaLogoProps = {
   scale?: number;
   offsetX?: string;
   offsetY?: string;
+  align?: 'center' | 'left';
 };
 
 const LOGO_SOURCES = {
@@ -24,7 +25,8 @@ export function PrivanaLogo({
   sizes = '240px',
   scale = 1,
   offsetX = '0px',
-  offsetY = '0px'
+  offsetY = '0px',
+  align = 'center'
 }: PrivanaLogoProps) {
   return (
     <div className={`relative h-full w-full overflow-hidden ${className}`}>
@@ -37,7 +39,7 @@ export function PrivanaLogo({
         className="object-contain"
         style={{
           transform: `translate(${offsetX}, ${offsetY}) scale(${scale})`,
-          transformOrigin: 'center'
+          transformOrigin: align === 'left' ? 'left center' : 'center'
         }}
       />
     </div>
