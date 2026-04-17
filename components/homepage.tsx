@@ -470,10 +470,13 @@ export function Homepage() {
       <footer id="contact" className="bg-black pb-20 pt-16 text-white">
         <div className="container-shell grid gap-12 border-t border-white/10 pt-10 sm:grid-cols-2 lg:grid-cols-[minmax(0,1.55fr)_repeat(4,minmax(0,1fr))] lg:gap-x-14">
           <div className="max-w-[420px] text-left justify-self-start">
-            <div className="flex justify-start h-[3rem] w-[420px]">
-              <PrivanaLogo
-                variant="white"
+            <div className="relative h-[3rem] w-[420px] max-w-full">
+              <Image
+                src="https://privana-website-images.s3.amazonaws.com/Privana%20Logo%20-%20White%20Text%20%28Transparent%20BG%29.png"
+                alt="Privana"
+                fill
                 sizes="420px"
+                className="object-contain object-left"
               />
             </div>
             <p className="mt-5 max-w-[34ch] text-sm leading-relaxed text-white/55">
