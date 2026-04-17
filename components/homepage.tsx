@@ -113,11 +113,11 @@ export function Homepage() {
 
           <div className="container-shell relative z-10 flex flex-1 items-center">
             <div className="mx-auto w-full max-w-5xl text-center">
-              <div className="mx-auto h-[clamp(3.4rem,10vw,6.4rem)] w-full max-w-[780px]">
+              <div className="mx-auto h-[clamp(4.5rem,12vw,7.5rem)] w-full max-w-[900px]">
                 <PrivanaLogo
                   variant="white"
                   priority
-                  sizes="(max-width: 640px) 88vw, (max-width: 1024px) 66vw, 780px"
+                  sizes="(max-width: 640px) 88vw, (max-width: 1024px) 72vw, 900px"
                 />
               </div>
               <p className="mx-auto mt-11 max-w-4xl text-balance text-lg font-normal leading-[1.24] tracking-[-0.008em] text-white/84 sm:text-[1.65rem] lg:max-w-none lg:text-[2.08rem] lg:whitespace-nowrap">
