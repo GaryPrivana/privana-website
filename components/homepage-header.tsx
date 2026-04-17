@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { MenuIcon } from './icons';
+import { PrivanaLogo } from './privana-logo';
 import { navItems } from './site-data';
 
 type HomepageHeaderProps = {
@@ -107,8 +108,27 @@ export function HomepageHeader({
       <div className="container-shell py-4 sm:py-5">
         <nav className="px-1" aria-label="Primary">
           <div className="flex items-center justify-between gap-4">
-            <Link href="#top" className="text-sm font-semibold tracking-[0.2em] text-[#74cbc5]">
-              PRIVANA
+            <Link
+              href="#top"
+              className="relative block h-7 w-[158px] shrink-0 sm:h-8 sm:w-[176px]"
+              aria-label="Privana"
+            >
+              <div
+                className={`absolute inset-0 transition-opacity duration-300 ${
+                  isOverHero ? 'opacity-100' : 'opacity-0'
+                }`}
+                aria-hidden={!isOverHero}
+              >
+                <PrivanaLogo variant="white" priority sizes="(max-width: 640px) 158px, 176px" />
+              </div>
+              <div
+                className={`absolute inset-0 transition-opacity duration-300 ${
+                  isOverHero ? 'opacity-0' : 'opacity-100'
+                }`}
+                aria-hidden={isOverHero}
+              >
+                <PrivanaLogo variant="black" priority sizes="(max-width: 640px) 158px, 176px" />
+              </div>
             </Link>
 
             <ul className="hidden items-center gap-10 text-sm font-medium md:flex">
