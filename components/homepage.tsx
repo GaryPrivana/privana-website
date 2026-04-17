@@ -113,12 +113,12 @@ export function Homepage() {
 
           <div className="container-shell relative z-10 flex flex-1 items-center">
             <div className="mx-auto w-full max-w-6xl text-center">
-              <div className="mx-auto h-[clamp(6rem,14vw,10rem)] w-full max-w-[1000px]">
+              <div className="mx-auto h-[clamp(15rem,34vw,24rem)] w-full max-w-[1800px]">
                 <PrivanaLogo
                   variant="white"
                   priority
-                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 92vw, 1300px"
-                  scale={2.2}
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 95vw, 1800px"
+                  scale={2.45}
                 />
               </div>
               <p className="mx-auto mt-11 max-w-4xl text-balance text-lg font-normal leading-[1.24] tracking-[-0.008em] text-white/84 sm:text-[1.65rem] lg:max-w-none lg:text-[2.08rem] lg:whitespace-nowrap">
@@ -468,17 +468,17 @@ export function Homepage() {
       <ContactFormSection />
 
       <footer id="contact" className="bg-black pb-20 pt-16 text-white">
-        <div className="container-shell grid gap-12 border-t border-white/10 pt-10 sm:grid-cols-2 lg:grid-cols-5">
-          <div className="justify-self-start text-left">
-            <div className="mb-5 h-[2.2rem] w-[290px] sm:h-[2.8rem] sm:w-[350px]">
+        <div className="container-shell grid gap-12 border-t border-white/10 pt-10 sm:grid-cols-2 lg:grid-cols-[minmax(0,1.55fr)_repeat(4,minmax(0,1fr))] lg:gap-x-14">
+          <div className="max-w-[420px] justify-self-start text-left">
+            <div className="h-[2.5rem] w-[320px] sm:h-[3rem] sm:w-[390px]">
               <PrivanaLogo
                 variant="white"
-                sizes="(max-width: 640px) 290px, 350px"
-                scale={2}
+                sizes="(max-width: 640px) 320px, 390px"
+                scale={2.1}
                 offsetX="-1%"
               />
             </div>
-            <p className="max-w-md text-sm leading-relaxed text-white/55">
+            <p className="mt-5 max-w-[34ch] text-sm leading-relaxed text-white/55">
               Premium operations infrastructure for modern member-led clubs.
             </p>
           </div>
