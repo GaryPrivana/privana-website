@@ -110,7 +110,7 @@ export function HomepageHeader({
           <div className="flex items-center justify-between gap-4">
             <Link
               href="#top"
-              className="relative block h-12 w-[220px] shrink-0 sm:h-14 sm:w-[260px] lg:h-16 lg:w-[290px]"
+              className="relative block h-8 w-[220px] shrink-0 sm:h-10 sm:w-[260px] lg:h-11 lg:w-[290px]"
               aria-label="Privana"
             >
               <div
@@ -123,7 +123,7 @@ export function HomepageHeader({
                   variant="white"
                   priority
                   sizes="(max-width: 640px) 220px, (max-width: 1024px) 260px, 290px"
-                  scale={4.9}
+                  scale={2}
                 />
               </div>
               <div
@@ -136,7 +136,7 @@ export function HomepageHeader({
                   variant="black"
                   priority
                   sizes="(max-width: 640px) 220px, (max-width: 1024px) 260px, 290px"
-                  scale={4.9}
+                  scale={2}
                 />
               </div>
             </Link>
