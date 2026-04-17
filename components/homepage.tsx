@@ -475,6 +475,7 @@ export function Homepage() {
                 variant="white"
                 sizes="(max-width: 640px) 320px, 390px"
                 scale={2.1}
+                align="left"
               />
             </div>
             <p className="mt-5 max-w-[34ch] text-sm leading-relaxed text-white/55">
