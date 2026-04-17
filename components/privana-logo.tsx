@@ -9,9 +9,9 @@ type PrivanaLogoProps = {
 
 const LOGO_SOURCES = {
   white:
-    'https://privana-website-images.s3.amazonaws.com/Privana%20Logo%20-%20White%20Text%20%28Transparent%20BG%29.png',
+    'https://privana-website-images.s3.amazonaws.com/Privana%20Logo%20-%20White%20Text%20%28Transparent%20BG%29.svg',
   black:
-    'https://privana-website-images.s3.amazonaws.com/Privana%20Logo%20-%20Black%20Text%20%28Transparent%20BG%29.png'
+    'https://privana-website-images.s3.amazonaws.com/Privana%20Logo%20-%20Black%20Text%20%28Transparent%20BG%29.svg'
 } as const;
 
 export function PrivanaLogo({
