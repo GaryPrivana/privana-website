@@ -104,10 +104,15 @@ export function Homepage() {
           id="hero"
           className={`relative isolate flex min-h-screen overflow-hidden bg-[#020304] px-6 pb-16 pt-36 text-white sm:pb-20 sm:pt-44 ${heroFont.className}`}
         >
-          {/* Future cinematic media slot:
-             Replace this backdrop layer with an absolute <video> or <Image> to run full-bleed behind the hero copy.
-             Keep object-cover + inset-0 positioning so the section remains media-ready. */}
-          <div className="pointer-events-none absolute inset-0 bg-[#020304]" />
+          <video
+            className="absolute inset-0 h-full w-full object-cover"
+            src="https://privana-website-images.s3.eu-north-1.amazonaws.com/website_hero_background_video.mp4"
+            autoPlay
+            muted
+            loop
+            playsInline
+          />
+          <div className="pointer-events-none absolute inset-0 bg-black/70" />
           <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_12%,rgba(101,215,206,0.16),transparent_42%),radial-gradient(circle_at_85%_22%,rgba(142,106,198,0.14),transparent_38%),linear-gradient(180deg,rgba(0,0,0,0.2)_0%,rgba(0,0,0,0.68)_100%)]" />
           <div className="pointer-events-none absolute inset-x-0 bottom-[-18rem] h-[28rem] bg-[radial-gradient(ellipse_at_center,rgba(101,215,206,0.08),transparent_65%)]" />
 
