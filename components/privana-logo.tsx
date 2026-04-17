@@ -5,6 +5,9 @@ type PrivanaLogoProps = {
   className?: string;
   priority?: boolean;
   sizes?: string;
+  scale?: number;
+  offsetX?: string;
+  offsetY?: string;
 };
 
 const LOGO_SOURCES = {
@@ -18,10 +21,13 @@ export function PrivanaLogo({
   variant,
   className = '',
   priority = false,
-  sizes = '240px'
+  sizes = '240px',
+  scale = 1,
+  offsetX = '0px',
+  offsetY = '0px'
 }: PrivanaLogoProps) {
   return (
-    <div className={`relative h-full w-full ${className}`}>
+    <div className={`relative h-full w-full overflow-hidden ${className}`}>
       <Image
         src={LOGO_SOURCES[variant]}
         alt="Privana"
@@ -29,6 +35,10 @@ export function PrivanaLogo({
         priority={priority}
         sizes={sizes}
         className="object-contain"
+        style={{
+          transform: `translate(${offsetX}, ${offsetY}) scale(${scale})`,
+          transformOrigin: 'center'
+        }}
       />
     </div>
   );

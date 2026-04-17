@@ -113,11 +113,12 @@ export function Homepage() {
 
           <div className="container-shell relative z-10 flex flex-1 items-center">
             <div className="mx-auto w-full max-w-6xl text-center">
-              <div className="mx-auto h-[clamp(7rem,16vw,11rem)] w-full max-w-[1200px]">
+              <div className="mx-auto h-[clamp(11rem,30vw,20rem)] w-full max-w-[1300px]">
                 <PrivanaLogo
                   variant="white"
                   priority
-                  sizes="(max-width: 640px) 94vw, (max-width: 1024px) 84vw, 1200px"
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 92vw, 1300px"
+                  scale={5.2}
                 />
               </div>
               <p className="mx-auto mt-11 max-w-4xl text-balance text-lg font-normal leading-[1.24] tracking-[-0.008em] text-white/84 sm:text-[1.65rem] lg:max-w-none lg:text-[2.08rem] lg:whitespace-nowrap">
@@ -468,9 +469,14 @@ export function Homepage() {
 
       <footer id="contact" className="bg-black pb-20 pt-16 text-white">
         <div className="container-shell grid gap-12 border-t border-white/10 pt-10 sm:grid-cols-2 lg:grid-cols-5">
-          <div>
-            <div className="mb-5 h-10 w-[260px] sm:h-12 sm:w-[320px]">
-              <PrivanaLogo variant="white" sizes="(max-width: 640px) 260px, 320px" />
+          <div className="justify-self-start text-left">
+            <div className="mb-5 h-[4.35rem] w-[290px] sm:h-[5.15rem] sm:w-[350px]">
+              <PrivanaLogo
+                variant="white"
+                sizes="(max-width: 640px) 290px, 350px"
+                scale={5}
+                offsetX="-1%"
+              />
             </div>
             <p className="max-w-md text-sm leading-relaxed text-white/55">
               Premium operations infrastructure for modern member-led clubs.
