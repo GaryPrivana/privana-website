@@ -107,10 +107,10 @@ export function HomepageHeader({
     >
       <div className="container-shell py-6 sm:py-7">
         <nav className="px-1" aria-label="Primary">
-          <div className="flex items-center justify-between gap-4">
+          <div className="flex items-center justify-between gap-4 md:gap-6">
             <Link
               href="#top"
-              className="relative block h-8 w-[220px] shrink-0 sm:h-10 sm:w-[260px] lg:h-11 lg:w-[290px]"
+              className="relative block h-9 w-[240px] shrink-0 sm:h-10 sm:w-[270px] lg:h-11 lg:w-[320px]"
               aria-label="Privana"
             >
               <div
@@ -122,8 +122,8 @@ export function HomepageHeader({
                 <PrivanaLogo
                   variant="white"
                   priority
-                  sizes="(max-width: 640px) 220px, (max-width: 1024px) 260px, 290px"
-                  scale={2}
+                  sizes="(max-width: 640px) 240px, (max-width: 1024px) 270px, 320px"
+                  scale={2.1}
                 />
               </div>
               <div
@@ -135,13 +135,13 @@ export function HomepageHeader({
                 <PrivanaLogo
                   variant="black"
                   priority
-                  sizes="(max-width: 640px) 220px, (max-width: 1024px) 260px, 290px"
-                  scale={2}
+                  sizes="(max-width: 640px) 240px, (max-width: 1024px) 270px, 320px"
+                  scale={2.1}
                 />
               </div>
             </Link>
 
-            <ul className="hidden items-center gap-10 text-sm font-medium md:flex">
+            <ul className="absolute left-1/2 hidden -translate-x-1/2 items-center gap-10 text-sm font-medium md:flex">
               {navItems.map((item) => (
                 <li key={item.label}>
                   <Link
