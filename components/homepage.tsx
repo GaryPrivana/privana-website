@@ -469,7 +469,9 @@ export function Homepage() {
       <footer id="contact" className="bg-black pb-20 pt-16 text-white">
         <div className="container-shell grid gap-12 border-t border-white/10 pt-10 sm:grid-cols-2 lg:grid-cols-5">
           <div>
-            <h4 className="mb-4 text-base font-semibold tracking-[0.16em] text-[#62d5ce]">PRIVANA</h4>
+            <div className="mb-4 h-5 w-[132px]">
+              <PrivanaLogo variant="white" sizes="132px" />
+            </div>
             <p className="max-w-md text-sm leading-relaxed text-white/55">
               Premium operations infrastructure for modern member-led clubs.
             </p>
