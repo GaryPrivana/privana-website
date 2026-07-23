@@ -235,22 +235,32 @@ test("comparison section keeps the approved content and premium paired rows", ()
   assert.match(homepage, /Privana/);
 });
 
-test("premium feature showcase is inserted immediately after the AI-powered intro", () => {
+test("assist demo is inserted immediately after the feature showcase", () => {
   const intro = homepage.indexOf('id="about"');
-  const showcase = homepage.indexOf("<PrivanaFeatureShowcase demoLink={demoLink} />");
+  const showcase = homepage.indexOf("<PrivanaFeatureShowcase />");
+  const assist = homepage.indexOf("<PrivanaAssistInteractiveDemo />");
   const heroShowcase = homepage.indexOf('id="hero-showcase"');
   assert.ok(intro >= 0);
   assert.ok(showcase > intro);
-  assert.ok(heroShowcase > showcase);
-  assert.match(homepage, /PrivanaFeatureShowcase demoLink=\{demoLink\}/);
+  assert.ok(assist > showcase);
+  assert.ok(heroShowcase > assist);
+  assert.match(homepage, /PrivanaAssistInteractiveDemo/);
 });
 
 const featureShowcase = readFileSync(
   new URL("../components/privana-feature-showcase.tsx", import.meta.url),
   "utf8",
 );
+const assistDemo = readFileSync(
+  new URL("../components/privana-assist-interactive-demo.tsx", import.meta.url),
+  "utf8",
+);
+const assistData = readFileSync(
+  new URL("../components/privana-assist-demo-data.ts", import.meta.url),
+  "utf8",
+);
 
-test("premium feature showcase keeps eight accessible chapters and demo CTA", () => {
+test("premium feature showcase keeps eight accessible chapters and removes final demo CTA", () => {
   for (const copy of [
     "One platform. Every part of your club.",
     "Know every member.",
@@ -260,7 +270,6 @@ test("premium feature showcase keeps eight accessible chapters and demo CTA", ()
     "One financial truth.",
     "Your club can listen, respond and react.",
     "Your club already knows the answer.",
-    "BOOK A DEMO",
   ]) {
     assert.match(featureShowcase, new RegExp(copy.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")));
   }
@@ -268,7 +277,7 @@ test("premium feature showcase keeps eight accessible chapters and demo CTA", ()
   assert.match(featureShowcase, /prefers-reduced-motion: reduce/);
   assert.match(featureShowcase, /ScrollTrigger/);
   assert.doesNotMatch(featureShowcase, /removeEventListener\("scroll"/);
-  assert.match(featureShowcase, /href=\{demoLink\}/);
+  assert.doesNotMatch(featureShowcase, /See Privana in action|BOOK A DEMO|FinalCta|href=\{demoLink\}/);
 });
 
 
@@ -277,7 +286,10 @@ test("feature showcase emits final unit-bearing CSS values without CSS var multi
   assert.match(featureShowcase, /"--panel-one-x": px\(mix\("p1x"\)\)/);
   assert.match(featureShowcase, /"--ambient-x": `\$\{mix\("ambientX"\)\.toFixed\(2\)\}%`/);
   assert.match(featureShowcase, /const CHAPTER_REST_PORTION = 0\.42/);
-  assert.match(featureShowcase, /const chapterFloat = progress \* total/);
+  assert.match(featureShowcase, /const CHAPTER_PROGRESS_END = 0\.88/);
+  assert.match(featureShowcase, /const FINAL_HOLD_END = 0\.96/);
+  assert.match(featureShowcase, /const chapterProgress = clamp01\(progress \/ CHAPTER_PROGRESS_END\)/);
+  assert.match(featureShowcase, /const chapterFloat = chapterProgress \* total/);
   assert.match(featureShowcase, /const activeIndex = Math\.min\(total - 1, Math\.max\(0, Math\.floor\(chapterFloat\)\)\)/);
   assert.match(featureShowcase, /const localProgress = activeIndex >= total - 1 \? 0 : clamp01/);
   assert.match(featureShowcase, /const easedProgress = ease\(localProgress\)/);
@@ -307,8 +319,67 @@ test("feature showcase updates continuous progress outside React state", () => {
   assert.match(featureShowcase, /setActiveIndex\(values\.activeIndex\)/);
 });
 
-test("feature showcase final CTA is scoped to the final chapter and reuses demoLink", () => {
-  assert.match(featureShowcase, /const isFinal = index === showcaseChapters\.length - 1/);
-  assert.match(featureShowcase, /<FinalCta demoLink=\{demoLink\}/);
-  assert.match(featureShowcase, /<Link href=\{demoLink\}/);
+test("feature showcase adds a short pinned upward exit without scroll-jacking", () => {
+  assert.match(featureShowcase, /--showcase-exit-y/);
+  assert.match(featureShowcase, /--showcase-exit-opacity/);
+  assert.match(featureShowcase, /lerp\(1, 0\.88, exitProgress\)/);
+  assert.match(featureShowcase, /--showcase-warm-blend-opacity/);
+  assert.match(featureShowcase, /<div className="privana-feature-scene">/);
+  assert.match(globals, /\.privana-feature-scene \{[\s\S]*transform: translate3d\(0, var\(--showcase-exit-y, 0svh\), 0\)/);
+  assert.doesNotMatch(globals, /\.privana-feature-pin \{[\s\S]{0,180}transform: translate3d/);
+  assert.match(globals, /\.privana-feature-showcase::after \{[\s\S]*--showcase-warm-blend-opacity/);
+  assert.doesNotMatch(featureShowcase, /wheel|preventDefault/);
+});
+
+test("assist demo contains exact preset scenarios and no API calls", () => {
+  for (const question of [
+    "What should I know today?",
+    "Which members are becoming less engaged?",
+    "Draft an email to members about Saturday’s event.",
+  ]) assert.match(assistData + assistDemo, new RegExp(question.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")));
+  assert.match(assistData, /id: "daily-briefing"/);
+  assert.match(assistData, /id: "member-engagement"/);
+  assert.match(assistData, /id: "email-draft"/);
+  assert.doesNotMatch(assistDemo + assistData, /fetch\(|XMLHttpRequest|axios|openai|api\//i);
+});
+
+test("assist demo state machine controls typing, waiting, cancellation, and cleanup", () => {
+  assert.match(assistData, /type DemoPhase =/);
+  assert.match(assistData, /"typing-question"/);
+  assert.match(assistData, /export const TYPING_SPEED_MS = 22/);
+  assert.match(assistData, /export const ASSIST_WAIT_MS = 1000/);
+  assert.match(assistDemo, /sequenceRef/);
+  assert.match(assistDemo, /clearTimers\(\)/);
+  assert.match(assistDemo, /setSubmittedUserMessage\(""\)/);
+  assert.match(assistDemo, /setComposerText\(scenario\.question\.slice\(0, index\)\)/);
+  assert.match(assistDemo, /setPhase\("complete"\)/);
+  assert.match(assistDemo, /useEffect\(\(\) => \(\) => clearTimers\(\)/);
+});
+
+test("assist responses render complete briefing, three member cards, email asset, and accessible buttons", () => {
+  assert.match(assistDemo, /<button key=\{scenario\.id\} type="button"/);
+  assert.match(assistDemo, /aria-live="polite"/);
+  assert.match(assistDemo, /aria-expanded=\{historyOpen\}/);
+  assert.match(assistDemo, /setHistoryOpen/);
+  assert.match(assistDemo, /assist-history-panel/);
+  assert.match(assistDemo, /aria-readonly="true"/);
+  assert.match(assistData, /Review members/);
+  assert.match(assistData, /Eleanor Whitmore/);
+  assert.match(assistData, /Marcus Bennett/);
+  assert.match(assistData, /Sophie Laurent/);
+  assert.equal((assistData.match(/memberNo: "/g) || []).length, 3);
+  assert.match(assistDemo, /assist-member-grid/);
+  assert.match(assistDemo, /EmailDraftAsset/);
+  assert.match(assistDemo, /EMAIL DRAFT/);
+  assert.match(assistDemo, /Ready for review/);
+  assert.match(globals, /\.assist-member-grid \{[\s\S]*grid-template-columns: repeat\(3, minmax\(0, 1fr\)\)/);
+  assert.match(globals, /@media \(max-width: 620px\)[\s\S]*\.assist-member-grid, \.assist-briefing-list article \{ grid-template-columns: 1fr; \}/);
+});
+
+test("assist demo supports reduced motion branch", () => {
+  assert.match(assistDemo, /prefers-reduced-motion: reduce/);
+  assert.match(assistData, /REDUCED_MOTION_WAIT_MS = 250/);
+  assert.match(assistDemo, /if \(reducedMotion\) \{/);
+  assert.match(assistDemo, /setComposerText\(scenario\.question\)/);
+  assert.match(globals, /@media \(prefers-reduced-motion: reduce\)[\s\S]*\.assist-thinking i, \.assist-composer i \{ animation: none; \}/);
 });

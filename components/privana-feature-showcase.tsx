@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useEffect, useRef, useState } from "react";
@@ -46,11 +45,14 @@ export const showcaseChapters: Chapter[] = [
 const clamp01 = (value: number) => Math.min(1, Math.max(0, value));
 const CHAPTER_REST_PORTION = 0.42;
 const DESKTOP_SCROLL_CHAPTERS = 8;
+const CHAPTER_PROGRESS_END = 0.88;
+const FINAL_HOLD_END = 0.96;
 
 gsap.registerPlugin(ScrollTrigger);
 const lerp = (start: number, end: number, amount: number) => start + (end - start) * amount;
 const ease = (value: number) => value * value * (3 - 2 * value);
 const px = (value: number) => `${value.toFixed(2)}px`;
+const svh = (value: number) => `${value.toFixed(2)}svh`;
 const deg = (value: number) => `${value.toFixed(2)}deg`;
 
 const objectStates = [
@@ -66,7 +68,8 @@ const objectStates = [
 
 export function getShowcaseValues(rawProgress: number, total = showcaseChapters.length): ShowcaseValues {
   const progress = clamp01(rawProgress);
-  const chapterFloat = progress * total;
+  const chapterProgress = clamp01(progress / CHAPTER_PROGRESS_END);
+  const chapterFloat = chapterProgress * total;
   const activeIndex = Math.min(total - 1, Math.max(0, Math.floor(chapterFloat)));
   const segmentProgress = activeIndex >= total - 1 ? 0 : chapterFloat - activeIndex;
   const transitionStart = CHAPTER_REST_PORTION;
@@ -76,6 +79,7 @@ export function getShowcaseValues(rawProgress: number, total = showcaseChapters.
   const current = objectStates[baseIndex] ?? objectStates[0];
   const next = objectStates[Math.min(total - 1, baseIndex + 1)] ?? current;
   const mix = (key: keyof typeof current) => lerp(current[key], next[key], easedProgress);
+  const exitProgress = clamp01((progress - FINAL_HOLD_END) / (1 - FINAL_HOLD_END));
 
   return {
     progress,
@@ -87,7 +91,7 @@ export function getShowcaseValues(rawProgress: number, total = showcaseChapters.
       "--object-rotate-x": deg(mix("rx")),
       "--object-rotate-y": deg(mix("ry")),
       "--object-rotate-z": deg(mix("rz")),
-      "--object-scale": mix("scale").toFixed(4),
+      "--object-scale": (mix("scale") * lerp(1, 0.88, exitProgress)).toFixed(4),
       "--panel-one-x": px(mix("p1x")),
       "--panel-one-y": px(mix("p1y")),
       "--panel-two-x": px(mix("p2x")),
@@ -102,11 +106,15 @@ export function getShowcaseValues(rawProgress: number, total = showcaseChapters.
       "--ledger-opacity": mix("ledger").toFixed(4),
       "--node-opacity": mix("nodes").toFixed(4),
       "--showcase-progress-value": progress.toFixed(4),
+      "--showcase-exit-progress": exitProgress.toFixed(4),
+      "--showcase-exit-y": svh(lerp(0, -36, exitProgress)),
+      "--showcase-exit-opacity": lerp(1, 0.06, exitProgress).toFixed(4),
+      "--showcase-warm-blend-opacity": exitProgress.toFixed(4),
     },
   };
 }
 
-export function PrivanaFeatureShowcase({ demoLink }: { demoLink: string }) {
+export function PrivanaFeatureShowcase() {
   const sectionRef = useRef<HTMLElement>(null);
   const pinRef = useRef<HTMLDivElement>(null);
   const rafRef = useRef(0);
@@ -190,30 +198,31 @@ export function PrivanaFeatureShowcase({ demoLink }: { demoLink: string }) {
   return (
     <section ref={sectionRef} id="connected-platform" className={`privana-feature-showcase tone-${active.tone}`} aria-labelledby="connected-platform-heading">
       <div ref={pinRef} className="privana-feature-pin container-shell">
-        <div className="privana-feature-copy privana-feature-copy-left">
-          {showcaseChapters.map((chapter, index) => <ChapterCopy key={chapter.headline} chapter={chapter} index={index} activeIndex={activeIndex} side="left" demoLink={demoLink} />)}
+        <div className="privana-feature-scene">
+          <div className="privana-feature-copy privana-feature-copy-left">
+            {showcaseChapters.map((chapter, index) => <ChapterCopy key={chapter.headline} chapter={chapter} index={index} activeIndex={activeIndex} side="left" />)}
+          </div>
+          <div className="privana-feature-stage" aria-hidden="true"><PrivanaObject activeIndex={activeIndex} /></div>
+          <div className="privana-feature-copy privana-feature-copy-right">
+            {showcaseChapters.map((chapter, index) => <ChapterCopy key={chapter.headline} chapter={chapter} index={index} activeIndex={activeIndex} side="right" />)}
+          </div>
+          <div className="privana-feature-indicator" aria-hidden="true">{String(activeIndex + 1).padStart(2, "0")}<span />{String(showcaseChapters.length).padStart(2, "0")}</div>
         </div>
-        <div className="privana-feature-stage" aria-hidden="true"><PrivanaObject activeIndex={activeIndex} /></div>
-        <div className="privana-feature-copy privana-feature-copy-right">
-          {showcaseChapters.map((chapter, index) => <ChapterCopy key={chapter.headline} chapter={chapter} index={index} activeIndex={activeIndex} side="right" demoLink={demoLink} />)}
-        </div>
-        <div className="privana-feature-indicator" aria-hidden="true">{String(activeIndex + 1).padStart(2, "0")}<span />{String(showcaseChapters.length).padStart(2, "0")}</div>
       </div>
       <div className="container-shell privana-feature-mobile-flow">
-        {showcaseChapters.map((chapter, index) => <MobileChapter key={chapter.headline} chapter={chapter} index={index} demoLink={demoLink} />)}
+        {showcaseChapters.map((chapter, index) => <MobileChapter key={chapter.headline} chapter={chapter} index={index} />)}
       </div>
     </section>
   );
 }
 
-function ChapterCopy({ chapter, index, activeIndex, side, demoLink }: { chapter: Chapter; index: number; activeIndex: number; side: "left" | "right"; demoLink: string }) {
+function ChapterCopy({ chapter, index, activeIndex, side, }: { chapter: Chapter; index: number; activeIndex: number; side: "left" | "right" }) {
   if (chapter.align !== side) return null;
   const isFinal = index === showcaseChapters.length - 1;
-  return <article className={`privana-chapter-copy ${index === activeIndex ? "is-active" : ""} ${isFinal ? "is-final" : ""}`}>{chapter.eyebrow && <p>{chapter.eyebrow}</p>}<h2 id={index === 0 ? "connected-platform-heading" : undefined}>{chapter.headline}</h2><span>{chapter.body}</span>{isFinal && <FinalCta demoLink={demoLink} />}</article>;
+  return <article className={`privana-chapter-copy ${index === activeIndex ? "is-active" : ""} ${isFinal ? "is-final" : ""}`}>{chapter.eyebrow && <p>{chapter.eyebrow}</p>}<h2 id={index === 0 ? "connected-platform-heading" : undefined}>{chapter.headline}</h2><span>{chapter.body}</span></article>;
 }
 
-function FinalCta({ demoLink }: { demoLink: string }) { return <div className="privana-feature-cta"><p>See Privana in action</p><Link href={demoLink} className="privana-feature-button">BOOK A DEMO</Link></div>; }
-function MobileChapter({ chapter, index, demoLink }: { chapter: Chapter; index: number; demoLink: string }) { const Icon = chapter.icon; return <article className={`privana-mobile-chapter tone-${chapter.tone}`}><div className="privana-mobile-visual" aria-hidden="true"><span>{String(index + 1).padStart(2, "0")}</span><MiniVisual visual={chapter.visual} Icon={Icon} /></div>{chapter.eyebrow && <p>{chapter.eyebrow}</p>}<h2>{chapter.headline}</h2><p>{chapter.body}</p>{index === showcaseChapters.length - 1 && <FinalCta demoLink={demoLink} />}</article>; }
+function MobileChapter({ chapter, index }: { chapter: Chapter; index: number }) { const Icon = chapter.icon; return <article className={`privana-mobile-chapter tone-${chapter.tone}`}><div className="privana-mobile-visual" aria-hidden="true"><span>{String(index + 1).padStart(2, "0")}</span><MiniVisual visual={chapter.visual} Icon={Icon} /></div>{chapter.eyebrow && <p>{chapter.eyebrow}</p>}<h2>{chapter.headline}</h2><p>{chapter.body}</p></article>; }
 function PrivanaObject({ activeIndex }: { activeIndex: number }) { const chapter = showcaseChapters[activeIndex]; const Icon = chapter.icon; return <div className={`privana-object visual-${chapter.visual}`}><div className="privana-object-shadow" /><div className="privana-object-assembly"><span className="privana-plane plane-back"/><span className="privana-plane plane-left"/><span className="privana-plane plane-right"/><span className="privana-plane plane-top"/><div className="privana-object-core"><div className="privana-object-mark">P</div>{Icon && <Icon className="privana-object-icon" />}</div><FeatureGeometry visual={chapter.visual} /></div></div>; }
 function FeatureGeometry({ visual }: { visual: Chapter["visual"] }) { return <div className={`feature-geometry geometry-${visual}`}><span/><span/><span/><span/><span/><span/></div>; }
 function MiniVisual({ visual, Icon }: { visual: Chapter["visual"]; Icon?: typeof OperationsIcon }) { return <div className={`mini-visual geometry-${visual}`}>{Icon ? <Icon /> : <span/>}<i/><i/><i/></div>; }
