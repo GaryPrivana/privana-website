@@ -75,109 +75,64 @@ body {
   animation: hero-scroll-drift 2.8s ease-in-out infinite;
 }
 
-@keyframes club-card-float-up {
-  0%,
-  100% {
-    translate: 0 0;
-  }
-  50% {
-    translate: 0 -4px;
-  }
-}
-
-@keyframes club-card-float-down {
-  0%,
-  100% {
-    translate: 0 0;
-  }
-  50% {
-    translate: 0 4px;
-  }
-}
-
-.club-overlap-composition {
+.club-expanding-composition {
   display: grid;
+  width: min(100%, 86rem);
+  margin-inline: auto;
   gap: 1rem;
-  perspective: 1600px;
 }
 
-.club-overlap-card {
+.club-expanding-card {
   position: relative;
-  z-index: 1;
-  min-height: 25rem;
-  border: 0;
-  padding: 0;
+  display: flex;
+  min-height: 24rem;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.14);
   border-radius: 1.85rem;
-  background: transparent;
+  padding: clamp(1.2rem, 2vw, 1.8rem);
   color: inherit;
   font: inherit;
-  text-align: inherit;
+  text-align: left;
   appearance: none;
   cursor: pointer;
-  perspective: 1400px;
-  transform-origin: center center;
-  transition: transform 620ms cubic-bezier(0.2, 0.72, 0.2, 1),
-    filter 620ms cubic-bezier(0.2, 0.72, 0.2, 1);
-  will-change: transform, translate;
+  isolation: isolate;
+  box-shadow: 0 34px 86px rgba(0, 0, 0, 0.2),
+    0 14px 42px rgba(0, 0, 0, 0.14),
+    0 2px 10px rgba(255, 255, 255, 0.04);
+  transition: flex-basis 600ms cubic-bezier(0.2, 0.72, 0.2, 1),
+    filter 600ms cubic-bezier(0.2, 0.72, 0.2, 1),
+    box-shadow 600ms cubic-bezier(0.2, 0.72, 0.2, 1);
   -webkit-tap-highlight-color: transparent;
 }
 
-.club-overlap-card:focus-visible {
+.club-expanding-card:focus-visible {
   outline: 2px solid rgba(255, 255, 255, 0.92);
   outline-offset: 6px;
 }
 
-.club-card-inner {
-  --club-flip-half-delay: 310ms;
-  position: absolute;
-  inset: 0;
-  display: block;
-  border-radius: inherit;
-  transform-style: preserve-3d;
-  -webkit-transform-style: preserve-3d;
-  transition: transform 620ms cubic-bezier(0.2, 0.72, 0.2, 1);
-}
-
-.club-card-face {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  border-radius: inherit;
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
-  box-shadow: 0 44px 110px rgba(0, 0, 0, 0.22),
-    0 18px 54px rgba(0, 0, 0, 0.14),
-    0 2px 10px rgba(255, 255, 255, 0.04);
-}
-
-.club-card-front {
-  padding: clamp(1.35rem, 2.1vw, 2rem);
-  isolation: isolate;
-  opacity: 1;
-  transition: opacity 1ms linear var(--club-flip-half-delay);
-}
-
-.club-card-back {
-  transform: rotateY(180deg);
-  -webkit-transform: rotateY(180deg);
-  background: #11141a;
-  opacity: 0;
-  transition: opacity 1ms linear var(--club-flip-half-delay);
-}
-
-.club-card-image {
-  transform: scale(1.04);
-  transition: transform 620ms cubic-bezier(0.2, 0.72, 0.2, 1);
-}
-
+.club-card-image-layer,
+.club-card-readability-gradient,
 .club-card-glow,
 .club-card-noise {
   position: absolute;
   inset: 0;
   pointer-events: none;
+}
+
+.club-card-image-layer {
+  opacity: 0;
+  transition: opacity 560ms cubic-bezier(0.2, 0.72, 0.2, 1);
+}
+
+.club-card-image {
+  transform: scale(1.03);
+  transition: transform 600ms cubic-bezier(0.2, 0.72, 0.2, 1);
+}
+
+.club-card-readability-gradient {
+  opacity: 0;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.08) 0%, rgba(0, 0, 0, 0.34) 48%, rgba(0, 0, 0, 0.78) 100%);
+  transition: opacity 560ms cubic-bezier(0.2, 0.72, 0.2, 1);
 }
 
 .club-card-glow {
@@ -192,200 +147,166 @@ body {
   mix-blend-mode: soft-light;
 }
 
+.club-card-content {
+  position: relative;
+  display: flex;
+  min-height: 100%;
+  width: 100%;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 2rem;
+}
+
 .club-card-mark {
-  width: clamp(2.8rem, 4vw, 3.8rem);
-  height: clamp(2.8rem, 4vw, 3.8rem);
-  opacity: 0.3;
+  width: clamp(2.1rem, 3vw, 3.1rem);
+  height: clamp(2.1rem, 3vw, 3.1rem);
+  opacity: 0.32;
+}
+
+.club-card-text {
+  display: grid;
+  gap: 0.85rem;
 }
 
 .club-card-title {
-  display: grid;
-  margin-top: auto;
-  max-width: 7.6ch;
-  margin-bottom: clamp(1.45rem, 3.8vw, 3.2rem);
-  text-align: left;
-  font-size: clamp(3.25rem, 5.7vw, 4.95rem);
+  display: block;
+  overflow-wrap: normal;
+  text-wrap: balance;
+  font-size: clamp(1.65rem, 2.1vw, 2.5rem);
   font-weight: 700;
-  line-height: 0.88;
-  letter-spacing: -0.07em;
+  line-height: 0.96;
+  letter-spacing: -0.055em;
 }
 
 .club-card-copy {
-  max-width: 18rem;
-  text-align: left;
-  font-size: 0.92rem;
+  display: block;
+  max-width: 17rem;
+  font-size: clamp(0.78rem, 0.82vw, 0.92rem);
   font-weight: 500;
-  line-height: 1.45;
-  opacity: 0.62;
+  line-height: 1.38;
+  opacity: 0.72;
 }
 
-.club-card-front-stone {
+.club-card-tone-stone {
   color: #161719;
   border-color: rgba(255, 255, 255, 0.36);
   background: linear-gradient(145deg, #e9e1d4 0%, #cfc7ba 54%, #e2d9cb 100%);
 }
 
-.club-card-front-stone .club-card-glow {
+.club-card-tone-stone .club-card-glow {
   background: radial-gradient(circle at 22% 18%, rgba(255, 250, 241, 0.3), transparent 42%),
     radial-gradient(circle at 74% 86%, rgba(101, 93, 82, 0.115), transparent 48%),
     linear-gradient(180deg, transparent 52%, rgba(31, 27, 23, 0.08));
 }
 
-.club-card-front-blue {
+.club-card-tone-blue {
   color: #ffffff;
   background: linear-gradient(145deg, #092248 0%, #10396f 52%, #07172e 100%);
 }
 
-.club-card-front-blue .club-card-glow {
+.club-card-tone-blue .club-card-glow {
   background: radial-gradient(circle at 24% 16%, rgba(190, 214, 244, 0.16), transparent 42%),
     radial-gradient(circle at 80% 82%, rgba(57, 93, 136, 0.16), transparent 48%),
     linear-gradient(180deg, transparent 50%, rgba(0, 0, 0, 0.16));
 }
 
-.club-card-front-charcoal {
+.club-card-tone-charcoal {
   color: #ffffff;
   background: linear-gradient(145deg, #17191b 0%, #242528 50%, #0d0e10 100%);
 }
 
-.club-card-front-charcoal .club-card-glow {
+.club-card-tone-charcoal .club-card-glow {
   background: radial-gradient(circle at 24% 16%, rgba(255, 255, 255, 0.1), transparent 40%),
     radial-gradient(circle at 82% 84%, rgba(124, 119, 108, 0.1), transparent 48%),
     linear-gradient(180deg, transparent 48%, rgba(0, 0, 0, 0.22));
 }
 
-.club-card-front-teal {
+.club-card-tone-teal {
   color: #ffffff;
   background: linear-gradient(145deg, #0e1112 0%, #14191a 52%, #070909 100%);
 }
 
-.club-card-front-teal .club-card-glow {
+.club-card-tone-teal .club-card-glow {
   background: radial-gradient(circle at 26% 16%, rgba(190, 216, 207, 0.075), transparent 42%),
     radial-gradient(circle at 82% 78%, rgba(53, 103, 92, 0.105), transparent 50%),
     linear-gradient(180deg, transparent 48%, rgba(0, 0, 0, 0.22));
 }
 
-.club-overlap-card:hover,
-.club-overlap-card:focus-visible,
-.club-overlap-card.is-active,
-.club-overlap-card.is-flipped {
-  z-index: 50;
+.club-expanding-card.is-image-active {
+  color: #ffffff;
+  text-shadow: 0 1px 18px rgba(0, 0, 0, 0.36);
 }
 
-.club-overlap-card:hover .club-card-inner,
-.club-overlap-card:focus-visible .club-card-inner,
-.club-overlap-card.is-flipped .club-card-inner {
-  transform: rotateY(180deg);
-  -webkit-transform: rotateY(180deg);
-}
-
-.club-overlap-card:hover .club-card-front,
-.club-overlap-card:focus-visible .club-card-front,
-.club-overlap-card.is-flipped .club-card-front {
-  opacity: 0;
-}
-
-.club-overlap-card:hover .club-card-back,
-.club-overlap-card:focus-visible .club-card-back,
-.club-overlap-card.is-flipped .club-card-back {
+.club-expanding-card.is-image-active .club-card-image-layer,
+.club-expanding-card.is-image-active .club-card-readability-gradient {
   opacity: 1;
 }
 
-.club-overlap-card:hover .club-card-image,
-.club-overlap-card:focus-visible .club-card-image,
-.club-overlap-card.is-flipped .club-card-image {
+.club-expanding-card.is-image-active .club-card-image {
   transform: scale(1);
 }
 
-@media (min-width: 768px) {
-  .club-overlap-composition {
-    position: relative;
-    height: 35.5rem;
-    max-width: 86rem;
-    margin-inline: auto;
+@media (min-width: 1024px) {
+  .club-expanding-composition {
+    display: flex;
+    width: min(88vw, 86rem);
+    align-items: stretch;
   }
 
-  .club-overlap-card {
-    position: absolute;
-    width: min(42vw, 33.25rem);
-    min-height: 33.5rem;
+  .club-expanding-card {
+    flex: 1 1 25%;
+    min-width: 0;
+    min-height: clamp(24rem, 29vw, 31rem);
   }
 
-  .club-overlap-card:nth-child(2),
-  .club-overlap-card:nth-child(3) {
-    z-index: 2;
+  .club-expanding-composition:has(.club-expanding-card.is-expanded) .club-expanding-card {
+    flex-basis: 21%;
   }
 
-  .club-overlap-card:hover,
-  .club-overlap-card:focus-visible,
-  .club-overlap-card.is-active,
-  .club-overlap-card.is-flipped {
-    transform: translateY(-6px);
-  }
-
-  .club-overlap-card:hover,
-  .club-overlap-card:focus-visible,
-  .club-overlap-card.is-active,
-  .club-overlap-card.is-flipped {
-    animation-play-state: paused;
-  }
-
-  .club-card-float-slow {
-    animation: club-card-float-up 6.8s ease-in-out infinite;
-  }
-
-  .club-card-float-medium {
-    animation: club-card-float-down 7.4s ease-in-out -1.2s infinite;
-  }
-
-  .club-card-float-late {
-    animation: club-card-float-up 5.9s ease-in-out -2.1s infinite;
-  }
-
-  .club-card-float-long {
-    animation: club-card-float-down 7.9s ease-in-out -0.7s infinite;
+  .club-expanding-composition:has(.club-expanding-card.is-expanded) .club-expanding-card.is-expanded {
+    flex-basis: 37%;
+    filter: saturate(1.03);
   }
 }
 
 @media (min-width: 768px) and (max-width: 1023px) {
-  .club-overlap-composition {
-    height: 30rem;
-    max-width: 44rem;
+  .club-expanding-composition {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    max-width: 48rem;
   }
 
-  .club-overlap-card {
-    width: 21.75rem;
-    min-height: 27.25rem;
-  }
-
-  .club-card-title {
-    font-size: 2.85rem;
+  .club-expanding-card {
+    min-height: 22rem;
   }
 }
 
 @media (max-width: 767px) {
-  .club-overlap-card {
-    min-height: 24rem;
-    rotate: 0deg !important;
-    transform: none !important;
-    animation: none !important;
+  .club-expanding-composition {
+    grid-template-columns: 1fr;
   }
 
-  .club-card-inner {
-    position: absolute;
+  .club-expanding-card {
+    min-height: 22rem;
   }
 
   .club-card-title {
-    font-size: clamp(2.65rem, 14vw, 4rem);
+    font-size: clamp(1.9rem, 9vw, 2.8rem);
   }
 }
 
+
 @media (prefers-reduced-motion: reduce) {
-  .club-overlap-card {
-    animation: none !important;
+  .club-expanding-card,
+  .club-card-image-layer,
+  .club-card-readability-gradient,
+  .club-card-image {
+    transition-duration: 1ms !important;
   }
 
-  .club-overlap-card,
-  .club-card-inner {
-    transition-duration: 1ms !important;
+  @media (min-width: 1024px) {
+    .club-expanding-composition:has(.club-expanding-card.is-expanded) .club-expanding-card,
+    .club-expanding-composition:has(.club-expanding-card.is-expanded) .club-expanding-card.is-expanded {
+      flex-basis: 25%;
+    }
   }
 }
