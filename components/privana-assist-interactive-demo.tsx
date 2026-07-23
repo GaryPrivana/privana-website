@@ -111,46 +111,52 @@ export function PrivanaAssistInteractiveDemo() {
 
   return (
     <section id="privana-assist-demo" className="privana-assist-demo-section" aria-labelledby="privana-assist-demo-heading">
-      <div className="container-shell">
+      <div className="privana-assist-demo-intro container-shell">
         <div className="privana-assist-demo-heading">
           <p>TRY PRIVANA ASSIST</p>
           <h2 id="privana-assist-demo-heading">Ask your club anything.</h2>
           <span>See how Privana Assist turns live club information into clear answers, useful insight and ready-to-review action.</span>
         </div>
+      </div>
 
-        <div className="assist-product-window">
-          <div className="assist-topbar">
-            <div className="assist-title-lockup"><AssistMark /><strong>Privana Assist</strong></div>
-            <button type="button" className="assist-history-button" aria-label="Show Privana Assist history" aria-expanded={historyOpen} onClick={() => setHistoryOpen((open) => !open)}>Show History</button>
-          </div>
-          {historyOpen && <div className="assist-history-panel" role="status">Demo history is local to this page. Choose a preset question to replay a scenario.</div>}
-          <div className="assist-tabs" aria-hidden="true"><span className="is-active">Assist</span><span>Explore</span></div>
-          <div ref={conversationRef} className="assist-conversation" aria-live="polite">
-            {!submittedUserMessage && phase === "idle" && <EmptyState />}
-            {submittedUserMessage && <UserBubble text={submittedUserMessage} />}
-            {(phase === "waiting-for-assist" || phase === "complete") && activeScenario && (
-              <AssistBubble scenario={activeScenario} phase={phase} />
-            )}
-          </div>
-          <div className="assist-composer-row">
-            <div className="assist-composer" role="textbox" aria-label="Privana Assist demo composer" aria-readonly="true">
-              <span>{composerText || "Choose a preset question below"}</span>
-              {phase === "typing-question" && <i aria-hidden="true" />}
+      <div className="privana-assist-demo-experience container-shell">
+        <div className="assist-demo-experience-inner">
+          <div className="assist-product-window">
+            <div className="assist-window-header">
+              <div className="assist-topbar">
+                <div className="assist-title-lockup"><AssistMark /><strong>Privana Assist</strong></div>
+                <button type="button" className="assist-history-button" aria-label="Show Privana Assist history" aria-expanded={historyOpen} onClick={() => setHistoryOpen((open) => !open)}>Show History</button>
+              </div>
+              {historyOpen && <div className="assist-history-panel" role="status">Demo history is local to this page. Choose a preset question to replay a scenario.</div>}
             </div>
-            <button type="button" className={`assist-send-button ${phase === "submitted" ? "is-sending" : ""}`} aria-label="Send selected demo question" disabled>
-              ↑
-            </button>
-          </div>
-        </div>
-
-        <div className="assist-prompt-area" aria-label="Preset questions">
-          <div><p>Choose a question</p><span>Preset questions</span></div>
-          <div className="assist-prompt-grid">
-            {assistScenarios.map((scenario) => (
-              <button key={scenario.id} type="button" className="assist-prompt-button" onClick={() => playScenario(scenario)} disabled={controlsLocked}>
-                <span aria-hidden="true">{scenario.icon}</span>{scenario.question}
+            <div className="assist-tabs" aria-hidden="true"><span className="is-active">Assist</span><span>Explore</span></div>
+            <div ref={conversationRef} className="assist-conversation" aria-live="polite">
+              {!submittedUserMessage && phase === "idle" && <EmptyState />}
+              {submittedUserMessage && <UserBubble text={submittedUserMessage} />}
+              {(phase === "waiting-for-assist" || phase === "complete") && activeScenario && (
+                <AssistBubble scenario={activeScenario} phase={phase} />
+              )}
+            </div>
+            <div className="assist-composer-row">
+              <div className="assist-composer" role="textbox" aria-label="Privana Assist demo composer" aria-readonly="true">
+                <span>{composerText || "Choose a preset question below"}</span>
+                {phase === "typing-question" && <i aria-hidden="true" />}
+              </div>
+              <button type="button" className={`assist-send-button ${phase === "submitted" ? "is-sending" : ""}`} aria-label="Send selected demo question" disabled>
+                ↑
               </button>
-            ))}
+            </div>
+          </div>
+
+          <div className="assist-prompt-area" aria-label="Preset questions">
+            <div><p>Choose a question</p><span>Preset questions</span></div>
+            <div className="assist-prompt-grid">
+              {assistScenarios.map((scenario) => (
+                <button key={scenario.id} type="button" className="assist-prompt-button" onClick={() => playScenario(scenario)} disabled={controlsLocked}>
+                  <span aria-hidden="true">{scenario.icon}</span>{scenario.question}
+                </button>
+              ))}
+            </div>
           </div>
         </div>
       </div>

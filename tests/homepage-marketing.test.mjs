@@ -376,6 +376,41 @@ test("assist responses render complete briefing, three member cards, email asset
   assert.match(globals, /@media \(max-width: 620px\)[\s\S]*\.assist-member-grid, \.assist-briefing-list article \{ grid-template-columns: 1fr; \}/);
 });
 
+
+test("assist demo separates intro and experience stages", () => {
+  assert.match(assistDemo, /className="privana-assist-demo-intro container-shell"/);
+  assert.match(assistDemo, /className="privana-assist-demo-experience container-shell"/);
+  assert.ok(assistDemo.indexOf('privana-assist-demo-intro') < assistDemo.indexOf('privana-assist-demo-experience'));
+  assert.doesNotMatch(globals, /\.privana-assist-demo-section > \.container-shell \{[\s\S]*grid-template-rows: auto minmax\(0, 1fr\) auto/);
+  assert.doesNotMatch(globals, /max-height: calc\(100svh - var\(--site-header-height/);
+});
+
+test("assist demo uses stable desktop product-window sizing", () => {
+  assert.match(globals, /@media \(min-width: 901px\)[\s\S]*\.assist-product-window \{[\s\S]*height: clamp\(34rem, 68svh, 42rem\);[\s\S]*min-height: 34rem;[\s\S]*max-height: 42rem;[\s\S]*display: grid;[\s\S]*grid-template-rows: auto auto minmax\(0, 1fr\) auto;/);
+  assert.match(globals, /\.assist-product-window \{[\s\S]*width: min\(100%, 70rem\);/);
+  assert.doesNotMatch(globals, /\.assist-product-window \{[\s\S]{0,220}height: 100%;/);
+  assert.doesNotMatch(globals, /\.assist-product-window \{[\s\S]{0,220}height: auto;/);
+});
+
+test("assist conversation is the only internally scrolling demo content", () => {
+  assert.match(globals, /\.assist-conversation \{[\s\S]*min-height: 0;[\s\S]*overflow-y: auto;/);
+  assert.match(globals, /@media \(min-width: 901px\)[\s\S]*\.assist-conversation \{ min-height: 0; overflow-y: auto; \}/);
+});
+
+test("assist history stays in first window row and prompts stay outside modal", () => {
+  assert.match(assistDemo, /<div className="assist-window-header">[\s\S]*assist-topbar[\s\S]*\{historyOpen && <div className="assist-history-panel"/);
+  assert.ok(assistDemo.indexOf('className="assist-prompt-area"') > assistDemo.indexOf('</div>\n\n          <div className="assist-prompt-area"'));
+  assert.match(globals, /\.assist-prompt-area \{ margin: 1\.5rem auto 0; max-width: 70rem; \}/);
+  assert.match(globals, /\.assist-prompt-grid \{ display: grid; grid-template-columns: repeat\(3, minmax\(0,1fr\)\);/);
+});
+
+test("assist demo preserves mobile flow and short-height desktop fallback", () => {
+  assert.match(globals, /@media \(min-width: 901px\) and \(max-height: 760px\)[\s\S]*height: clamp\(31rem, 66svh, 36rem\);[\s\S]*min-height: 31rem;[\s\S]*max-height: 36rem;/);
+  assert.match(globals, /@media \(max-width: 900px\)[\s\S]*\.assist-conversation \{ height: clamp\(27rem, 70vh, 34rem\); \}/);
+  assert.match(globals, /@media \(max-width: 620px\)[\s\S]*\.assist-conversation \{ height: 30rem; padding: \.85rem; \}/);
+  assert.match(globals, /@media \(max-width: 900px\)[\s\S]*\.assist-prompt-grid \{ grid-template-columns: 1fr; \}/);
+});
+
 test("assist demo supports reduced motion branch", () => {
   assert.match(assistDemo, /prefers-reduced-motion: reduce/);
   assert.match(assistData, /REDUCED_MOTION_WAIT_MS = 250/);
