@@ -1,35 +1,36 @@
-import Image from 'next/image';
-import Link from 'next/link';
-import { Manrope } from 'next/font/google';
+import Image from "next/image";
+import Link from "next/link";
+import { Manrope } from "next/font/google";
 import {
   DeviceFramePlaceholder,
   FeatureMediaPlaceholder,
   HeroProductPlaceholder,
   ProductShowcasePlaceholder,
-  VideoPreviewPlaceholder
-} from './media-placeholders';
+  VideoPreviewPlaceholder,
+} from "./media-placeholders";
 import {
   CrmIcon,
   HotelIcon,
   InventoryIcon,
   MembershipIcon,
   OperationsIcon,
-  ReservationsIcon
-} from './icons';
-import { aiChips, platformModules } from './site-data';
-import { ContactFormSection } from './contact-form-section';
-import { HeroScrollPrompt } from './hero-scroll-prompt';
-import { HomepageHeader } from './homepage-header';
-import { PrivanaLogo } from './privana-logo';
+  ReservationsIcon,
+} from "./icons";
+import { aiChips, platformModules } from "./site-data";
+import { ClubCubeCarousel, type ClubSegment } from "./club-cube-carousel";
+import { ContactFormSection } from "./contact-form-section";
+import { HeroScrollPrompt } from "./hero-scroll-prompt";
+import { HomepageHeader } from "./homepage-header";
+import { PrivanaLogo } from "./privana-logo";
 
-const demoLink = '#demo';
+const demoLink = "#demo";
 const heroFont = Manrope({
-  subsets: ['latin'],
-  weight: ['500', '600', '700'],
-  display: 'swap'
+  subsets: ["latin"],
+  weight: ["500", "600", "700"],
+  display: "swap",
 });
 const sharedDemoCtaClass =
-  'inline-flex items-center justify-center rounded-full bg-white px-8 py-3 text-xs font-semibold tracking-[0.1em] text-[#10131a] transition duration-300 hover:bg-white/92 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/80 focus-visible:ring-offset-2 focus-visible:ring-offset-black';
+  "inline-flex items-center justify-center rounded-full bg-white px-8 py-3 text-xs font-semibold tracking-[0.1em] text-[#10131a] transition duration-300 hover:bg-white/92 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/80 focus-visible:ring-offset-2 focus-visible:ring-offset-black";
 
 const iconMap = {
   operations: OperationsIcon,
@@ -37,57 +38,115 @@ const iconMap = {
   reservations: ReservationsIcon,
   membership: MembershipIcon,
   hotel: HotelIcon,
-  inventory: InventoryIcon
+  inventory: InventoryIcon,
 } as const;
 
 const authorityValueCards = [
   {
-    label: 'Up to',
-    headline: '80% less admin time',
-    description: 'Automate member communication, reporting and operational workflows.'
+    label: "Up to",
+    headline: "80% less admin time",
+    description: (
+      <>
+        Assisted member communications.
+        <br />
+        Automated workflows.
+      </>
+    ),
   },
   {
-    label: 'Over',
-    headline: '25+ modules unified',
-    description: 'Run your entire club from one connected ecosystem.'
+    label: "Over",
+    headline: "25+ modules unified",
+    description: "Run your entire club from one connected ecosystem.",
   },
   {
-    label: 'Built for',
-    headline: 'Modern Private Clubs',
-    description: 'Designed for the world’s leading golf, country and lifestyle clubs.'
-  }
+    label: "Built for",
+    headline: "Modern Private Clubs",
+    description:
+      "Designed for the world’s leading golf, country and lifestyle clubs.",
+  },
 ];
 
 const valuePillars = [
-  'AI Concierge & Automation',
-  'CRM & Lead Intelligence',
-  'Reservations & Experience Management',
-  'Membership Lifecycle Management',
-  'Hospitality & Revenue Operations',
-  'Finance, Reporting & Insights'
+  "AI Concierge & Automation",
+  "CRM & Lead Intelligence",
+  "Reservations & Experience Management",
+  "Membership Lifecycle Management",
+  "Hospitality & Revenue Operations",
+  "Finance, Reporting & Insights",
+];
+
+const clubSegments: ClubSegment[] = [
+  {
+    title: "Sporting & Lifestyle Clubs",
+    image:
+      "https://privana-website-images.s3.amazonaws.com/GRID_Sporting+and+Lifestyle+Clubs.png",
+    examples: [
+      "Golf Clubs",
+      "Athletic Clubs",
+      "Equestrian Clubs",
+      "Shooting Clubs",
+      "Wellness Retreats",
+    ],
+  },
+  {
+    title: "City Clubs",
+    image:
+      "https://privana-website-images.s3.amazonaws.com/GRID_city+clubs.png",
+    examples: [
+      "Business Clubs",
+      "Private Dining Clubs",
+      "Executive Clubs",
+      "Members Lounges",
+      "Networking Clubs",
+    ],
+  },
+  {
+    title: "Arts & Culture Clubs",
+    image:
+      "https://privana-website-images.s3.amazonaws.com/GRID_arts+and+culture+clubs+V2.png",
+    examples: [
+      "Creative Clubs",
+      "Museum Societies",
+      "Arts Foundations",
+      "Literary Clubs",
+      "Performance Venues",
+    ],
+  },
+  {
+    title: "Beach & Leisure Clubs",
+    image:
+      "https://privana-website-images.s3.amazonaws.com/GRID_beach+clubs+V2.png",
+    examples: [
+      "Beach Clubs",
+      "Coastal Resorts",
+      "Private Retreats",
+      "Leisure Clubs",
+      "Wellness Resorts",
+    ],
+  },
 ];
 
 const comparisonRows = [
   {
-    legacy: 'Fragmented tools and disconnected teams',
-    modern: 'One connected platform across every department'
+    legacy: "Fragmented tools and disconnected teams",
+    modern: "One connected platform across every department",
   },
   {
-    legacy: 'Manual workflows and repetitive admin',
-    modern: 'Intelligent automation with AI assistance'
+    legacy: "Manual workflows and repetitive admin",
+    modern: "Intelligent automation with AI assistance",
   },
   {
-    legacy: 'Static monthly reporting',
-    modern: 'Real-time operational and member insight'
+    legacy: "Static monthly reporting",
+    modern: "Real-time operational and member insight",
   },
   {
-    legacy: 'Generic software not built for clubs',
-    modern: 'Hospitality-first product design for premium clubs'
+    legacy: "Generic software not built for clubs",
+    modern: "Hospitality-first product design for premium clubs",
   },
   {
-    legacy: 'Systems optimized for admin tasks',
-    modern: 'Operations designed around member experience'
-  }
+    legacy: "Systems optimized for admin tasks",
+    modern: "Operations designed around member experience",
+  },
 ];
 
 export function Homepage() {
@@ -137,10 +196,16 @@ export function Homepage() {
             </div>
           </div>
 
-          <HeroScrollPrompt targetId="hero-showcase" className={heroFont.className} />
+          <HeroScrollPrompt
+            targetId="hero-showcase"
+            className={heroFont.className}
+          />
         </section>
 
-        <section id="about" className={`section-pad bg-[#fbfafe] ${heroFont.className}`}>
+        <section
+          id="about"
+          className={`section-pad bg-[#fbfafe] ${heroFont.className}`}
+        >
           <div className="container-shell grid items-center gap-12 lg:grid-cols-[1.3fr_1fr] lg:gap-20">
             <h2 className="max-w-4xl text-4xl font-semibold leading-[1.04] tracking-[-0.02em] text-[#111017] sm:text-6xl">
               <span className="text-[#af8bda]">Privana</span> is the
@@ -158,13 +223,17 @@ export function Homepage() {
               Software
             </h2>
             <p className="max-w-xl justify-self-end text-pretty text-xl leading-relaxed text-[#201a2d]/92">
-              Connect departments, elevate hospitality, and make better decisions with one modern
-              system built for premium clubs, private hospitality, and lifestyle-driven communities.
+              Connect departments, elevate hospitality, and make better
+              decisions with one modern system built for premium clubs, private
+              hospitality, and lifestyle-driven communities.
             </p>
           </div>
         </section>
 
-        <section id="hero-showcase" className="bg-black px-6 pb-20 pt-8 text-white sm:pt-10">
+        <section
+          id="hero-showcase"
+          className="bg-black px-6 pb-20 pt-8 text-white sm:pt-10"
+        >
           <div className="container-shell">
             <div className="grid gap-5 lg:grid-cols-[1fr_260px]">
               <HeroProductPlaceholder
@@ -201,11 +270,15 @@ export function Homepage() {
                 key={card.headline}
                 className="group flex h-full min-h-[22rem] flex-col rounded-[1.85rem] border border-[#e5dfeb] bg-[#f6f4f8] p-8 shadow-[0_1px_0_rgba(17,16,23,0.04)] transition-all duration-300 ease-out hover:-translate-y-1 hover:border-[#ddd5e6] hover:shadow-[0_18px_42px_rgba(16,12,25,0.11)] sm:p-10"
               >
-                <p className="text-sm font-medium tracking-[-0.01em] text-[#4a4356]/65">{card.label}</p>
+                <p className="text-sm font-medium tracking-[-0.01em] text-[#4a4356]/65">
+                  {card.label}
+                </p>
                 <h3 className="mt-7 max-w-[16ch] text-[2.35rem] font-semibold leading-[1.03] tracking-[-0.03em] text-[#111017] sm:text-[2.65rem]">
                   {card.headline}
                 </h3>
-                <p className="mt-auto pt-10 text-lg leading-relaxed text-[#2f2a3c]/72">{card.description}</p>
+                <p className="mt-auto pt-10 text-lg leading-relaxed text-[#2f2a3c]/72">
+                  {card.description}
+                </p>
               </article>
             ))}
           </div>
@@ -218,84 +291,14 @@ export function Homepage() {
             >
               Tailored Exclusively for Your Club
             </h3>
-            <div className="grid gap-5 md:grid-cols-2">
-              {[
-                {
-                  title: 'Sporting & Lifestyle Clubs',
-                  image:
-                    'https://privana-website-images.s3.amazonaws.com/GRID_Sporting+and+Lifestyle+Clubs.png',
-                  examples: [
-                    'Golf Clubs',
-                    'Athletic Clubs',
-                    'Equestrian Clubs',
-                    'Shooting Clubs',
-                    'Wellness Retreats'
-                  ]
-                },
-                {
-                  title: 'City Clubs',
-                  image: 'https://privana-website-images.s3.amazonaws.com/GRID_city+clubs.png',
-                  examples: [
-                    'Business Clubs',
-                    'Private Dining Clubs',
-                    'Executive Clubs',
-                    'Members Lounges',
-                    'Networking Clubs'
-                  ]
-                },
-                {
-                  title: 'Arts & Culture Clubs',
-                  image:
-                    'https://privana-website-images.s3.amazonaws.com/GRID_arts+and+culture+clubs+V2.png',
-                  examples: [
-                    'Creative Clubs',
-                    'Museum Societies',
-                    'Arts Foundations',
-                    'Literary Clubs',
-                    'Performance Venues'
-                  ]
-                },
-                {
-                  title: 'Beach & Leisure Clubs',
-                  image: 'https://privana-website-images.s3.amazonaws.com/GRID_beach+clubs+V2.png',
-                  examples: [
-                    'Beach Clubs',
-                    'Coastal Resorts',
-                    'Private Retreats',
-                    'Leisure Clubs',
-                    'Wellness Resorts'
-                  ]
-                }
-              ].map((segment) => (
-                <article
-                  key={segment.title}
-                  className="group relative aspect-[6/5] overflow-hidden rounded-[24px]"
-                >
-                  <Image
-                    src={segment.image}
-                    alt={segment.title}
-                    fill
-                    className="object-cover transition duration-700 ease-out group-hover:scale-[1.03]"
-                    sizes="(max-width: 768px) 100vw, 50vw"
-                  />
-                  <div className="absolute inset-0 bg-black/8 transition duration-500 ease-out group-hover:bg-black/55" />
-                  <div className="absolute inset-0 flex flex-col items-center justify-center px-6 py-8 text-center sm:px-10">
-                    <h4 className="max-w-[22rem] translate-y-1 font-display text-[1.35rem] font-medium tracking-[-0.01em] text-white/20 opacity-20 transition duration-500 ease-out group-hover:-translate-y-3 group-hover:text-white group-hover:opacity-100 sm:text-[1.55rem]">
-                      {segment.title}
-                    </h4>
-                    <ul className="mt-3 space-y-1 text-sm font-light leading-relaxed text-white/0 opacity-0 transition duration-500 ease-out group-hover:opacity-100 group-hover:text-white/88 sm:text-[0.92rem]">
-                      {segment.examples.map((example) => (
-                        <li key={example}>{example}</li>
-                      ))}
-                    </ul>
-                  </div>
-                </article>
-              ))}
-            </div>
+            <ClubCubeCarousel segments={clubSegments} />
           </div>
         </section>
 
-        <section id="product-showcase" className="section-pad bg-[#121018] text-white">
+        <section
+          id="product-showcase"
+          className="section-pad bg-[#121018] text-white"
+        >
           <div className="container-shell grid items-center gap-12 lg:grid-cols-[1.15fr_0.85fr]">
             <ProductShowcasePlaceholder
               title="Primary Platform Experience"
@@ -308,13 +311,16 @@ export function Homepage() {
                 The Most Powerful Club Management Platform Ever Built.
               </h3>
               <p className="text-base leading-relaxed text-white/72">
-                Privana unifies every operational layer of a premium club into one intelligent
-                control system built for leadership teams, hospitality teams, and member-facing
-                teams.
+                Privana unifies every operational layer of a premium club into
+                one intelligent control system built for leadership teams,
+                hospitality teams, and member-facing teams.
               </p>
               <ul className="grid gap-3 text-sm sm:grid-cols-2">
                 {valuePillars.map((pillar) => (
-                  <li key={pillar} className="rounded-xl border border-white/15 bg-white/[0.04] px-4 py-3">
+                  <li
+                    key={pillar}
+                    className="rounded-xl border border-white/15 bg-white/[0.04] px-4 py-3"
+                  >
                     {pillar}
                   </li>
                 ))}
@@ -339,8 +345,8 @@ export function Homepage() {
                     key={chip}
                     className={`rounded-full px-4 py-2 text-sm text-[#2c2840]/85 shadow-sm ${
                       chipIndex % 2 === 0
-                        ? 'border border-[#ded8ec] bg-[#f9f7fc]'
-                        : 'border border-[#e8e1f3] bg-[#f1edf8]'
+                        ? "border border-[#ded8ec] bg-[#f9f7fc]"
+                        : "border border-[#e8e1f3] bg-[#f1edf8]"
                     }`}
                   >
                     {chip}
@@ -355,9 +361,9 @@ export function Homepage() {
               />
               <aside className="max-w-xl rounded-[28px] border border-[#d7cee8] bg-[#13111a] p-7 text-[#efebf8] shadow-[0_18px_55px_rgba(21,14,39,0.28)]">
                 <p className="text-sm leading-relaxed text-[#efebf8]/90 sm:text-base">
-                  Give club leaders real-time insight into member behaviour, operational
-                  performance, and retention opportunities — without adding manual reporting
-                  overhead.
+                  Give club leaders real-time insight into member behaviour,
+                  operational performance, and retention opportunities — without
+                  adding manual reporting overhead.
                 </p>
               </aside>
             </div>
@@ -381,7 +387,9 @@ export function Homepage() {
                     <h4 className="mb-3 text-[1.15rem] font-medium tracking-[-0.01em] text-[#201a2b]">
                       {module.title}
                     </h4>
-                    <p className="mb-5 text-sm leading-7 text-[#3d3550]/75">{module.description}</p>
+                    <p className="mb-5 text-sm leading-7 text-[#3d3550]/75">
+                      {module.description}
+                    </p>
                     <FeatureMediaPlaceholder
                       title={`${module.title} Preview`}
                       label="Module Preview"
@@ -396,44 +404,85 @@ export function Homepage() {
           </div>
         </section>
 
-        <section id="comparison" className="section-pad bg-white">
-          <div className="container-shell space-y-9">
-            <h3 className="max-w-3xl text-balance font-display text-4xl font-medium leading-[1.08] tracking-[-0.02em] text-[#191522] sm:text-5xl">
-              Built for the Next Generation of Club Operations.
-            </h3>
-            <div className="overflow-hidden rounded-[28px] border border-[#ded7ea] bg-[#fbfafe]">
-              <div className="grid grid-cols-2 border-b border-[#e3dded] text-xs uppercase tracking-[0.15em] text-[#3a324b]/75">
-                <div className="px-6 py-4">Legacy Systems</div>
-                <div className="bg-[#f2ecfa] px-6 py-4 text-[#272035]">Privana</div>
+        <section id="comparison" className="section-pad bg-[#fbf9ff]">
+          <div className="container-shell">
+            <div className="relative overflow-hidden rounded-[34px] border border-[#ded5ee] bg-[radial-gradient(circle_at_14%_10%,rgba(88,136,217,0.14),transparent_34%),radial-gradient(circle_at_88%_4%,rgba(175,139,218,0.2),transparent_34%),linear-gradient(160deg,#fffefe,#f6f1fc_58%,#eef4ff)] px-6 py-10 shadow-[0_30px_80px_rgba(62,45,91,0.12)] sm:px-10 sm:py-14 lg:px-14">
+              <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-white/70 via-white/20 to-transparent" />
+              <div className="relative z-10 mx-auto max-w-4xl text-center">
+                <p className="mb-4 text-xs font-semibold uppercase tracking-[0.18em] text-[#725aa0]">
+                  Legacy systems become intelligent operations
+                </p>
+                <h3 className="text-balance font-display text-4xl font-medium leading-[1.04] tracking-[-0.03em] text-[#16121f] sm:text-5xl lg:text-6xl">
+                  Built for the Next Generation
+                  <br />
+                  of Club Operations.
+                </h3>
+                <p className="mx-auto mt-6 max-w-2xl text-base leading-7 text-[#393047]/76 sm:text-lg">
+                  Replace disconnected systems and repetitive administration
+                  with one intelligent platform designed around your club, your
+                  team and your members.
+                </p>
               </div>
-              <div>
-                {comparisonRows.map((row) => (
-                  <div key={row.legacy} className="grid grid-cols-1 border-t border-[#e8e2f1] sm:grid-cols-2">
-                    <div className="px-6 py-4 text-sm text-[#4f455f]/82">{row.legacy}</div>
-                    <div className="bg-[#f7f3fd] px-6 py-4 text-sm font-medium text-[#1f1a2b]">
-                      {row.modern}
+
+              <div className="relative z-10 mt-10 space-y-4 lg:mt-12">
+                {comparisonRows.map((row, index) => (
+                  <article
+                    key={row.legacy}
+                    className="group grid gap-4 rounded-[24px] border border-white/70 bg-white/70 p-4 shadow-[0_12px_36px_rgba(85,66,118,0.08)] transition duration-300 ease-out hover:-translate-y-0.5 hover:bg-white/86 hover:shadow-[0_18px_46px_rgba(85,66,118,0.12)] sm:p-5 lg:grid-cols-[1fr_auto_1.18fr] lg:items-center"
+                    style={{ transitionDelay: `${index * 35}ms` }}
+                  >
+                    <div className="rounded-[18px] border border-[#e7e0f2] bg-[#faf8fe] p-5">
+                      <p className="mb-2 text-[0.68rem] font-semibold uppercase tracking-[0.16em] text-[#6d637d]/68">
+                        Before
+                      </p>
+                      <p className="text-sm font-medium leading-6 text-[#4e455e]/82 sm:text-base">
+                        {row.legacy}
+                      </p>
                     </div>
-                  </div>
+                    <div
+                      className="flex h-10 w-10 items-center justify-center justify-self-center rounded-full border border-[#d9cdec] bg-white text-[#7f60b1] shadow-sm transition duration-300 group-hover:translate-x-1 lg:h-12 lg:w-12"
+                      aria-hidden="true"
+                    >
+                      →
+                    </div>
+                    <div className="rounded-[18px] border border-[#d9c9f0] bg-[linear-gradient(135deg,#ffffff,#f3effb)] p-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.85)]">
+                      <p className="mb-2 text-[0.68rem] font-semibold uppercase tracking-[0.16em] text-[#725aa0]">
+                        Privana
+                      </p>
+                      <p className="text-sm font-semibold leading-6 text-[#171322] sm:text-base">
+                        {row.modern}
+                      </p>
+                    </div>
+                  </article>
                 ))}
               </div>
             </div>
           </div>
         </section>
 
-        <section id="experience-preview" className="section-pad bg-[#121018] text-white">
+        <section
+          id="experience-preview"
+          className="section-pad bg-[#121018] text-white"
+        >
           <div className="container-shell grid items-center gap-12 lg:grid-cols-[0.9fr_1.1fr]">
             <div className="space-y-6">
               <h3 className="text-balance font-display text-4xl font-medium leading-[1.08] tracking-[-0.02em] sm:text-5xl">
-                Member Journeys, Booking Flows, and Revenue Operations — In Motion.
+                Member Journeys, Booking Flows, and Revenue Operations — In
+                Motion.
               </h3>
               <p className="text-base leading-relaxed text-white/72">
-                Use this section for a full screen recording of your booking experience, member app,
-                CRM workflow, or executive reporting sequence.
+                Use this section for a full screen recording of your booking
+                experience, member app, CRM workflow, or executive reporting
+                sequence.
               </p>
               <ul className="space-y-2 text-sm text-white/80">
-                <li>• Perfect placement for future high-impact product film.</li>
+                <li>
+                  • Perfect placement for future high-impact product film.
+                </li>
                 <li>• Supports AWS-hosted MP4 recording and poster frame.</li>
-                <li>• Works for both desktop and mobile workflow demonstrations.</li>
+                <li>
+                  • Works for both desktop and mobile workflow demonstrations.
+                </li>
               </ul>
             </div>
             <VideoPreviewPlaceholder
@@ -454,7 +503,8 @@ export function Homepage() {
                   Your Club Deserves Better Software.
                 </h3>
                 <p className="mx-auto max-w-2xl text-white/72">
-                  Built for clubs that expect more from technology, hospitality, and execution.
+                  Built for clubs that expect more from technology, hospitality,
+                  and execution.
                 </p>
                 <div>
                   <Link
@@ -491,33 +541,35 @@ export function Homepage() {
           <FooterColumn
             title="Information"
             links={[
-              { label: 'Club Operations', href: '#platform' },
-              { label: 'CRM', href: '#platform' },
-              { label: 'Reservations', href: '#platform' },
-              { label: 'Membership', href: '#platform' },
-              { label: 'Hotel', href: '#platform' },
-              { label: 'Inventory', href: '#platform' }
+              { label: "Club Operations", href: "#platform" },
+              { label: "CRM", href: "#platform" },
+              { label: "Reservations", href: "#platform" },
+              { label: "Membership", href: "#platform" },
+              { label: "Hotel", href: "#platform" },
+              { label: "Inventory", href: "#platform" },
             ]}
           />
           <FooterColumn
             title="Company"
             links={[
-              { label: 'About', href: '#about' },
-              { label: 'Team', href: '#about' },
-              { label: 'Careers', href: '#contact' },
-              { label: 'Partners', href: '#contact' }
+              { label: "About", href: "#about" },
+              { label: "Team", href: "#about" },
+              { label: "Careers", href: "#contact" },
+              { label: "Partners", href: "#contact" },
             ]}
           />
           <FooterColumn
             title="Accreditations"
             links={[
-              { label: 'GDPR Compliant', href: '#contact' },
-              { label: 'SOC 2 Ready', href: '#contact' },
-              { label: 'ISO 27001', href: '#contact' }
+              { label: "GDPR Compliant", href: "#contact" },
+              { label: "SOC 2 Ready", href: "#contact" },
+              { label: "ISO 27001", href: "#contact" },
             ]}
           />
           <div>
-            <h4 className="mb-4 text-xs uppercase tracking-[0.18em] text-white/55">Follow Us</h4>
+            <h4 className="mb-4 text-xs uppercase tracking-[0.18em] text-white/55">
+              Follow Us
+            </h4>
             <ul className="space-y-2.5">
               <li>
                 <a
@@ -528,7 +580,10 @@ export function Homepage() {
                 </a>
               </li>
               <li>
-                <a href="https://x.com/privana" className="text-sm text-white/68 transition hover:text-white">
+                <a
+                  href="https://x.com/privana"
+                  className="text-sm text-white/68 transition hover:text-white"
+                >
                   X
                 </a>
               </li>
@@ -556,11 +611,16 @@ type FooterColumnProps = {
 function FooterColumn({ title, links }: FooterColumnProps) {
   return (
     <div>
-      <h4 className="mb-4 text-xs uppercase tracking-[0.18em] text-white/55">{title}</h4>
+      <h4 className="mb-4 text-xs uppercase tracking-[0.18em] text-white/55">
+        {title}
+      </h4>
       <ul className="space-y-2.5">
         {links.map((link) => (
           <li key={link.label}>
-            <Link href={link.href} className="text-sm text-white/68 transition hover:text-white">
+            <Link
+              href={link.href}
+              className="text-sm text-white/68 transition hover:text-white"
+            >
               {link.label}
             </Link>
           </li>
