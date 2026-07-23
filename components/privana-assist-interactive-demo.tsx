@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState, type MutableRefObject, type RefObject } from "react";
 import {
   ASSIST_WAIT_MS,
   REDUCED_MOTION_WAIT_MS,
@@ -11,6 +11,10 @@ import {
   type MemberInsight,
   type ScenarioId,
 } from "./privana-assist-demo-data";
+
+const ASSIST_SCROLL_PAUSE_MS = 400;
+const DESKTOP_SCROLL_PAUSE_QUERY = "(min-width: 901px) and (pointer: fine)";
+let assistScrollPauseUsedThisVisit = false;
 
 function usePrefersReducedMotion() {
   const [reduced, setReduced] = useState(false);
@@ -24,6 +28,82 @@ function usePrefersReducedMotion() {
   return reduced;
 }
 
+function useAssistScrollPause({
+  targetRef,
+  hasInteractedRef,
+  reducedMotion,
+}: {
+  targetRef: RefObject<HTMLDivElement | null>;
+  hasInteractedRef: MutableRefObject<boolean>;
+  reducedMotion: boolean;
+}) {
+  const pauseTimerRef = useRef<number | null>(null);
+
+  useEffect(() => {
+    if (reducedMotion || assistScrollPauseUsedThisVisit) return;
+
+    const target = targetRef.current;
+    if (!target) return;
+
+    const desktopMedia = window.matchMedia(DESKTOP_SCROLL_PAUSE_QUERY);
+    if (!desktopMedia.matches) return;
+
+    let cleanupScrollCapture: (() => void) | null = null;
+    const releasePause = () => {
+      if (pauseTimerRef.current) window.clearTimeout(pauseTimerRef.current);
+      pauseTimerRef.current = null;
+      cleanupScrollCapture?.();
+      cleanupScrollCapture = null;
+    };
+
+    const startPause = () => {
+      if (assistScrollPauseUsedThisVisit || hasInteractedRef.current || reducedMotion || !desktopMedia.matches) return;
+      assistScrollPauseUsedThisVisit = true;
+
+      let interceptedScroll = false;
+      let touchStartY = 0;
+      const releaseOnContinuedScroll = (event: WheelEvent | TouchEvent) => {
+        if (!interceptedScroll) {
+          interceptedScroll = true;
+          event.preventDefault();
+        }
+        releasePause();
+      };
+      const rememberTouchStart = (event: TouchEvent) => {
+        touchStartY = event.touches[0]?.clientY ?? 0;
+      };
+      const handleTouchMove = (event: TouchEvent) => {
+        const touchY = event.touches[0]?.clientY ?? touchStartY;
+        if (Math.abs(touchY - touchStartY) > 2) releaseOnContinuedScroll(event);
+      };
+
+      window.addEventListener("wheel", releaseOnContinuedScroll, { passive: false, capture: true });
+      window.addEventListener("touchstart", rememberTouchStart, { passive: true, capture: true });
+      window.addEventListener("touchmove", handleTouchMove, { passive: false, capture: true });
+      cleanupScrollCapture = () => {
+        window.removeEventListener("wheel", releaseOnContinuedScroll, true);
+        window.removeEventListener("touchstart", rememberTouchStart, true);
+        window.removeEventListener("touchmove", handleTouchMove, true);
+      };
+
+      pauseTimerRef.current = window.setTimeout(releasePause, ASSIST_SCROLL_PAUSE_MS);
+    };
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry?.isIntersecting && entry.intersectionRatio >= 1) startPause();
+      },
+      { threshold: 1 },
+    );
+
+    observer.observe(target);
+    return () => {
+      observer.disconnect();
+      releasePause();
+    };
+  }, [hasInteractedRef, reducedMotion, targetRef]);
+}
+
 export function PrivanaAssistInteractiveDemo() {
   const reducedMotion = usePrefersReducedMotion();
   const [phase, setPhase] = useState<DemoPhase>("idle");
@@ -34,6 +114,8 @@ export function PrivanaAssistInteractiveDemo() {
   const typingIntervalRef = useRef<number | null>(null);
   const timeoutRefs = useRef<number[]>([]);
   const conversationRef = useRef<HTMLDivElement>(null);
+  const experienceRef = useRef<HTMLDivElement>(null);
+  const hasInteractedRef = useRef(false);
 
   const clearTimers = useCallback(() => {
     if (typingIntervalRef.current) window.clearInterval(typingIntervalRef.current);
@@ -76,6 +158,7 @@ export function PrivanaAssistInteractiveDemo() {
 
   const playScenario = useCallback(
     (scenario: AssistScenario) => {
+      hasInteractedRef.current = true;
       clearTimers();
       const sequence = sequenceRef.current + 1;
       sequenceRef.current = sequence;
@@ -105,11 +188,19 @@ export function PrivanaAssistInteractiveDemo() {
     [clearTimers, reducedMotion, submitScenario],
   );
 
+  useAssistScrollPause({ targetRef: experienceRef, hasInteractedRef, reducedMotion });
+
   const activeScenario = assistScenarios.find((scenario) => scenario.id === activeScenarioId);
   const controlsLocked = phase === "typing-question" || phase === "submitted" || phase === "waiting-for-assist";
 
   return (
-    <section id="privana-assist-demo" className="privana-assist-demo-section" aria-labelledby="privana-assist-demo-heading">
+    <section
+      id="privana-assist-demo"
+      className="privana-assist-demo-section"
+      aria-labelledby="privana-assist-demo-heading"
+      onPointerDown={() => { hasInteractedRef.current = true; }}
+      onKeyDown={() => { hasInteractedRef.current = true; }}
+    >
       <div className="privana-assist-demo-intro container-shell">
         <div className="privana-assist-demo-heading">
           <p>TRY PRIVANA ASSIST</p>
@@ -119,7 +210,7 @@ export function PrivanaAssistInteractiveDemo() {
       </div>
 
       <div className="privana-assist-demo-experience container-shell">
-        <div className="assist-demo-experience-inner">
+        <div ref={experienceRef} className="assist-demo-experience-inner">
           <div className="assist-product-window">
             <div className="assist-window-header">
               <div className="assist-topbar">
