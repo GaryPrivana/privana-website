@@ -17,7 +17,7 @@ import {
   ReservationsIcon,
 } from "./icons";
 import { aiChips, platformModules } from "./site-data";
-import { ClubCubeCarousel, type ClubSegment } from "./club-cube-carousel";
+import { ClubOverlappingCards, type ClubSegment } from "./club-overlapping-cards";
 import { ContactFormSection } from "./contact-form-section";
 import { HeroScrollPrompt } from "./hero-scroll-prompt";
 import { HomepageHeader } from "./homepage-header";
@@ -87,6 +87,7 @@ const clubSegments: ClubSegment[] = [
       "Shooting Clubs",
       "Wellness Retreats",
     ],
+    supportingCopy: "Golf, racquet, wellness and multi-activity clubs.",
   },
   {
     title: "City Clubs",
@@ -99,6 +100,7 @@ const clubSegments: ClubSegment[] = [
       "Members Lounges",
       "Networking Clubs",
     ],
+    supportingCopy: "Private business, dining and members’ clubs.",
   },
   {
     title: "Arts & Culture Clubs",
@@ -111,6 +113,7 @@ const clubSegments: ClubSegment[] = [
       "Literary Clubs",
       "Performance Venues",
     ],
+    supportingCopy: "Creative, cultural and membership-led institutions.",
   },
   {
     title: "Beach & Leisure Clubs",
@@ -123,6 +126,7 @@ const clubSegments: ClubSegment[] = [
       "Leisure Clubs",
       "Wellness Resorts",
     ],
+    supportingCopy: "Coastal, leisure and resort-style private clubs.",
   },
 ];
 
@@ -286,9 +290,11 @@ export function Homepage() {
 
         <section
           id="solutions"
-          className="bg-[radial-gradient(circle_at_15%_15%,rgba(98,213,206,0.18),transparent_42%),radial-gradient(circle_at_85%_12%,rgba(175,139,218,0.2),transparent_36%),linear-gradient(160deg,#0f0f15,#0a0a0f)] text-white"
+          className="section-pad bg-[radial-gradient(circle_at_15%_15%,rgba(98,213,206,0.18),transparent_42%),radial-gradient(circle_at_85%_12%,rgba(175,139,218,0.2),transparent_36%),linear-gradient(160deg,#0f0f15,#0a0a0f)] text-white"
         >
-          <ClubCubeCarousel segments={clubSegments} />
+          <div className="container-shell">
+            <ClubOverlappingCards segments={clubSegments} />
+          </div>
         </section>
 
         <section
