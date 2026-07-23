@@ -290,7 +290,7 @@ export function Homepage() {
 
         <section
           id="solutions"
-          className="section-pad bg-[radial-gradient(circle_at_15%_15%,rgba(98,213,206,0.18),transparent_42%),radial-gradient(circle_at_85%_12%,rgba(175,139,218,0.2),transparent_36%),linear-gradient(160deg,#0f0f15,#0a0a0f)] text-white"
+          className="bg-[radial-gradient(circle_at_15%_15%,rgba(98,213,206,0.18),transparent_42%),radial-gradient(circle_at_85%_12%,rgba(175,139,218,0.2),transparent_36%),linear-gradient(160deg,#0f0f15,#0a0a0f)] py-14 text-white sm:py-16 lg:py-20"
         >
           <div className="container-shell">
             <ClubOverlappingCards segments={clubSegments} />

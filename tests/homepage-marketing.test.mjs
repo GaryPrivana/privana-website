@@ -6,13 +6,20 @@ const homepage = readFileSync(new URL('../components/homepage.tsx', import.meta.
 const cards = readFileSync(new URL('../components/club-overlapping-cards.tsx', import.meta.url), 'utf8');
 const globals = readFileSync(new URL('../app/globals.css', import.meta.url), 'utf8');
 
+const imageUrls = [
+  'https://privana-website-images.s3.amazonaws.com/GRID_Sporting+and+Lifestyle+Clubs.png',
+  'https://privana-website-images.s3.amazonaws.com/GRID_city+clubs.png',
+  'https://privana-website-images.s3.amazonaws.com/GRID_arts+and+culture+clubs+V2.png',
+  'https://privana-website-images.s3.amazonaws.com/GRID_beach+clubs+V2.png',
+];
+
 test('admin-time card copy uses the requested two-line copy', () => {
   assert.match(homepage, /Assisted member communications\./);
   assert.match(homepage, /<br \/>/);
   assert.match(homepage, /Automated workflows\./);
 });
 
-test('all four club category cards render with titles and supporting copy', () => {
+test('all four club card front text faces render with titles and supporting copy', () => {
   for (const [title, copy] of [
     ['Sporting & Lifestyle Clubs', 'Golf, racquet, wellness and multi-activity clubs.'],
     ['City Clubs', 'Private business, dining and members’ clubs.'],
@@ -22,49 +29,77 @@ test('all four club category cards render with titles and supporting copy', () =
     assert.match(homepage, new RegExp(title.replace('&', '&')));
     assert.match(homepage, new RegExp(copy.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')));
   }
-  assert.match(cards, /segments\.map\(\(segment, index\) =>/);
-  assert.match(cards, /<article\s+key=\{segment\.title\}/);
+  assert.match(cards, /club-card-front/);
+  assert.match(cards, /club-card-title/);
+  assert.match(cards, /club-card-copy/);
 });
 
-test('homepage keeps the required club section heading and dark radial background language', () => {
+test('four image back faces render with the exact current image URLs', () => {
+  for (const url of imageUrls) assert.match(homepage, new RegExp(url.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')));
+  assert.match(cards, /club-card-back/);
+  assert.match(cards, /className=\{`object-cover \$\{visuals\.position\}`\}/);
+  assert.doesNotMatch(cards, /bg-gradient-to-t from-black|font-display|via-black/);
+});
+
+test('homepage keeps the required club section heading and removes the enclosing inner rounded panel', () => {
   assert.match(cards, /Tailored Exclusively for Your Club/);
   assert.match(homepage, /id="solutions"/);
   assert.match(homepage, /radial-gradient\(circle_at_15%_15%,rgba\(98,213,206,0\.18\),transparent_42%\)/);
-  assert.match(cards, /radial-gradient\(circle_at_15%_15%,rgba\(98,213,206,0\.2\),transparent_45%\)/);
+  assert.doesNotMatch(cards, /rounded-\[34px\]|border border-white\/15|shadow-\[0_32px_80px|no duplicate inner radial/);
 });
 
-test('cube implementation and sticky scroll mechanics are removed from the club section', () => {
+test('sticky, scroll-linked mechanics and 2x2 grid assumptions are absent from the club section', () => {
   assert.doesNotMatch(homepage, /ClubCubeCarousel|club-cube-carousel/);
-  assert.doesNotMatch(cards, /Cube|cube|ResizeObserver|activeIndex|aria-live|tabIndex|addEventListener\("scroll"|sticky|min-h-\[340vh\]/);
-  assert.doesNotMatch(globals, /club-cube|perspective|preserve-3d|backface-visibility|rotateY|transform-style/);
+  assert.doesNotMatch(cards, /ResizeObserver|activeIndex|aria-live|addEventListener\("scroll"|sticky|min-h-\[340vh\]|grid-cols-2/);
 });
 
-test('desktop overlapping-card composition classes exist without interactive card semantics', () => {
+test('desktop overlapping editorial composition remains wide and does not recenter on interaction', () => {
   assert.match(cards, /club-overlap-composition/);
   assert.match(cards, /club-overlap-card/);
-  assert.match(cards, /md:left-\[2%\].*md:-rotate-\[5deg\]/s);
-  assert.match(cards, /md:left-\[25%\].*md:-rotate-\[1deg\]/s);
-  assert.match(cards, /md:left-\[49%\].*md:rotate-\[3deg\]/s);
-  assert.match(cards, /md:left-\[72%\].*md:-rotate-\[3deg\]/s);
-  assert.doesNotMatch(cards, /<button\b|role="button"|onClick|group-hover|hover:/);
+  assert.match(cards, /md:left-\[4%\].*md:-rotate-\[7deg\]/s);
+  assert.match(cards, /md:left-\[20\.5%\].*md:-rotate-\[1\.5deg\]/s);
+  assert.match(cards, /md:left-\[38\.5%\].*md:rotate-\[4\.5deg\]/s);
+  assert.match(cards, /md:left-\[54%\].*md:-rotate-\[3deg\]/s);
+  assert.match(globals, /max-width: 64rem/);
+  assert.doesNotMatch(globals, /left: 50%|translateX\(-50%\)/);
+});
+
+test('3D flip face classes and Safari-compatible backface visibility exist', () => {
+  assert.match(cards, /club-card-inner/);
+  assert.match(cards, /club-card-face club-card-front/);
+  assert.match(cards, /club-card-face club-card-back/);
+  assert.match(globals, /transform-style: preserve-3d;/);
+  assert.match(globals, /-webkit-transform-style: preserve-3d;/);
+  assert.match(globals, /backface-visibility: hidden;/);
+  assert.match(globals, /-webkit-backface-visibility: hidden;/);
+  assert.match(globals, /rotateY\(180deg\)/);
+});
+
+test('hover and keyboard focus raise z-index, lift, and flip in place', () => {
+  assert.match(globals, /club-overlap-card:hover,[\s\S]*club-overlap-card:focus-visible,[\s\S]*z-index: 20;/);
+  assert.match(globals, /transform: translateY\(-6px\);/);
+  assert.match(globals, /club-overlap-card:hover \.club-card-inner,[\s\S]*club-overlap-card:focus-visible \.club-card-inner,[\s\S]*transform: rotateY\(180deg\);/);
+  assert.match(cards, /aria-label=\{`Show \$\{segment\.title\} image`\}/);
+});
+
+test('mobile removes overlap and rotation and supports tap-to-flip one card at a time', () => {
+  assert.match(globals, /@media \(max-width: 767px\)[\s\S]*\.club-overlap-card \{[\s\S]*rotate: 0deg !important;[\s\S]*transform: none !important;[\s\S]*animation: none !important;/);
+  assert.match(globals, /\.club-overlap-composition \{[\s\S]*display: grid;[\s\S]*gap: 1rem;/);
+  assert.match(cards, /const \[flippedCard, setFlippedCard\] = useState<string \| null>\(null\)/);
+  assert.match(cards, /current === segment\.title \? null : segment\.title/);
+  assert.match(cards, /aria-pressed=\{isFlipped\}/);
+  assert.match(cards, /is-flipped/);
 });
 
 test('floating animation is vertical-only and disabled for reduced-motion users', () => {
-  assert.match(globals, /@keyframes club-card-float-up[\s\S]*translate: 0 -8px;/);
-  assert.match(globals, /@keyframes club-card-float-down[\s\S]*translate: 0 8px;/);
+  assert.match(globals, /@keyframes club-card-float-up[\s\S]*translate: 0 -4px;/);
+  assert.match(globals, /@keyframes club-card-float-down[\s\S]*translate: 0 4px;/);
   assert.match(globals, /club-card-float-slow[\s\S]*6\.8s/);
   assert.match(globals, /club-card-float-medium[\s\S]*7\.4s/);
   assert.match(globals, /club-card-float-late[\s\S]*5\.9s/);
   assert.match(globals, /club-card-float-long[\s\S]*7\.9s/);
+  assert.match(globals, /animation-play-state: paused;/);
   assert.match(globals, /@media \(prefers-reduced-motion: reduce\)[\s\S]*animation: none !important;/);
-  assert.doesNotMatch(globals, /scale\(|rotate\(/);
-});
-
-test('mobile fallback removes overlap and rotation while preserving readable cards', () => {
-  assert.match(globals, /@media \(max-width: 767px\)[\s\S]*\.club-overlap-card \{[\s\S]*rotate: 0deg !important;[\s\S]*transform: none !important;[\s\S]*animation: none !important;/);
-  assert.match(globals, /\.club-overlap-composition \{[\s\S]*display: grid;[\s\S]*gap: 1rem;/);
-  assert.match(cards, /className="object-cover"/);
-  assert.match(cards, /bg-gradient-to-t from-black\/88 via-black\/28 to-transparent/);
 });
 
 test('comparison section keeps the approved content and premium paired rows', () => {
