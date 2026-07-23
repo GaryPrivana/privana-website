@@ -100,49 +100,60 @@ export function ClubCubeCarousel({ segments }: ClubCubeCarouselProps) {
   return (
     <div
       ref={sectionRef}
-      className="club-cube-section relative md:min-h-[280vh]"
+      className="club-cube-section relative md:min-h-[340vh]"
     >
-      <div className="club-cube-sticky md:sticky md:top-0 md:flex md:min-h-screen md:items-center md:justify-center md:py-20">
-        <div className="mx-auto w-full max-w-5xl">
-          <div className="mb-6 flex items-center justify-center gap-3 text-xs font-semibold uppercase tracking-[0.18em] text-[#554b66]/70 md:mb-8">
-            <span>
-              {String(activeIndex + 1).padStart(2, "0")} /{" "}
-              {String(segments.length).padStart(2, "0")}
-            </span>
-            <span aria-hidden="true" className="h-px w-10 bg-[#cfc4df]" />
-            <span className="text-[#2b2437]">
-              {segments[activeIndex]?.title}
-            </span>
-          </div>
+      <div className="club-cube-sticky md:sticky md:top-0 md:flex md:min-h-screen md:items-center md:justify-center md:py-10 lg:py-12">
+        <div className="container-shell mx-auto w-full">
+          <div className="mx-auto flex w-full max-w-5xl flex-col items-center">
+            <h3 className="max-w-[18ch] text-center text-pretty text-[2.15rem] font-semibold leading-[1.03] tracking-[-0.03em] text-white sm:text-[2.75rem] lg:text-[3.05rem]">
+              Tailored Exclusively for Your Club
+            </h3>
 
-          <div
-            className="club-cube-stage mx-auto hidden md:block"
-            aria-live="polite"
-          >
-            <div ref={cubeRef} className="club-cube">
-              {segments.map((segment, index) => (
-                <article
-                  key={segment.title}
-                  className="club-cube-face group absolute inset-0 overflow-hidden rounded-[24px] text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#8a6bc0] focus-visible:ring-offset-4 focus-visible:ring-offset-white"
-                  style={{ transform: faceTransforms[index] }}
-                  tabIndex={activeIndex === index ? 0 : -1}
-                  aria-hidden={activeIndex !== index}
-                >
-                  <ClubSegmentCard segment={segment} sizes="min(82vw, 760px)" />
-                </article>
-              ))}
+            <div className="mt-6 lg:mt-7">
+              <div
+                className="club-cube-stage mx-auto hidden md:block"
+                aria-live="polite"
+              >
+                <div ref={cubeRef} className="club-cube">
+                  {segments.map((segment, index) => (
+                    <article
+                      key={segment.title}
+                      className="club-cube-face group absolute inset-0 overflow-hidden rounded-[24px] text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/80 focus-visible:ring-offset-4 focus-visible:ring-offset-[#0a0a0f]"
+                      style={{ transform: faceTransforms[index] }}
+                      tabIndex={activeIndex === index ? 0 : -1}
+                      aria-hidden={activeIndex !== index}
+                    >
+                      <ClubSegmentCard
+                        segment={segment}
+                        sizes="min(82vw, 760px)"
+                      />
+                    </article>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            <div className="mt-5 flex items-center justify-center gap-3 rounded-full border border-white/12 bg-white/[0.06] px-4 py-2 text-xs font-semibold uppercase tracking-[0.18em] text-white/70 shadow-[0_16px_40px_rgba(0,0,0,0.18)] backdrop-blur md:mt-6">
+              <span>
+                {String(activeIndex + 1).padStart(2, "0")} /{" "}
+                {String(segments.length).padStart(2, "0")}
+              </span>
+              <span aria-hidden="true" className="h-px w-8 bg-white/30" />
+              <span className="text-white">{segments[activeIndex]?.title}</span>
             </div>
           </div>
 
-          <div className="club-cube-fallback grid gap-5 md:hidden">
-            {segments.map((segment) => (
-              <article
-                key={segment.title}
-                className="group relative aspect-[6/5] overflow-hidden rounded-[24px]"
-              >
-                <ClubSegmentCard segment={segment} sizes="100vw" />
-              </article>
-            ))}
+          <div className="mt-8">
+            <div className="club-cube-fallback grid gap-5 md:hidden">
+              {segments.map((segment) => (
+                <article
+                  key={segment.title}
+                  className="group relative aspect-[6/5] overflow-hidden rounded-[24px]"
+                >
+                  <ClubSegmentCard segment={segment} sizes="100vw" />
+                </article>
+              ))}
+            </div>
           </div>
         </div>
       </div>

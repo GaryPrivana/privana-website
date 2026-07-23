@@ -76,15 +76,15 @@ body {
 }
 
 .club-cube-section {
-  --cube-size: min(62vw, 42rem);
+  --cube-size: min(52vw, 34.5rem);
   --cube-depth: calc(var(--cube-size) / 2);
 }
 
 .club-cube-stage {
   height: var(--cube-size);
   width: var(--cube-size);
-  max-height: min(72vh, 42rem);
-  max-width: min(86vw, 42rem);
+  max-height: min(62vh, 34.5rem);
+  max-width: min(76vw, 34.5rem);
   perspective: 1500px;
 }
 
@@ -124,7 +124,7 @@ body {
 
 @media (max-width: 1023px) {
   .club-cube-section {
-    --cube-size: min(72vw, 34rem);
+    --cube-size: min(62vw, 29rem);
   }
 
   .club-cube-stage {

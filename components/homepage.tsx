@@ -284,15 +284,11 @@ export function Homepage() {
           </div>
         </section>
 
-        <section id="solutions" className="section-pad bg-white">
-          <div className="container-shell space-y-10 sm:space-y-12">
-            <h3
-              className={`${heroFont.className} mx-auto max-w-4xl text-center text-2xl font-semibold leading-[1.04] tracking-[-0.02em] text-[#111017] sm:text-3xl lg:text-4xl`}
-            >
-              Tailored Exclusively for Your Club
-            </h3>
-            <ClubCubeCarousel segments={clubSegments} />
-          </div>
+        <section
+          id="solutions"
+          className="bg-[radial-gradient(circle_at_15%_15%,rgba(98,213,206,0.18),transparent_42%),radial-gradient(circle_at_85%_12%,rgba(175,139,218,0.2),transparent_36%),linear-gradient(160deg,#0f0f15,#0a0a0f)] text-white"
+        >
+          <ClubCubeCarousel segments={clubSegments} />
         </section>
 
         <section
