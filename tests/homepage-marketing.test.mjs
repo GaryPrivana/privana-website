@@ -56,11 +56,12 @@ test('sticky, scroll-linked mechanics and 2x2 grid assumptions are absent from t
 test('desktop overlapping editorial composition remains wide and does not recenter on interaction', () => {
   assert.match(cards, /club-overlap-composition/);
   assert.match(cards, /club-overlap-card/);
-  assert.match(cards, /md:left-\[4%\].*md:-rotate-\[7deg\]/s);
-  assert.match(cards, /md:left-\[20\.5%\].*md:-rotate-\[1\.5deg\]/s);
-  assert.match(cards, /md:left-\[38\.5%\].*md:rotate-\[4\.5deg\]/s);
-  assert.match(cards, /md:left-\[54%\].*md:-rotate-\[3deg\]/s);
-  assert.match(globals, /max-width: 64rem/);
+  assert.match(cards, /md:left-\[0%\].*md:-rotate-\[7deg\]/s);
+  assert.match(cards, /md:left-\[21%\].*md:-rotate-\[1\.5deg\]/s);
+  assert.match(cards, /md:left-\[42%\].*md:rotate-\[4\.5deg\]/s);
+  assert.match(cards, /md:left-\[63%\].*md:-rotate-\[3deg\]/s);
+  assert.match(globals, /max-width: 80rem/);
+  assert.match(globals, /width: min\(42vw, 33\.25rem\)/);
   assert.doesNotMatch(globals, /left: 50%|translateX\(-50%\)/);
 });
 
@@ -76,7 +77,8 @@ test('3D flip face classes and Safari-compatible backface visibility exist', () 
 });
 
 test('hover and keyboard focus raise z-index, lift, and flip in place', () => {
-  assert.match(globals, /club-overlap-card:hover,[\s\S]*club-overlap-card:focus-visible,[\s\S]*z-index: 20;/);
+  assert.match(globals, /club-overlap-card:hover,[\s\S]*club-overlap-card:focus-visible,[\s\S]*club-overlap-card\.is-active,[\s\S]*z-index: 50;/);
+  assert.match(cards, /const \[activeCard, setActiveCard\] = useState<string \| null>\(null\)/);
   assert.match(globals, /transform: translateY\(-6px\);/);
   assert.match(globals, /club-overlap-card:hover \.club-card-inner,[\s\S]*club-overlap-card:focus-visible \.club-card-inner,[\s\S]*transform: rotateY\(180deg\);/);
   assert.match(cards, /aria-label=\{`Show \$\{segment\.title\} image`\}/);

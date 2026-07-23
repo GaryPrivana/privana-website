@@ -15,10 +15,10 @@ type ClubOverlappingCardsProps = {
 };
 
 const cardClasses = [
-  "club-card-float-slow md:left-[4%] md:top-[3.05rem] md:-rotate-[7deg] lg:left-[4%]",
-  "club-card-float-medium md:left-[20.5%] md:top-[0.45rem] md:-rotate-[1.5deg] lg:left-[20.5%]",
-  "club-card-float-late md:left-[38.5%] md:top-[2.2rem] md:rotate-[4.5deg] lg:left-[38.5%]",
-  "club-card-float-long md:left-[54%] md:top-[1.1rem] md:-rotate-[3deg] lg:left-[54%]",
+  "club-card-float-slow md:left-[0%] md:top-[3.05rem] md:-rotate-[7deg] lg:left-[0%]",
+  "club-card-float-medium md:left-[21%] md:top-[0.45rem] md:-rotate-[1.5deg] lg:left-[21%]",
+  "club-card-float-late md:left-[42%] md:top-[2.2rem] md:rotate-[4.5deg] lg:left-[42%]",
+  "club-card-float-long md:left-[63%] md:top-[1.1rem] md:-rotate-[3deg] lg:left-[63%]",
 ];
 
 const cardVisuals = [
@@ -52,6 +52,7 @@ const displayTitles: Record<string, string> = {
 
 export function ClubOverlappingCards({ segments }: ClubOverlappingCardsProps) {
   const [flippedCard, setFlippedCard] = useState<string | null>(null);
+  const [activeCard, setActiveCard] = useState<string | null>(null);
 
   return (
     <div className="mx-auto max-w-7xl">
@@ -71,12 +72,26 @@ export function ClubOverlappingCards({ segments }: ClubOverlappingCardsProps) {
               type="button"
               aria-label={`Show ${segment.title} image`}
               aria-pressed={isFlipped}
+              onPointerEnter={() => setActiveCard(segment.title)}
+              onPointerLeave={() =>
+                setActiveCard((current) =>
+                  current === segment.title ? null : current,
+                )
+              }
+              onFocus={() => setActiveCard(segment.title)}
+              onBlur={() =>
+                setActiveCard((current) =>
+                  current === segment.title ? null : current,
+                )
+              }
               onClick={() =>
                 setFlippedCard((current) =>
                   current === segment.title ? null : segment.title,
                 )
               }
-              className={`club-overlap-card ${isFlipped ? "is-flipped" : ""} ${cardClasses[index] ?? ""}`}
+              className={`club-overlap-card ${
+                activeCard === segment.title ? "is-active" : ""
+              } ${isFlipped ? "is-flipped" : ""} ${cardClasses[index] ?? ""}`}
             >
               <span className="sr-only">
                 {segment.title}. {segment.supportingCopy}

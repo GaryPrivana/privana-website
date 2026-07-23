@@ -191,7 +191,7 @@ body {
 .club-card-title {
   display: grid;
   margin-top: auto;
-  margin-bottom: auto;
+  margin-bottom: clamp(1.45rem, 3.8vw, 3.2rem);
   text-align: left;
   font-size: clamp(3.25rem, 5.7vw, 4.95rem);
   font-weight: 700;
@@ -211,7 +211,7 @@ body {
 .club-card-front-stone {
   color: #161719;
   border-color: rgba(255, 255, 255, 0.36);
-  background: linear-gradient(145deg, #f3eee2 0%, #d7d1c5 54%, #eee8dd 100%);
+  background: linear-gradient(145deg, #eee9de 0%, #d2ccbf 54%, #e7e1d6 100%);
 }
 
 .club-card-front-stone .club-card-glow {
@@ -222,7 +222,7 @@ body {
 
 .club-card-front-blue {
   color: #ffffff;
-  background: linear-gradient(145deg, #092653 0%, #0a3e8b 52%, #061936 100%);
+  background: linear-gradient(145deg, #092248 0%, #10396f 52%, #07172e 100%);
 }
 
 .club-card-front-blue .club-card-glow {
@@ -233,7 +233,7 @@ body {
 
 .club-card-front-charcoal {
   color: #ffffff;
-  background: linear-gradient(145deg, #17191c 0%, #26272a 50%, #0c0d0f 100%);
+  background: linear-gradient(145deg, #17191b 0%, #242528 50%, #0d0e10 100%);
 }
 
 .club-card-front-charcoal .club-card-glow {
@@ -244,19 +244,20 @@ body {
 
 .club-card-front-teal {
   color: #ffffff;
-  background: linear-gradient(145deg, #111416 0%, #182325 52%, #070b0c 100%);
+  background: linear-gradient(145deg, #0e1112 0%, #14191a 52%, #070909 100%);
 }
 
 .club-card-front-teal .club-card-glow {
-  background: radial-gradient(circle at 26% 16%, rgba(195, 221, 213, 0.1), transparent 42%),
-    radial-gradient(circle at 82% 78%, rgba(57, 127, 116, 0.16), transparent 50%),
+  background: radial-gradient(circle at 26% 16%, rgba(190, 216, 207, 0.075), transparent 42%),
+    radial-gradient(circle at 82% 78%, rgba(53, 103, 92, 0.105), transparent 50%),
     linear-gradient(180deg, transparent 48%, rgba(0, 0, 0, 0.22));
 }
 
 .club-overlap-card:hover,
 .club-overlap-card:focus-visible,
+.club-overlap-card.is-active,
 .club-overlap-card.is-flipped {
-  z-index: 20;
+  z-index: 50;
 }
 
 .club-overlap-card:hover .club-card-inner,
@@ -270,13 +271,13 @@ body {
   .club-overlap-composition {
     position: relative;
     height: 35.5rem;
-    max-width: 64rem;
+    max-width: 80rem;
     margin-inline: auto;
   }
 
   .club-overlap-card {
     position: absolute;
-    width: min(36vw, 27rem);
+    width: min(42vw, 33.25rem);
     min-height: 33.5rem;
   }
 
@@ -287,12 +288,14 @@ body {
 
   .club-overlap-card:hover,
   .club-overlap-card:focus-visible,
+  .club-overlap-card.is-active,
   .club-overlap-card.is-flipped {
     transform: translateY(-6px);
   }
 
   .club-overlap-card:hover,
   .club-overlap-card:focus-visible,
+  .club-overlap-card.is-active,
   .club-overlap-card.is-flipped {
     animation-play-state: paused;
   }
@@ -321,7 +324,7 @@ body {
   }
 
   .club-overlap-card {
-    width: 18rem;
+    width: 21.75rem;
     min-height: 27.25rem;
   }
 
