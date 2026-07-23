@@ -238,7 +238,7 @@ export function Homepage() {
 
         <PrivanaAssistInteractiveDemo />
 
-        <section className="border-y border-[#e0dbea] bg-[#f3eff9] py-16 sm:py-20">
+        <section className="authority-value-transition-section">
           <div className="container-shell grid gap-5 md:grid-cols-2 xl:grid-cols-3">
             {authorityValueCards.map((card) => (
               <article
