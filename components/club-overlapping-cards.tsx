@@ -1,4 +1,7 @@
+"use client";
+
 import Image from "next/image";
+import { useState } from "react";
 
 export type ClubSegment = {
   title: string;
@@ -12,46 +15,104 @@ type ClubOverlappingCardsProps = {
 };
 
 const cardClasses = [
-  "club-card-float-slow md:left-[2%] md:top-[2.25rem] md:-rotate-[5deg] lg:left-[1%]",
-  "club-card-float-medium md:left-[25%] md:top-[0.5rem] md:-rotate-[1deg] lg:left-[25%]",
-  "club-card-float-late md:left-[49%] md:top-[1.4rem] md:rotate-[3deg] lg:left-[49%]",
-  "club-card-float-long md:left-[72%] md:top-[3.15rem] md:-rotate-[3deg] lg:left-[72%]",
+  "club-card-float-slow md:left-[4%] md:top-[3.05rem] md:-rotate-[7deg] lg:left-[4%]",
+  "club-card-float-medium md:left-[20.5%] md:top-[0.45rem] md:-rotate-[1.5deg] lg:left-[20.5%]",
+  "club-card-float-late md:left-[38.5%] md:top-[2.2rem] md:rotate-[4.5deg] lg:left-[38.5%]",
+  "club-card-float-long md:left-[54%] md:top-[1.1rem] md:-rotate-[3deg] lg:left-[54%]",
 ];
 
-export function ClubOverlappingCards({ segments }: ClubOverlappingCardsProps) {
-  return (
-    <div className="relative overflow-hidden rounded-[34px] border border-white/15 bg-[radial-gradient(circle_at_15%_15%,rgba(98,213,206,0.2),transparent_45%),radial-gradient(circle_at_85%_10%,rgba(175,139,218,0.2),transparent_35%),linear-gradient(160deg,#0f0f15,#0a0a0f)] px-5 py-9 shadow-[0_32px_80px_rgba(8,8,12,0.45)] sm:px-8 sm:py-10 lg:px-10 lg:py-12">
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-white/5 via-transparent to-transparent" />
-      <div className="relative z-10 mx-auto flex max-w-6xl flex-col items-center">
-        <h3 className="max-w-[18ch] text-center text-pretty text-[2.15rem] font-semibold leading-[1.03] tracking-[-0.03em] text-white sm:text-[2.75rem] lg:text-[3.05rem]">
-          Tailored Exclusively for Your Club
-        </h3>
+const cardVisuals = [
+  {
+    tone: "club-card-front-stone",
+    mark: "M28 58C42 42 54 26 76 22C68 42 54 58 28 58ZM30 66C56 66 72 52 84 34C84 62 66 80 38 84C34 78 31 72 30 66Z",
+    position: "object-[50%_42%]",
+  },
+  {
+    tone: "club-card-front-blue",
+    mark: "M28 30H84V42H28V30ZM34 50H78V62H34V50ZM42 70H70V82H42V70Z",
+    position: "object-[50%_48%]",
+  },
+  {
+    tone: "club-card-front-charcoal",
+    mark: "M56 22L68 46L94 50L75 68L80 94L56 81L32 94L37 68L18 50L44 46L56 22Z",
+    position: "object-[52%_56%]",
+  },
+  {
+    tone: "club-card-front-teal",
+    mark: "M20 67C33 54 46 54 59 67C70 78 82 78 94 67V82C80 92 67 91 55 80C43 69 32 69 20 82V67Z",
+    position: "object-[55%_48%]",
+  },
+];
 
-        <div className="club-overlap-composition mt-7 w-full md:mt-8">
-          {segments.map((segment, index) => (
-            <article
+const displayTitles: Record<string, string> = {
+  "Sporting & Lifestyle Clubs": "Sporting &\nLifestyle Clubs",
+  "Arts & Culture Clubs": "Arts & Culture\nClubs",
+  "Beach & Leisure Clubs": "Beach & Leisure\nClubs",
+};
+
+export function ClubOverlappingCards({ segments }: ClubOverlappingCardsProps) {
+  const [flippedCard, setFlippedCard] = useState<string | null>(null);
+
+  return (
+    <div className="mx-auto max-w-7xl">
+      <h3 className="mx-auto max-w-[18ch] text-center text-pretty text-[2.15rem] font-semibold leading-[1.03] tracking-[-0.03em] text-white sm:text-[2.75rem] lg:text-[3.05rem]">
+        Tailored Exclusively for Your Club
+      </h3>
+
+      <div className="club-overlap-composition mt-3 w-full sm:mt-4 md:mt-5">
+        {segments.map((segment, index) => {
+          const visuals = cardVisuals[index] ?? cardVisuals[0];
+          const displayTitle = displayTitles[segment.title] ?? segment.title;
+          const isFlipped = flippedCard === segment.title;
+
+          return (
+            <button
               key={segment.title}
-              className={`club-overlap-card ${cardClasses[index] ?? ""}`}
+              type="button"
+              aria-label={`Show ${segment.title} image`}
+              aria-pressed={isFlipped}
+              onClick={() =>
+                setFlippedCard((current) =>
+                  current === segment.title ? null : segment.title,
+                )
+              }
+              className={`club-overlap-card ${isFlipped ? "is-flipped" : ""} ${cardClasses[index] ?? ""}`}
             >
-              <Image
-                src={segment.image}
-                alt={segment.title}
-                fill
-                className="object-cover"
-                sizes="(max-width: 767px) 100vw, (max-width: 1023px) 34vw, 320px"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/88 via-black/28 to-transparent" />
-              <div className="absolute inset-x-0 bottom-0 p-5 text-left sm:p-6">
-                <h4 className="font-display text-[1.28rem] font-medium leading-tight tracking-[-0.01em] text-white sm:text-[1.45rem]">
-                  {segment.title}
-                </h4>
-                <p className="mt-2 max-w-[18rem] text-sm leading-relaxed text-white/74">
-                  {segment.supportingCopy}
-                </p>
-              </div>
-            </article>
-          ))}
-        </div>
+              <span className="sr-only">
+                {segment.title}. {segment.supportingCopy}
+              </span>
+              <span className="club-card-inner">
+                <span className={`club-card-face club-card-front ${visuals.tone}`}>
+                  <span className="club-card-glow" />
+                  <span className="club-card-noise" />
+                  <svg
+                    className="club-card-mark"
+                    viewBox="0 0 112 112"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path d={visuals.mark} fill="currentColor" />
+                  </svg>
+                  <span className="club-card-title">
+                    {displayTitle.split("\n").map((line) => (
+                      <span key={line}>{line}</span>
+                    ))}
+                  </span>
+                  <span className="club-card-copy">{segment.supportingCopy}</span>
+                </span>
+                <span className="club-card-face club-card-back">
+                  <Image
+                    src={segment.image}
+                    alt=""
+                    fill
+                    className={`object-cover ${visuals.position}`}
+                    sizes="(max-width: 767px) 92vw, (max-width: 1023px) 36vw, 430px"
+                  />
+                </span>
+              </span>
+            </button>
+          );
+        })}
       </div>
     </div>
   );
