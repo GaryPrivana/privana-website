@@ -75,87 +75,111 @@ body {
   animation: hero-scroll-drift 2.8s ease-in-out infinite;
 }
 
-.club-cube-section {
-  --cube-size: min(52vw, 34.5rem);
-  --cube-depth: calc(var(--cube-size) / 2);
+@keyframes club-card-float-up {
+  0%,
+  100% {
+    translate: 0 0;
+  }
+  50% {
+    translate: 0 -8px;
+  }
 }
 
-.club-cube-stage {
-  height: var(--cube-size);
-  width: var(--cube-size);
-  max-height: min(62vh, 34.5rem);
-  max-width: min(76vw, 34.5rem);
-  perspective: 1500px;
+@keyframes club-card-float-down {
+  0%,
+  100% {
+    translate: 0 0;
+  }
+  50% {
+    translate: 0 8px;
+  }
 }
 
-.club-cube {
+.club-overlap-composition {
+  display: grid;
+  gap: 1rem;
+}
+
+.club-overlap-card {
   position: relative;
-  height: 100%;
-  width: 100%;
-  -webkit-transform-style: preserve-3d;
-  transform-style: preserve-3d;
-  transition: transform 120ms linear;
+  min-height: 26rem;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 1.65rem;
+  background: rgba(255, 255, 255, 0.05);
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.36),
+    0 12px 36px rgba(42, 30, 66, 0.22);
+  isolation: isolate;
 }
 
-.club-cube::after {
-  content: "";
-  position: absolute;
-  inset: 8%;
-  -webkit-transform: translateZ(calc(var(--cube-depth) * -1.06)) translateY(12%);
-  transform: translateZ(calc(var(--cube-depth) * -1.06)) translateY(12%);
-  border-radius: 32px;
-  background: radial-gradient(
-    ellipse at center,
-    rgba(41, 29, 66, 0.28),
-    transparent 68%
-  );
-  filter: blur(18px);
-}
-
-.club-cube-face {
-  -webkit-backface-visibility: hidden;
-  backface-visibility: hidden;
-  box-shadow: 0 28px 70px rgba(27, 20, 43, 0.24);
-}
-
-.club-cube-face[aria-hidden="true"] {
-  pointer-events: none;
-}
-
-@media (max-width: 1023px) {
-  .club-cube-section {
-    --cube-size: min(62vw, 29rem);
+@media (min-width: 768px) {
+  .club-overlap-composition {
+    position: relative;
+    height: 31rem;
+    max-width: 63rem;
+    margin-inline: auto;
   }
 
-  .club-cube-stage {
-    perspective: 1100px;
+  .club-overlap-card {
+    position: absolute;
+    width: min(29vw, 17.75rem);
+    min-height: 25.75rem;
+    will-change: translate;
+  }
+
+  .club-overlap-card:nth-child(2),
+  .club-overlap-card:nth-child(3) {
+    z-index: 2;
+    width: min(30vw, 18.75rem);
+    min-height: 27.25rem;
+  }
+
+  .club-card-float-slow {
+    animation: club-card-float-up 6.8s ease-in-out infinite;
+  }
+
+  .club-card-float-medium {
+    animation: club-card-float-down 7.4s ease-in-out -1.2s infinite;
+  }
+
+  .club-card-float-late {
+    animation: club-card-float-up 5.9s ease-in-out -2.1s infinite;
+  }
+
+  .club-card-float-long {
+    animation: club-card-float-down 7.9s ease-in-out -0.7s infinite;
   }
 }
 
-@media (max-width: 767px), (prefers-reduced-motion: reduce) {
-  .club-cube-section {
-    min-height: auto;
+@media (min-width: 768px) and (max-width: 1023px) {
+  .club-overlap-composition {
+    height: 28rem;
+    max-width: 45rem;
   }
 
-  .club-cube-sticky {
-    position: static;
-    min-height: auto;
+  .club-overlap-card {
+    width: 14.25rem;
+    min-height: 23.75rem;
   }
 
-  .club-cube,
-  .club-cube-face,
-  .club-cube-stage {
+  .club-overlap-card:nth-child(2),
+  .club-overlap-card:nth-child(3) {
+    width: 15rem;
+    min-height: 24.75rem;
+  }
+}
+
+@media (max-width: 767px) {
+  .club-overlap-card {
+    min-height: 24rem;
+    rotate: 0deg !important;
     transform: none !important;
-    transition: none !important;
+    animation: none !important;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .club-cube-stage {
-    display: none !important;
-  }
-
-  .club-cube-fallback {
-    display: grid !important;
+  .club-overlap-card {
+    animation: none !important;
   }
 }
