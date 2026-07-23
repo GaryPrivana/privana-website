@@ -42,6 +42,7 @@ export const showcaseChapters: Chapter[] = [
 ];
 
 const clamp01 = (value: number) => Math.min(1, Math.max(0, value));
+const CHAPTER_REST_PORTION = 0.56;
 const lerp = (start: number, end: number, amount: number) => start + (end - start) * amount;
 const ease = (value: number) => value * value * (3 - 2 * value);
 const px = (value: number) => `${value.toFixed(2)}px`;
@@ -60,11 +61,13 @@ const objectStates = [
 
 export function getShowcaseValues(rawProgress: number, total = showcaseChapters.length): ShowcaseValues {
   const progress = clamp01(rawProgress);
-  const chapterFloat = progress * (total - 1);
-  const baseIndex = Math.min(total - 1, Math.floor(chapterFloat));
-  const activeIndex = Math.min(total - 1, Math.max(0, Math.round(chapterFloat)));
-  const localProgress = baseIndex >= total - 1 ? 1 : chapterFloat - baseIndex;
+  const chapterFloat = progress * total;
+  const activeIndex = Math.min(total - 1, Math.max(0, Math.floor(chapterFloat)));
+  const segmentProgress = activeIndex >= total - 1 ? 0 : chapterFloat - activeIndex;
+  const transitionStart = CHAPTER_REST_PORTION;
+  const localProgress = activeIndex >= total - 1 ? 0 : clamp01((segmentProgress - transitionStart) / (1 - transitionStart));
   const easedProgress = ease(localProgress);
+  const baseIndex = activeIndex;
   const current = objectStates[baseIndex] ?? objectStates[0];
   const next = objectStates[Math.min(total - 1, baseIndex + 1)] ?? current;
   const mix = (key: keyof typeof current) => lerp(current[key], next[key], easedProgress);
@@ -121,7 +124,7 @@ export function PrivanaFeatureShowcase({ demoLink }: { demoLink: string }) {
       const el = sectionRef.current;
       if (!el) return;
       const rect = el.getBoundingClientRect();
-      const scrollable = Math.max(1, rect.height - window.innerHeight);
+      const scrollable = Math.max(1, el.offsetHeight - window.innerHeight);
       const values = getShowcaseValues(-rect.top / scrollable);
       for (const [property, value] of Object.entries(values.css)) el.style.setProperty(property, value);
       if (values.activeIndex !== activeIndexRef.current) {

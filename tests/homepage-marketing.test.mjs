@@ -276,10 +276,18 @@ test("feature showcase emits final unit-bearing CSS values without CSS var multi
   assert.match(featureShowcase, /"--object-rotate-x": deg\(mix\("rx"\)\)/);
   assert.match(featureShowcase, /"--panel-one-x": px\(mix\("p1x"\)\)/);
   assert.match(featureShowcase, /"--ambient-x": `\$\{mix\("ambientX"\)\.toFixed\(2\)\}%`/);
-  assert.match(featureShowcase, /const activeIndex = Math\.min\(total - 1, Math\.max\(0, Math\.round\(chapterFloat\)\)\)/);
-  assert.match(featureShowcase, /const localProgress = baseIndex >= total - 1 \? 1 : chapterFloat - baseIndex/);
+  assert.match(featureShowcase, /const CHAPTER_REST_PORTION = 0\.56/);
+  assert.match(featureShowcase, /const chapterFloat = progress \* total/);
+  assert.match(featureShowcase, /const activeIndex = Math\.min\(total - 1, Math\.max\(0, Math\.floor\(chapterFloat\)\)\)/);
+  assert.match(featureShowcase, /const localProgress = activeIndex >= total - 1 \? 0 : clamp01/);
   assert.match(featureShowcase, /const easedProgress = ease\(localProgress\)/);
   assert.doesNotMatch(globals, /calc\([^)]*var\([^)]*\)[^)]*\*/);
+});
+
+test("feature showcase desktop sticky pin has a bounded viewport and visible scroll container", () => {
+  assert.match(globals, /\.privana-feature-showcase \{[\s\S]*min-height: 900svh;[\s\S]*overflow: visible;/);
+  assert.match(globals, /\.privana-feature-pin \{[\s\S]*position: sticky;[\s\S]*top: 0;[\s\S]*height: 100svh;[\s\S]*min-height: 0;[\s\S]*box-sizing: border-box;[\s\S]*overflow: hidden;/);
+  assert.match(featureShowcase, /const scrollable = Math\.max\(1, el\.offsetHeight - window\.innerHeight\)/);
 });
 
 test("feature showcase updates continuous progress outside React state", () => {
