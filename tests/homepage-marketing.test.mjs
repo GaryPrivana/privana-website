@@ -1,102 +1,234 @@
-import { readFileSync } from 'node:fs';
-import test from 'node:test';
-import assert from 'node:assert/strict';
+import { readFileSync } from "node:fs";
+import test from "node:test";
+import assert from "node:assert/strict";
 
-const homepage = readFileSync(new URL('../components/homepage.tsx', import.meta.url), 'utf8');
-const cards = readFileSync(new URL('../components/club-overlapping-cards.tsx', import.meta.url), 'utf8');
-const globals = readFileSync(new URL('../app/globals.css', import.meta.url), 'utf8');
+const homepage = readFileSync(
+  new URL("../components/homepage.tsx", import.meta.url),
+  "utf8",
+);
+const cards = readFileSync(
+  new URL("../components/club-overlapping-cards.tsx", import.meta.url),
+  "utf8",
+);
+const globals = readFileSync(
+  new URL("../app/globals.css", import.meta.url),
+  "utf8",
+);
 
 const imageUrls = [
-  'https://privana-website-images.s3.amazonaws.com/GRID_Sporting+and+Lifestyle+Clubs.png',
-  'https://privana-website-images.s3.amazonaws.com/GRID_city+clubs.png',
-  'https://privana-website-images.s3.amazonaws.com/GRID_arts+and+culture+clubs+V2.png',
-  'https://privana-website-images.s3.amazonaws.com/GRID_beach+clubs+V2.png',
+  "https://privana-website-images.s3.amazonaws.com/GRID_Sporting+and+Lifestyle+Clubs.png",
+  "https://privana-website-images.s3.amazonaws.com/GRID_city+clubs.png",
+  "https://privana-website-images.s3.amazonaws.com/GRID_arts+and+culture+clubs+V2.png",
+  "https://privana-website-images.s3.amazonaws.com/GRID_beach+clubs+V2.png",
 ];
 
 const categories = [
-  ['Sporting & Lifestyle Clubs', 'Golf, racquet, wellness and multi-activity clubs.'],
-  ['City Clubs', 'Private business, dining and members’ clubs.'],
-  ['Arts & Culture Clubs', 'Creative, cultural and membership-led institutions.'],
-  ['Beach & Leisure Clubs', 'Coastal, leisure and resort-style private clubs.'],
+  [
+    "Sporting & Lifestyle Clubs",
+    "Golf, racquet, wellness and multi-activity clubs.",
+  ],
+  ["City Clubs", "Private business, dining and members’ clubs."],
+  [
+    "Arts & Culture Clubs",
+    "Creative, cultural and membership-led institutions.",
+  ],
+  ["Beach & Leisure Clubs", "Coastal, leisure and resort-style private clubs."],
 ];
 
-test('admin-time card copy uses the requested two-line copy', () => {
+test("admin-time card copy uses the requested two-line copy", () => {
   assert.match(homepage, /Assisted member communications\./);
   assert.match(homepage, /<br \/>/);
   assert.match(homepage, /Automated workflows\./);
 });
 
-test('four category cards render with complete visible titles and descriptions', () => {
+test("four category cards render with complete visible titles and descriptions", () => {
   assert.match(cards, /segments\.map/);
   assert.match(cards, /club-expanding-card/);
   assert.match(cards, /club-card-content/);
   assert.match(cards, /club-card-title">\{segment\.title\}/);
-  assert.match(cards, /club-card-copy">\{segment\.supportingCopy\}/);
+  assert.match(cards, /club-card-copy">[\s\S]*\{segment\.supportingCopy\}/);
   for (const [title, copy] of categories) {
-    assert.match(homepage, new RegExp(title.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')));
-    assert.match(homepage, new RegExp(copy.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')));
+    assert.match(
+      homepage,
+      new RegExp(title.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")),
+    );
+    assert.match(
+      homepage,
+      new RegExp(copy.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")),
+    );
   }
-  assert.doesNotMatch(globals, /text-overflow:\s*ellipsis|line-clamp|overflow:\s*hidden[\s\S]{0,80}\.club-card-title/);
+  assert.doesNotMatch(
+    globals,
+    /text-overflow:\s*ellipsis|line-clamp|overflow:\s*hidden[\s\S]{0,80}\.club-card-title/,
+  );
 });
 
-test('image reveal keeps exact current URLs and uses opacity instead of a flip', () => {
-  for (const url of imageUrls) assert.match(homepage, new RegExp(url.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')));
+test("image reveal keeps exact current URLs and uses opacity instead of a flip", () => {
+  for (const url of imageUrls)
+    assert.match(
+      homepage,
+      new RegExp(url.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")),
+    );
   assert.match(cards, /club-card-image-layer/);
   assert.match(cards, /club-card-readability-gradient/);
   assert.match(cards, /is-image-active/);
-  assert.match(globals, /\.club-card-image-layer \{[\s\S]*opacity: 0;[\s\S]*transition: opacity 560ms/);
-  assert.match(globals, /\.club-expanding-card\.is-image-active \.club-card-image-layer,[\s\S]*opacity: 1;/);
-  assert.doesNotMatch(cards + globals, /club-card-back|club-card-face|rotateY|preserve-3d|backface-visibility|--club-flip-half-delay/);
+  assert.match(
+    globals,
+    /\.club-card-image-layer \{[\s\S]*opacity: 0;[\s\S]*transition: opacity 560ms/,
+  );
+  assert.match(
+    globals,
+    /\.club-expanding-card\.is-image-active \.club-card-image-layer,[\s\S]*opacity: 1;/,
+  );
+  assert.doesNotMatch(
+    cards + globals,
+    /club-card-back|club-card-face|rotateY|preserve-3d|backface-visibility|--club-flip-half-delay/,
+  );
 });
 
-test('homepage keeps the required club section heading and existing section background', () => {
+test("homepage keeps the required club section heading and existing section background", () => {
   assert.match(cards, /Tailored Exclusively for Your Club/);
   assert.match(homepage, /id="solutions"/);
-  assert.match(homepage, /radial-gradient\(circle_at_15%_15%,rgba\(98,213,206,0\.18\),transparent_42%\)/);
-  assert.doesNotMatch(cards, /rounded-\[34px\]|border border-white\/15|shadow-\[0_32px_80px/);
+  assert.match(
+    homepage,
+    /radial-gradient\(circle_at_15%_15%,rgba\(98,213,206,0\.18\),transparent_42%\)/,
+  );
+  assert.doesNotMatch(
+    cards,
+    /rounded-\[34px\]|border border-white\/15|shadow-\[0_32px_80px/,
+  );
 });
 
-test('old overlap and flip mechanics are absent', () => {
+test("old overlap and flip mechanics are absent", () => {
   assert.doesNotMatch(homepage, /ClubCubeCarousel|club-cube-carousel/);
-  assert.doesNotMatch(cards, /ResizeObserver|activeIndex|aria-live|addEventListener\("scroll"|sticky|min-h-\[340vh\]|grid-cols-2/);
-  assert.doesNotMatch(cards + globals, /club-overlap-composition|club-overlap-card|md:left-\[|lg:left-\[|-rotate-\[|rotate-\[|z-index:\s*50|is-flipped|flippedCard|club-card-float|@keyframes club-card-float/);
+  assert.doesNotMatch(
+    cards,
+    /ResizeObserver|activeIndex|aria-live|addEventListener\("scroll"|sticky|min-h-\[340vh\]|grid-cols-2/,
+  );
+  assert.doesNotMatch(
+    cards + globals,
+    /club-overlap-composition|club-overlap-card|md:left-\[|lg:left-\[|-rotate-\[|rotate-\[|z-index:\s*50|is-flipped|flippedCard|club-card-float|@keyframes club-card-float/,
+  );
 });
 
-test('desktop uses a bounded flex expanding row with readable inactive cards', () => {
-  assert.match(globals, /@media \(min-width: 1024px\)[\s\S]*\.club-expanding-composition \{[\s\S]*display: flex;[\s\S]*width: min\(88vw, 86rem\);/);
+test("desktop uses a bounded flex expanding row with readable inactive cards", () => {
+  assert.match(
+    globals,
+    /@media \(min-width: 1024px\)[\s\S]*\.club-expanding-composition \{[\s\S]*display: flex;[\s\S]*width: 100%;/,
+  );
   assert.match(globals, /\.club-expanding-card \{[\s\S]*flex: 1 1 25%;/);
-  assert.match(globals, /\.club-expanding-composition:has\(\.club-expanding-card\.is-expanded\) \.club-expanding-card \{[\s\S]*flex-basis: 21%;/);
-  assert.match(globals, /\.club-expanding-composition:has\(\.club-expanding-card\.is-expanded\) \.club-expanding-card\.is-expanded \{[\s\S]*flex-basis: 37%;/);
-  assert.match(globals, /\.club-card-title \{[\s\S]*text-wrap: balance;[\s\S]*font-size: clamp/);
+  assert.match(
+    globals,
+    /\.club-expanding-composition:has\(\.club-expanding-card\.is-expanded\)[\s\S]*\.club-expanding-card \{[\s\S]*flex-basis: 21%;/,
+  );
+  assert.match(
+    globals,
+    /\.club-expanding-composition:has\(\.club-expanding-card\.is-expanded\)[\s\S]*\.club-expanding-card\.is-expanded \{[\s\S]*flex-basis: 37%;/,
+  );
+  assert.match(
+    globals,
+    /\.club-card-title \{[\s\S]*text-wrap: balance;[\s\S]*font-size: clamp/,
+  );
   assert.match(globals, /\.club-card-copy \{[\s\S]*font-size: clamp/);
 });
 
-test('hover and keyboard focus share the same expanded state and accessible control handling', () => {
-  assert.match(cards, /const \[activeCard, setActiveCard\] = useState<string \| null>\(null\)/);
-  assert.match(cards, /onPointerEnter=\{\(\) => setActiveCard\(segment\.title\)\}/);
+test("club cards are centred and use meaningful decorative semantic icons", () => {
+  assert.match(cards, /className="mx-auto w-\[min\(88vw,86rem\)\] max-w-full"/);
+  assert.match(
+    globals,
+    /\.club-expanding-composition \{[\s\S]*width: 100%;[\s\S]*max-width: min\(88vw, 86rem\);[\s\S]*margin-inline: auto;/,
+  );
+  assert.doesNotMatch(
+    cards + globals,
+    /left:\s*-|margin-left:\s*-|translateX|translate-x|translate3d|transform:\s*translateX/,
+  );
+
+  for (const icon of [
+    "SportingLifestyleClubIcon",
+    "CityClubIcon",
+    "ArtsCultureClubIcon",
+    "BeachLeisureClubIcon",
+  ]) {
+    assert.match(cards, new RegExp(icon));
+  }
+  assert.match(
+    cards,
+    /<Icon className="club-card-mark" aria-hidden="true" \/>/,
+  );
+  assert.doesNotMatch(
+    cards,
+    /visuals\.mark|<path d=\{visuals\.mark\}|viewBox="0 0 112 112"/,
+  );
+  assert.match(
+    globals,
+    /\.club-card-mark \{[\s\S]*width: clamp\(2\.7rem, 3\.75vw, 3\.9rem\);[\s\S]*height: clamp\(2\.7rem, 3\.75vw, 3\.9rem\);[\s\S]*opacity: 0\.32;/,
+  );
+  assert.match(
+    globals,
+    /\.club-card-content \{[\s\S]*justify-content: space-between;[\s\S]*gap: clamp\(2rem, 5vw, 4\.25rem\);/,
+  );
+  assert.match(
+    globals,
+    /\.club-card-text \{[\s\S]*margin-top: auto;[\s\S]*gap: clamp\(1\.05rem, 1\.2vw, 1\.35rem\);/,
+  );
+});
+
+test("hover and keyboard focus share the same expanded state and accessible control handling", () => {
+  assert.match(
+    cards,
+    /const \[activeCard, setActiveCard\] = useState<string \| null>\(null\)/,
+  );
+  assert.match(
+    cards,
+    /onPointerEnter=\{\(\) => setActiveCard\(segment\.title\)\}/,
+  );
   assert.match(cards, /onFocus=\{\(\) => setActiveCard\(segment\.title\)\}/);
   assert.match(cards, /isActive \? "is-expanded"/);
   assert.match(cards, /aria-pressed=\{isRevealed\}/);
-  assert.match(globals, /\.club-expanding-card:focus-visible \{[\s\S]*outline:/);
+  assert.match(
+    globals,
+    /\.club-expanding-card:focus-visible \{[\s\S]*outline:/,
+  );
 });
 
-test('tablet and mobile use non-overlapping flow layouts with one tap-active image', () => {
-  assert.match(globals, /@media \(min-width: 768px\) and \(max-width: 1023px\)[\s\S]*grid-template-columns: repeat\(2, minmax\(0, 1fr\)\);/);
-  assert.match(globals, /@media \(max-width: 767px\)[\s\S]*grid-template-columns: 1fr;/);
-  assert.match(cards, /const \[revealedCard, setRevealedCard\] = useState<string \| null>\(null\)/);
+test("tablet and mobile use non-overlapping flow layouts with one tap-active image", () => {
+  assert.match(
+    globals,
+    /@media \(min-width: 768px\) and \(max-width: 1023px\)[\s\S]*grid-template-columns: repeat\(2, minmax\(0, 1fr\)\);/,
+  );
+  assert.match(
+    globals,
+    /@media \(max-width: 767px\)[\s\S]*grid-template-columns: 1fr;/,
+  );
+  assert.match(
+    cards,
+    /const \[revealedCard, setRevealedCard\] = useState<string \| null>\(null\)/,
+  );
   assert.match(cards, /current === segment\.title \? null : segment\.title/);
-  assert.doesNotMatch(globals, /position:\s*absolute[\s\S]{0,120}\.club-expanding-card/);
+  assert.doesNotMatch(
+    globals,
+    /position:\s*absolute[\s\S]{0,120}\.club-expanding-card/,
+  );
 });
 
-test('reduced-motion behaviour remains supported', () => {
-  assert.match(globals, /@media \(prefers-reduced-motion: reduce\)[\s\S]*transition-duration: 1ms !important;/);
-  assert.match(globals, /@media \(prefers-reduced-motion: reduce\)[\s\S]*flex-basis: 25%;/);
+test("reduced-motion behaviour remains supported", () => {
+  assert.match(
+    globals,
+    /@media \(prefers-reduced-motion: reduce\)[\s\S]*transition-duration: 1ms !important;/,
+  );
+  assert.match(
+    globals,
+    /@media \(prefers-reduced-motion: reduce\)[\s\S]*flex-basis: 25%;/,
+  );
 });
 
-test('comparison section keeps the approved content and premium paired rows', () => {
+test("comparison section keeps the approved content and premium paired rows", () => {
   assert.match(homepage, /Built for the Next Generation/);
   assert.match(homepage, /of Club Operations\./);
-  assert.match(homepage, /Replace disconnected systems and repetitive administration/);
+  assert.match(
+    homepage,
+    /Replace disconnected systems and repetitive administration/,
+  );
   assert.match(homepage, /Fragmented tools and disconnected teams/);
   assert.match(homepage, /One connected platform across every department/);
   assert.match(homepage, /Before/);

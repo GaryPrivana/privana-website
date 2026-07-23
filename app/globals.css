@@ -77,7 +77,8 @@ body {
 
 .club-expanding-composition {
   display: grid;
-  width: min(100%, 86rem);
+  width: 100%;
+  max-width: min(88vw, 86rem);
   margin-inline: auto;
   gap: 1rem;
 }
@@ -96,10 +97,12 @@ body {
   appearance: none;
   cursor: pointer;
   isolation: isolate;
-  box-shadow: 0 34px 86px rgba(0, 0, 0, 0.2),
+  box-shadow:
+    0 34px 86px rgba(0, 0, 0, 0.2),
     0 14px 42px rgba(0, 0, 0, 0.14),
     0 2px 10px rgba(255, 255, 255, 0.04);
-  transition: flex-basis 600ms cubic-bezier(0.2, 0.72, 0.2, 1),
+  transition:
+    flex-basis 600ms cubic-bezier(0.2, 0.72, 0.2, 1),
     filter 600ms cubic-bezier(0.2, 0.72, 0.2, 1),
     box-shadow 600ms cubic-bezier(0.2, 0.72, 0.2, 1);
   -webkit-tap-highlight-color: transparent;
@@ -131,7 +134,12 @@ body {
 
 .club-card-readability-gradient {
   opacity: 0;
-  background: linear-gradient(180deg, rgba(0, 0, 0, 0.08) 0%, rgba(0, 0, 0, 0.34) 48%, rgba(0, 0, 0, 0.78) 100%);
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.08) 0%,
+    rgba(0, 0, 0, 0.34) 48%,
+    rgba(0, 0, 0, 0.78) 100%
+  );
   transition: opacity 560ms cubic-bezier(0.2, 0.72, 0.2, 1);
 }
 
@@ -142,7 +150,11 @@ body {
 .club-card-noise {
   z-index: -1;
   opacity: 0.045;
-  background-image: radial-gradient(circle at 20% 20%, currentColor 0 1px, transparent 1px);
+  background-image: radial-gradient(
+    circle at 20% 20%,
+    currentColor 0 1px,
+    transparent 1px
+  );
   background-size: 11px 11px;
   mix-blend-mode: soft-light;
 }
@@ -154,18 +166,19 @@ body {
   width: 100%;
   flex-direction: column;
   justify-content: space-between;
-  gap: 2rem;
+  gap: clamp(2rem, 5vw, 4.25rem);
 }
 
 .club-card-mark {
-  width: clamp(2.1rem, 3vw, 3.1rem);
-  height: clamp(2.1rem, 3vw, 3.1rem);
+  width: clamp(2.7rem, 3.75vw, 3.9rem);
+  height: clamp(2.7rem, 3.75vw, 3.9rem);
   opacity: 0.32;
 }
 
 .club-card-text {
   display: grid;
-  gap: 0.85rem;
+  margin-top: auto;
+  gap: clamp(1.05rem, 1.2vw, 1.35rem);
 }
 
 .club-card-title {
@@ -194,8 +207,17 @@ body {
 }
 
 .club-card-tone-stone .club-card-glow {
-  background: radial-gradient(circle at 22% 18%, rgba(255, 250, 241, 0.3), transparent 42%),
-    radial-gradient(circle at 74% 86%, rgba(101, 93, 82, 0.115), transparent 48%),
+  background:
+    radial-gradient(
+      circle at 22% 18%,
+      rgba(255, 250, 241, 0.3),
+      transparent 42%
+    ),
+    radial-gradient(
+      circle at 74% 86%,
+      rgba(101, 93, 82, 0.115),
+      transparent 48%
+    ),
     linear-gradient(180deg, transparent 52%, rgba(31, 27, 23, 0.08));
 }
 
@@ -205,8 +227,17 @@ body {
 }
 
 .club-card-tone-blue .club-card-glow {
-  background: radial-gradient(circle at 24% 16%, rgba(190, 214, 244, 0.16), transparent 42%),
-    radial-gradient(circle at 80% 82%, rgba(57, 93, 136, 0.16), transparent 48%),
+  background:
+    radial-gradient(
+      circle at 24% 16%,
+      rgba(190, 214, 244, 0.16),
+      transparent 42%
+    ),
+    radial-gradient(
+      circle at 80% 82%,
+      rgba(57, 93, 136, 0.16),
+      transparent 48%
+    ),
     linear-gradient(180deg, transparent 50%, rgba(0, 0, 0, 0.16));
 }
 
@@ -216,8 +247,17 @@ body {
 }
 
 .club-card-tone-charcoal .club-card-glow {
-  background: radial-gradient(circle at 24% 16%, rgba(255, 255, 255, 0.1), transparent 40%),
-    radial-gradient(circle at 82% 84%, rgba(124, 119, 108, 0.1), transparent 48%),
+  background:
+    radial-gradient(
+      circle at 24% 16%,
+      rgba(255, 255, 255, 0.1),
+      transparent 40%
+    ),
+    radial-gradient(
+      circle at 82% 84%,
+      rgba(124, 119, 108, 0.1),
+      transparent 48%
+    ),
     linear-gradient(180deg, transparent 48%, rgba(0, 0, 0, 0.22));
 }
 
@@ -227,8 +267,17 @@ body {
 }
 
 .club-card-tone-teal .club-card-glow {
-  background: radial-gradient(circle at 26% 16%, rgba(190, 216, 207, 0.075), transparent 42%),
-    radial-gradient(circle at 82% 78%, rgba(53, 103, 92, 0.105), transparent 50%),
+  background:
+    radial-gradient(
+      circle at 26% 16%,
+      rgba(190, 216, 207, 0.075),
+      transparent 42%
+    ),
+    radial-gradient(
+      circle at 82% 78%,
+      rgba(53, 103, 92, 0.105),
+      transparent 50%
+    ),
     linear-gradient(180deg, transparent 48%, rgba(0, 0, 0, 0.22));
 }
 
@@ -249,7 +298,7 @@ body {
 @media (min-width: 1024px) {
   .club-expanding-composition {
     display: flex;
-    width: min(88vw, 86rem);
+    width: 100%;
     align-items: stretch;
   }
 
@@ -259,11 +308,13 @@ body {
     min-height: clamp(24rem, 29vw, 31rem);
   }
 
-  .club-expanding-composition:has(.club-expanding-card.is-expanded) .club-expanding-card {
+  .club-expanding-composition:has(.club-expanding-card.is-expanded)
+    .club-expanding-card {
     flex-basis: 21%;
   }
 
-  .club-expanding-composition:has(.club-expanding-card.is-expanded) .club-expanding-card.is-expanded {
+  .club-expanding-composition:has(.club-expanding-card.is-expanded)
+    .club-expanding-card.is-expanded {
     flex-basis: 37%;
     filter: saturate(1.03);
   }
@@ -294,7 +345,6 @@ body {
   }
 }
 
-
 @media (prefers-reduced-motion: reduce) {
   .club-expanding-card,
   .club-card-image-layer,
@@ -304,8 +354,10 @@ body {
   }
 
   @media (min-width: 1024px) {
-    .club-expanding-composition:has(.club-expanding-card.is-expanded) .club-expanding-card,
-    .club-expanding-composition:has(.club-expanding-card.is-expanded) .club-expanding-card.is-expanded {
+    .club-expanding-composition:has(.club-expanding-card.is-expanded)
+      .club-expanding-card,
+    .club-expanding-composition:has(.club-expanding-card.is-expanded)
+      .club-expanding-card.is-expanded {
       flex-basis: 25%;
     }
   }
