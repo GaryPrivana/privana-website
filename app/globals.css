@@ -383,8 +383,8 @@ body {
   --ledger-opacity: 0;
   --node-opacity: 0;
   position: relative;
-  min-height: 640svh;
-  overflow: clip;
+  min-height: 900svh;
+  overflow: visible;
   color: #f5f0e9;
   background:
     radial-gradient(circle at var(--ambient-x) var(--ambient-y), var(--tone-glow, rgba(175,139,218,.16)), transparent 28rem),
@@ -415,14 +415,18 @@ body {
   position: sticky;
   top: 0;
   display: grid;
-  min-height: 100svh;
+  height: 100svh;
+  min-height: 0;
+  box-sizing: border-box;
+  overflow: hidden;
   grid-template-columns: minmax(0, .78fr) minmax(22rem, 1.14fr) minmax(0, .78fr);
   align-items: center;
   gap: clamp(1rem, 3vw, 3rem);
-  padding-block: clamp(5rem, 8svh, 7rem);
+  margin-block: 0;
+  padding-block: clamp(2.5rem, 5svh, 4.5rem);
 }
 
-.privana-feature-copy { position: relative; min-height: 25rem; }
+.privana-feature-copy { position: relative; min-height: min(25rem, 62svh); }
 .privana-chapter-copy {
   position: absolute;
   top: 50%;
@@ -461,8 +465,8 @@ body {
   line-height: 1.7;
 }
 
-.privana-feature-stage { perspective: 1250px; display: grid; place-items: center; min-height: 35rem; }
-.privana-object { position: relative; width: min(38vw, 32rem); aspect-ratio: 1; transform: rotateX(var(--object-rotate-x)) rotateY(var(--object-rotate-y)) rotateZ(var(--object-rotate-z)) scale(var(--object-scale)); transform-style: preserve-3d; transform-origin: center center; transition: filter 220ms ease; }
+.privana-feature-stage { perspective: 1250px; display: grid; place-items: center; min-height: min(35rem, 68svh); }
+.privana-object { position: relative; width: min(38vw, 32rem, 62svh); aspect-ratio: 1; transform: rotateX(var(--object-rotate-x)) rotateY(var(--object-rotate-y)) rotateZ(var(--object-rotate-z)) scale(var(--object-scale)); transform-style: preserve-3d; transform-origin: center center; transition: filter 220ms ease; }
 .privana-object-assembly { position:absolute; inset:0; transform-style: preserve-3d; }
 .privana-object-core { position: absolute; inset: 18%; display: grid; place-items: center; border: 1px solid rgba(255,255,255,.26); border-radius: 30%; background: linear-gradient(145deg, rgba(255,255,255,.2), rgba(255,255,255,.04) 42%, rgba(0,0,0,.3)), linear-gradient(145deg,#171922,#090a0e); box-shadow: inset 0 1px 0 rgba(255,255,255,.3), inset 0 -28px 74px rgba(0,0,0,.52), 0 46px 92px rgba(0,0,0,.5); transform: translateZ(72px); transform-style: preserve-3d; overflow: hidden; backface-visibility: hidden; }
 .privana-object-core::before { content:""; position:absolute; inset:-30%; background: conic-gradient(from 180deg, transparent, rgba(190,160,223,.38), transparent, rgba(158,181,218,.3), transparent); opacity:.66; }
@@ -499,12 +503,12 @@ body {
 .mini-visual svg { width:2rem; height:2rem; color:#dbc8ef; } .mini-visual i,.mini-visual span { position:absolute; border:1px solid rgba(220,200,239,.22); border-radius:999px; } .mini-visual i:nth-child(2){inset:18%}.mini-visual i:nth-child(3){inset:32%}.mini-visual i:nth-child(4){inset:46%}
 
 @media (max-width: 1180px) {
-  .privana-feature-pin { grid-template-columns: minmax(0,.72fr) minmax(19rem,1fr) minmax(0,.72fr); }
+  .privana-feature-pin { grid-template-columns: minmax(0,.72fr) minmax(19rem,1fr) minmax(0,.72fr); padding-block: clamp(2rem, 4svh, 3rem); }
   .privana-object { width:min(42vw,29rem); }
   .privana-chapter-copy h2 { font-size: clamp(2rem, 4vw, 3.35rem); }
 }
 @media (max-width: 900px), (prefers-reduced-motion: reduce) {
-  .privana-feature-showcase { min-height: auto; padding-block: 4rem 5rem; }
+  .privana-feature-showcase { min-height: auto; padding-block: 4rem 5rem; overflow: hidden; }
   .privana-feature-pin { display:none; }
   .privana-feature-mobile-flow { display:grid; gap: 1rem; }
   .privana-mobile-chapter { border:1px solid rgba(255,255,255,.14); border-radius: 1.8rem; background: radial-gradient(circle at 18% 0, var(--tone-glow, rgba(175,139,218,.16)), transparent 18rem), linear-gradient(145deg, rgba(255,255,255,.08), rgba(255,255,255,.025)); padding: clamp(1.35rem, 5vw, 2.4rem); box-shadow: 0 26px 80px rgba(0,0,0,.22); }
