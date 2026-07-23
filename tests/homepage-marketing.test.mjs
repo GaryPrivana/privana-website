@@ -359,9 +359,10 @@ test("assist demo state machine controls typing, waiting, cancellation, and clea
 test("assist responses render complete briefing, three member cards, email asset, and accessible buttons", () => {
   assert.match(assistDemo, /<button key=\{scenario\.id\} type="button"/);
   assert.match(assistDemo, /aria-live="polite"/);
-  assert.match(assistDemo, /aria-expanded=\{historyOpen\}/);
-  assert.match(assistDemo, /setHistoryOpen/);
-  assert.match(assistDemo, /assist-history-panel/);
+  assert.match(assistDemo, /className="assist-history-button"/);
+  assert.doesNotMatch(assistDemo, /aria-expanded=\{historyOpen\}/);
+  assert.doesNotMatch(assistDemo, /setHistoryOpen/);
+  assert.doesNotMatch(assistDemo, /assist-history-panel/);
   assert.match(assistDemo, /aria-readonly="true"/);
   assert.match(assistData, /Review members/);
   assert.match(assistData, /Eleanor Whitmore/);
@@ -397,8 +398,10 @@ test("assist conversation is the only internally scrolling demo content", () => 
   assert.match(globals, /@media \(min-width: 901px\)[\s\S]*\.assist-conversation \{ min-height: 0; overflow-y: auto; \}/);
 });
 
-test("assist history stays in first window row and prompts stay outside modal", () => {
-  assert.match(assistDemo, /<div className="assist-window-header">[\s\S]*assist-topbar[\s\S]*\{historyOpen && <div className="assist-history-panel"/);
+test("assist history button stays in first window row and prompts stay outside modal", () => {
+  assert.match(assistDemo, /<div className="assist-window-header">[\s\S]*assist-topbar[\s\S]*assist-history-button/);
+  assert.doesNotMatch(assistDemo, /historyOpen/);
+  assert.doesNotMatch(assistDemo, /assist-history-panel/);
   assert.ok(assistDemo.indexOf('className="assist-prompt-area"') > assistDemo.indexOf('</div>\n\n          <div className="assist-prompt-area"'));
   assert.match(globals, /\.assist-prompt-area \{ margin: 1\.5rem auto 0; max-width: 70rem; \}/);
   assert.match(globals, /\.assist-prompt-grid \{ display: grid; grid-template-columns: repeat\(3, minmax\(0,1fr\)\);/);

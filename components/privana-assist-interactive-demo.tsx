@@ -30,7 +30,6 @@ export function PrivanaAssistInteractiveDemo() {
   const [activeScenarioId, setActiveScenarioId] = useState<ScenarioId | null>(null);
   const [composerText, setComposerText] = useState("");
   const [submittedUserMessage, setSubmittedUserMessage] = useState("");
-  const [historyOpen, setHistoryOpen] = useState(false);
   const sequenceRef = useRef(0);
   const typingIntervalRef = useRef<number | null>(null);
   const timeoutRefs = useRef<number[]>([]);
@@ -125,9 +124,8 @@ export function PrivanaAssistInteractiveDemo() {
             <div className="assist-window-header">
               <div className="assist-topbar">
                 <div className="assist-title-lockup"><AssistMark /><strong>Privana Assist</strong></div>
-                <button type="button" className="assist-history-button" aria-label="Show Privana Assist history" aria-expanded={historyOpen} onClick={() => setHistoryOpen((open) => !open)}>Show History</button>
+                <button type="button" className="assist-history-button" aria-label="Show Privana Assist history" onClick={() => {}}>Show History</button>
               </div>
-              {historyOpen && <div className="assist-history-panel" role="status">Demo history is local to this page. Choose a preset question to replay a scenario.</div>}
             </div>
             <div className="assist-tabs" aria-hidden="true"><span className="is-active">Assist</span><span>Explore</span></div>
             <div ref={conversationRef} className="assist-conversation" aria-live="polite">
@@ -139,7 +137,7 @@ export function PrivanaAssistInteractiveDemo() {
             </div>
             <div className="assist-composer-row">
               <div className="assist-composer" role="textbox" aria-label="Privana Assist demo composer" aria-readonly="true">
-                <span>{composerText || "Choose a preset question below"}</span>
+                <span>{composerText || "How can I help you today?"}</span>
                 {phase === "typing-question" && <i aria-hidden="true" />}
               </div>
               <button type="button" className={`assist-send-button ${phase === "submitted" ? "is-sending" : ""}`} aria-label="Send selected demo question" disabled>
@@ -149,7 +147,7 @@ export function PrivanaAssistInteractiveDemo() {
           </div>
 
           <div className="assist-prompt-area" aria-label="Preset questions">
-            <div><p>Choose a question</p><span>Preset questions</span></div>
+            <div><p>Choose a question</p></div>
             <div className="assist-prompt-grid">
               {assistScenarios.map((scenario) => (
                 <button key={scenario.id} type="button" className="assist-prompt-button" onClick={() => playScenario(scenario)} disabled={controlsLocked}>
