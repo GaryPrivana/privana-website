@@ -266,8 +266,8 @@ test("premium feature showcase keeps eight accessible chapters and demo CTA", ()
   }
   assert.match(featureShowcase, /aria-labelledby="connected-platform-heading"/);
   assert.match(featureShowcase, /prefers-reduced-motion: reduce/);
-  assert.match(featureShowcase, /window\.requestAnimationFrame/);
-  assert.match(featureShowcase, /removeEventListener\("scroll"/);
+  assert.match(featureShowcase, /ScrollTrigger/);
+  assert.doesNotMatch(featureShowcase, /removeEventListener\("scroll"/);
   assert.match(featureShowcase, /href=\{demoLink\}/);
 });
 
@@ -276,7 +276,7 @@ test("feature showcase emits final unit-bearing CSS values without CSS var multi
   assert.match(featureShowcase, /"--object-rotate-x": deg\(mix\("rx"\)\)/);
   assert.match(featureShowcase, /"--panel-one-x": px\(mix\("p1x"\)\)/);
   assert.match(featureShowcase, /"--ambient-x": `\$\{mix\("ambientX"\)\.toFixed\(2\)\}%`/);
-  assert.match(featureShowcase, /const CHAPTER_REST_PORTION = 0\.56/);
+  assert.match(featureShowcase, /const CHAPTER_REST_PORTION = 0\.42/);
   assert.match(featureShowcase, /const chapterFloat = progress \* total/);
   assert.match(featureShowcase, /const activeIndex = Math\.min\(total - 1, Math\.max\(0, Math\.floor\(chapterFloat\)\)\)/);
   assert.match(featureShowcase, /const localProgress = activeIndex >= total - 1 \? 0 : clamp01/);
@@ -284,15 +284,25 @@ test("feature showcase emits final unit-bearing CSS values without CSS var multi
   assert.doesNotMatch(globals, /calc\([^)]*var\([^)]*\)[^)]*\*/);
 });
 
-test("feature showcase desktop sticky pin has a bounded viewport and visible scroll container", () => {
-  assert.match(globals, /\.privana-feature-showcase \{[\s\S]*min-height: 900svh;[\s\S]*overflow: visible;/);
-  assert.match(globals, /\.privana-feature-pin \{[\s\S]*position: sticky;[\s\S]*top: 0;[\s\S]*height: 100svh;[\s\S]*min-height: 0;[\s\S]*box-sizing: border-box;[\s\S]*overflow: hidden;/);
-  assert.match(featureShowcase, /const scrollable = Math\.max\(1, el\.offsetHeight - window\.innerHeight\)/);
+test("feature showcase desktop uses ScrollTrigger pinning instead of sticky scroll math", () => {
+  assert.match(globals, /\.privana-feature-showcase \{[\s\S]*min-height: auto;[\s\S]*overflow: visible;/);
+  assert.match(globals, /\.privana-feature-pin \{[\s\S]*position: relative;[\s\S]*height: 100svh;[\s\S]*min-height: 0;[\s\S]*box-sizing: border-box;[\s\S]*overflow: hidden;/);
+  assert.doesNotMatch(globals, /min-height: 900svh/);
+  assert.doesNotMatch(globals, /\.privana-feature-pin \{[\s\S]*position: sticky/);
+  assert.match(featureShowcase, /gsap\.registerPlugin\(ScrollTrigger\)/);
+  assert.match(featureShowcase, /ScrollTrigger\.create\(\{[\s\S]*pin,[\s\S]*scrub: true,[\s\S]*onUpdate: \(self\) => \{[\s\S]*applyShowcaseProgress\(self\.progress\)/);
+  assert.doesNotMatch(featureShowcase, /getBoundingClientRect\(/);
+  assert.doesNotMatch(featureShowcase, /offsetHeight - window\.innerHeight/);
+  assert.match(featureShowcase, /trigger\.kill\(\)/);
+  assert.match(featureShowcase, /mm\.revert\(\)/);
+  assert.match(featureShowcase, /context\.revert\(\)/);
+  assert.match(featureShowcase, /\(min-width: 901px\) and \(prefers-reduced-motion: no-preference\)/);
+  assert.match(featureShowcase, /if \(!section \|\| !pin \|\| reducedMotion\) return/);
 });
 
 test("feature showcase updates continuous progress outside React state", () => {
   assert.match(featureShowcase, /const activeIndexRef = useRef\(0\)/);
-  assert.match(featureShowcase, /el\.style\.setProperty\(property, value\)/);
+  assert.match(featureShowcase, /section\.style\.setProperty\(property, value\)/);
   assert.doesNotMatch(featureShowcase, /setProgress/);
   assert.match(featureShowcase, /setActiveIndex\(values\.activeIndex\)/);
 });

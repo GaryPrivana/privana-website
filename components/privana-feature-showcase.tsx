@@ -1,6 +1,8 @@
 "use client";
 
 import Link from "next/link";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useEffect, useRef, useState } from "react";
 import {
   CrmIcon,
@@ -42,7 +44,10 @@ export const showcaseChapters: Chapter[] = [
 ];
 
 const clamp01 = (value: number) => Math.min(1, Math.max(0, value));
-const CHAPTER_REST_PORTION = 0.56;
+const CHAPTER_REST_PORTION = 0.42;
+const DESKTOP_SCROLL_CHAPTERS = 8;
+
+gsap.registerPlugin(ScrollTrigger);
 const lerp = (start: number, end: number, amount: number) => start + (end - start) * amount;
 const ease = (value: number) => value * value * (3 - 2 * value);
 const px = (value: number) => `${value.toFixed(2)}px`;
@@ -103,6 +108,7 @@ export function getShowcaseValues(rawProgress: number, total = showcaseChapters.
 
 export function PrivanaFeatureShowcase({ demoLink }: { demoLink: string }) {
   const sectionRef = useRef<HTMLElement>(null);
+  const pinRef = useRef<HTMLDivElement>(null);
   const rafRef = useRef(0);
   const activeIndexRef = useRef(0);
   const [activeIndex, setActiveIndex] = useState(0);
@@ -118,38 +124,72 @@ export function PrivanaFeatureShowcase({ demoLink }: { demoLink: string }) {
   }, []);
 
   useEffect(() => {
-    if (reducedMotion) return;
-    const applyProgress = () => {
-      rafRef.current = 0;
-      const el = sectionRef.current;
-      if (!el) return;
-      const rect = el.getBoundingClientRect();
-      const scrollable = Math.max(1, el.offsetHeight - window.innerHeight);
-      const values = getShowcaseValues(-rect.top / scrollable);
-      for (const [property, value] of Object.entries(values.css)) el.style.setProperty(property, value);
+    const section = sectionRef.current;
+    const pin = pinRef.current;
+    if (!section || !pin || reducedMotion) return;
+
+    const applyShowcaseProgress = (progress: number) => {
+      const values = getShowcaseValues(progress);
+
+      for (const [property, value] of Object.entries(values.css)) {
+        section.style.setProperty(property, value);
+      }
+
       if (values.activeIndex !== activeIndexRef.current) {
         activeIndexRef.current = values.activeIndex;
         setActiveIndex(values.activeIndex);
       }
     };
-    const requestProgress = () => {
-      if (!rafRef.current) rafRef.current = window.requestAnimationFrame(applyProgress);
-    };
-    applyProgress();
-    window.addEventListener("scroll", requestProgress, { passive: true });
-    window.addEventListener("resize", requestProgress);
-    window.addEventListener("orientationchange", requestProgress);
+
+    const mm = gsap.matchMedia();
+    const context = gsap.context(() => {
+      mm.add("(min-width: 901px) and (prefers-reduced-motion: no-preference)", () => {
+        applyShowcaseProgress(0);
+
+        const trigger = ScrollTrigger.create({
+          trigger: section,
+          start: "top top",
+          end: () => `+=${window.innerHeight * DESKTOP_SCROLL_CHAPTERS}`,
+          pin,
+          pinSpacing: true,
+          scrub: true,
+          anticipatePin: 1,
+          invalidateOnRefresh: true,
+          onUpdate: (self) => {
+            applyShowcaseProgress(self.progress);
+          },
+        });
+
+        const refresh = () => {
+          if (rafRef.current) window.cancelAnimationFrame(rafRef.current);
+          rafRef.current = window.requestAnimationFrame(() => {
+            rafRef.current = 0;
+            ScrollTrigger.refresh();
+          });
+        };
+
+        window.addEventListener("orientationchange", refresh);
+        document.fonts?.ready.then(refresh);
+        refresh();
+
+        return () => {
+          window.removeEventListener("orientationchange", refresh);
+          if (rafRef.current) window.cancelAnimationFrame(rafRef.current);
+          trigger.kill();
+        };
+      });
+    }, section);
+
     return () => {
-      window.removeEventListener("scroll", requestProgress);
-      window.removeEventListener("resize", requestProgress);
-      window.removeEventListener("orientationchange", requestProgress);
+      mm.revert();
+      context.revert();
       if (rafRef.current) window.cancelAnimationFrame(rafRef.current);
     };
   }, [reducedMotion]);
 
   return (
     <section ref={sectionRef} id="connected-platform" className={`privana-feature-showcase tone-${active.tone}`} aria-labelledby="connected-platform-heading">
-      <div className="privana-feature-pin container-shell">
+      <div ref={pinRef} className="privana-feature-pin container-shell">
         <div className="privana-feature-copy privana-feature-copy-left">
           {showcaseChapters.map((chapter, index) => <ChapterCopy key={chapter.headline} chapter={chapter} index={index} activeIndex={activeIndex} side="left" demoLink={demoLink} />)}
         </div>
