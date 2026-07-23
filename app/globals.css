@@ -383,7 +383,7 @@ body {
   --ledger-opacity: 0;
   --node-opacity: 0;
   position: relative;
-  min-height: 900svh;
+  min-height: auto;
   overflow: visible;
   color: #f5f0e9;
   background:
@@ -412,8 +412,7 @@ body {
 }
 
 .privana-feature-pin {
-  position: sticky;
-  top: 0;
+  position: relative;
   display: grid;
   height: 100svh;
   min-height: 0;
@@ -466,7 +465,7 @@ body {
 }
 
 .privana-feature-stage { perspective: 1250px; display: grid; place-items: center; min-height: min(35rem, 68svh); }
-.privana-object { position: relative; width: min(38vw, 32rem, 62svh); aspect-ratio: 1; transform: rotateX(var(--object-rotate-x)) rotateY(var(--object-rotate-y)) rotateZ(var(--object-rotate-z)) scale(var(--object-scale)); transform-style: preserve-3d; transform-origin: center center; transition: filter 220ms ease; }
+.privana-object { position: relative; width: min(38vw, 32rem, 60svh); aspect-ratio: 1; transform: rotateX(var(--object-rotate-x)) rotateY(var(--object-rotate-y)) rotateZ(var(--object-rotate-z)) scale(var(--object-scale)); transform-style: preserve-3d; transform-origin: center center; transition: filter 220ms ease; }
 .privana-object-assembly { position:absolute; inset:0; transform-style: preserve-3d; }
 .privana-object-core { position: absolute; inset: 18%; display: grid; place-items: center; border: 1px solid rgba(255,255,255,.26); border-radius: 30%; background: linear-gradient(145deg, rgba(255,255,255,.2), rgba(255,255,255,.04) 42%, rgba(0,0,0,.3)), linear-gradient(145deg,#171922,#090a0e); box-shadow: inset 0 1px 0 rgba(255,255,255,.3), inset 0 -28px 74px rgba(0,0,0,.52), 0 46px 92px rgba(0,0,0,.5); transform: translateZ(72px); transform-style: preserve-3d; overflow: hidden; backface-visibility: hidden; }
 .privana-object-core::before { content:""; position:absolute; inset:-30%; background: conic-gradient(from 180deg, transparent, rgba(190,160,223,.38), transparent, rgba(158,181,218,.3), transparent); opacity:.66; }
@@ -504,7 +503,7 @@ body {
 
 @media (max-width: 1180px) {
   .privana-feature-pin { grid-template-columns: minmax(0,.72fr) minmax(19rem,1fr) minmax(0,.72fr); padding-block: clamp(2rem, 4svh, 3rem); }
-  .privana-object { width:min(42vw,29rem); }
+  .privana-object { width: min(42vw, 29rem, 56svh); }
   .privana-chapter-copy h2 { font-size: clamp(2rem, 4vw, 3.35rem); }
 }
 @media (max-width: 900px), (prefers-reduced-motion: reduce) {
