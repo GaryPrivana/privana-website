@@ -2,9 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Manrope } from "next/font/google";
 import {
-  DeviceFramePlaceholder,
   FeatureMediaPlaceholder,
-  HeroProductPlaceholder,
   ProductShowcasePlaceholder,
   VideoPreviewPlaceholder,
 } from "./media-placeholders";
@@ -239,39 +237,6 @@ export function Homepage() {
         <PrivanaFeatureShowcase />
 
         <PrivanaAssistInteractiveDemo />
-
-        <section
-          id="hero-showcase"
-          className="bg-black px-6 pb-20 pt-8 text-white sm:pt-10"
-        >
-          <div className="container-shell">
-            <div className="grid gap-5 lg:grid-cols-[1fr_260px]">
-              <HeroProductPlaceholder
-                title="Privana Command Dashboard"
-                label="Hero Product Showcase"
-                aspectRatio="16 / 9"
-                previewLabel="Replace with imageSrc or videoSrc"
-                className="w-full"
-              />
-              <div className="space-y-5">
-                <DeviceFramePlaceholder
-                  title="Live Operations Pulse"
-                  label="Floating Widget"
-                  aspectRatio="4 / 3"
-                  glowMode="teal"
-                  previewLabel="Replace with AWS image URL"
-                />
-                <DeviceFramePlaceholder
-                  title="AI Concierge Queue"
-                  label="Floating Widget"
-                  aspectRatio="4 / 3"
-                  glowMode="lilac"
-                  previewLabel="Replace with AWS image URL"
-                />
-              </div>
-            </div>
-          </div>
-        </section>
 
         <section className="border-y border-[#e0dbea] bg-[#f3eff9] py-16 sm:py-20">
           <div className="container-shell grid gap-5 md:grid-cols-2 xl:grid-cols-3">

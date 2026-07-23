@@ -235,15 +235,19 @@ test("comparison section keeps the approved content and premium paired rows", ()
   assert.match(homepage, /Privana/);
 });
 
-test("assist demo is inserted immediately after the feature showcase", () => {
+test("assist demo flows directly into the authority value cards", () => {
   const intro = homepage.indexOf('id="about"');
   const showcase = homepage.indexOf("<PrivanaFeatureShowcase />");
   const assist = homepage.indexOf("<PrivanaAssistInteractiveDemo />");
-  const heroShowcase = homepage.indexOf('id="hero-showcase"');
+  const valueCards = homepage.indexOf('className="border-y border-[#e0dbea] bg-[#f3eff9] py-16 sm:py-20"');
   assert.ok(intro >= 0);
   assert.ok(showcase > intro);
   assert.ok(assist > showcase);
-  assert.ok(heroShowcase > assist);
+  assert.ok(valueCards > assist);
+  assert.equal(homepage.includes('id="hero-showcase"'), false);
+  assert.equal(homepage.includes("Privana Command Dashboard"), false);
+  assert.equal(homepage.includes("Live Operations Pulse"), false);
+  assert.equal(homepage.includes("AI Concierge Queue"), false);
   assert.match(homepage, /PrivanaAssistInteractiveDemo/);
 });
 
