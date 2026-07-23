@@ -418,6 +418,20 @@ test("assist demo supports reduced motion branch", () => {
   assert.match(assistDemo, /prefers-reduced-motion: reduce/);
   assert.match(assistData, /REDUCED_MOTION_WAIT_MS = 250/);
   assert.match(assistDemo, /if \(reducedMotion\) \{/);
+  assert.match(assistDemo, /if \(reducedMotion \|\| assistScrollPauseUsedThisVisit\) return/);
   assert.match(assistDemo, /setComposerText\(scenario\.question\)/);
   assert.match(globals, /@media \(prefers-reduced-motion: reduce\)[\s\S]*\.assist-thinking i, \.assist-composer i \{ animation: none; \}/);
+});
+
+test("assist demo adds a one-time, desktop-only scroll pause that releases on continued scroll", () => {
+  assert.match(assistDemo, /ASSIST_SCROLL_PAUSE_MS = 400/);
+  assert.match(assistDemo, /DESKTOP_SCROLL_PAUSE_QUERY = "\(min-width: 901px\) and \(pointer: fine\)"/);
+  assert.match(assistDemo, /let assistScrollPauseUsedThisVisit = false/);
+  assert.match(assistDemo, /useAssistScrollPause\(\{ targetRef: experienceRef, hasInteractedRef, reducedMotion \}\)/);
+  assert.match(assistDemo, /intersectionRatio >= 1/);
+  assert.match(assistDemo, /window\.addEventListener\("wheel", releaseOnContinuedScroll, \{ passive: false, capture: true \}\)/);
+  assert.match(assistDemo, /window\.addEventListener\("touchmove", handleTouchMove, \{ passive: false, capture: true \}\)/);
+  assert.match(assistDemo, /event\.preventDefault\(\)/);
+  assert.match(assistDemo, /releasePause\(\)/);
+  assert.match(assistDemo, /hasInteractedRef\.current = true/);
 });
