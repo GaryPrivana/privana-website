@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "test:homepage": "node --test tests/homepage-marketing.test.mjs"
   },
   "dependencies": {
     "next": "15.5.7",
