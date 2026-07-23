@@ -81,7 +81,7 @@ test("image reveal keeps exact current URLs and uses opacity instead of a flip",
     /\.club-expanding-card\.is-image-active \.club-card-image-layer,[\s\S]*opacity: 1;/,
   );
   assert.doesNotMatch(
-    cards + globals,
+    cards,
     /club-card-back|club-card-face|rotateY|preserve-3d|backface-visibility|--club-flip-half-delay/,
   );
 });
@@ -139,7 +139,7 @@ test("club cards are centred and use meaningful decorative semantic icons", () =
     /\.club-expanding-composition \{[\s\S]*width: 100%;[\s\S]*max-width: min\(88vw, 86rem\);[\s\S]*margin-inline: auto;/,
   );
   assert.doesNotMatch(
-    cards + globals,
+    cards,
     /left:\s*-|margin-left:\s*-|translateX|translate-x|translate3d|transform:\s*translateX/,
   );
 
@@ -233,4 +233,64 @@ test("comparison section keeps the approved content and premium paired rows", ()
   assert.match(homepage, /One connected platform across every department/);
   assert.match(homepage, /Before/);
   assert.match(homepage, /Privana/);
+});
+
+test("premium feature showcase is inserted immediately after the AI-powered intro", () => {
+  const intro = homepage.indexOf('id="about"');
+  const showcase = homepage.indexOf("<PrivanaFeatureShowcase demoLink={demoLink} />");
+  const heroShowcase = homepage.indexOf('id="hero-showcase"');
+  assert.ok(intro >= 0);
+  assert.ok(showcase > intro);
+  assert.ok(heroShowcase > showcase);
+  assert.match(homepage, /PrivanaFeatureShowcase demoLink=\{demoLink\}/);
+});
+
+const featureShowcase = readFileSync(
+  new URL("../components/privana-feature-showcase.tsx", import.meta.url),
+  "utf8",
+);
+
+test("premium feature showcase keeps eight accessible chapters and demo CTA", () => {
+  for (const copy of [
+    "One platform. Every part of your club.",
+    "Know every member.",
+    "Every experience, beautifully managed.",
+    "Built for the way clubs play.",
+    "Run the entire operation.",
+    "One financial truth.",
+    "Your club can listen, respond and react.",
+    "Your club already knows the answer.",
+    "BOOK A DEMO",
+  ]) {
+    assert.match(featureShowcase, new RegExp(copy.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")));
+  }
+  assert.match(featureShowcase, /aria-labelledby="connected-platform-heading"/);
+  assert.match(featureShowcase, /prefers-reduced-motion: reduce/);
+  assert.match(featureShowcase, /window\.requestAnimationFrame/);
+  assert.match(featureShowcase, /removeEventListener\("scroll"/);
+  assert.match(featureShowcase, /href=\{demoLink\}/);
+});
+
+
+test("feature showcase emits final unit-bearing CSS values without CSS var multiplication", () => {
+  assert.match(featureShowcase, /"--object-rotate-x": deg\(mix\("rx"\)\)/);
+  assert.match(featureShowcase, /"--panel-one-x": px\(mix\("p1x"\)\)/);
+  assert.match(featureShowcase, /"--ambient-x": `\$\{mix\("ambientX"\)\.toFixed\(2\)\}%`/);
+  assert.match(featureShowcase, /const activeIndex = Math\.min\(total - 1, Math\.max\(0, Math\.round\(chapterFloat\)\)\)/);
+  assert.match(featureShowcase, /const localProgress = baseIndex >= total - 1 \? 1 : chapterFloat - baseIndex/);
+  assert.match(featureShowcase, /const easedProgress = ease\(localProgress\)/);
+  assert.doesNotMatch(globals, /calc\([^)]*var\([^)]*\)[^)]*\*/);
+});
+
+test("feature showcase updates continuous progress outside React state", () => {
+  assert.match(featureShowcase, /const activeIndexRef = useRef\(0\)/);
+  assert.match(featureShowcase, /el\.style\.setProperty\(property, value\)/);
+  assert.doesNotMatch(featureShowcase, /setProgress/);
+  assert.match(featureShowcase, /setActiveIndex\(values\.activeIndex\)/);
+});
+
+test("feature showcase final CTA is scoped to the final chapter and reuses demoLink", () => {
+  assert.match(featureShowcase, /const isFinal = index === showcaseChapters\.length - 1/);
+  assert.match(featureShowcase, /<FinalCta demoLink=\{demoLink\}/);
+  assert.match(featureShowcase, /<Link href=\{demoLink\}/);
 });

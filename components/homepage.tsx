@@ -22,6 +22,7 @@ import { ContactFormSection } from "./contact-form-section";
 import { HeroScrollPrompt } from "./hero-scroll-prompt";
 import { HomepageHeader } from "./homepage-header";
 import { PrivanaLogo } from "./privana-logo";
+import { PrivanaFeatureShowcase } from "./privana-feature-showcase";
 
 const demoLink = "#demo";
 const heroFont = Manrope({
@@ -233,6 +234,8 @@ export function Homepage() {
             </p>
           </div>
         </section>
+
+        <PrivanaFeatureShowcase demoLink={demoLink} />
 
         <section
           id="hero-showcase"
