@@ -239,7 +239,7 @@ test("assist demo flows directly into the authority value cards", () => {
   const intro = homepage.indexOf('id="about"');
   const showcase = homepage.indexOf("<PrivanaFeatureShowcase />");
   const assist = homepage.indexOf("<PrivanaAssistInteractiveDemo />");
-  const valueCards = homepage.indexOf('className="border-y border-[#e0dbea] bg-[#f3eff9] py-16 sm:py-20"');
+  const valueCards = homepage.indexOf('className="authority-value-transition-section"');
   assert.ok(intro >= 0);
   assert.ok(showcase > intro);
   assert.ok(assist > showcase);
