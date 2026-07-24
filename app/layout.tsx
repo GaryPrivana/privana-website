@@ -15,6 +15,14 @@ const cormorant = Cormorant_Garamond({
   display: 'swap'
 });
 
+const editorialItalic = Cormorant_Garamond({
+  subsets: ['latin'],
+  variable: '--font-editorial-emphasis',
+  weight: ['500', '600'],
+  style: ['italic'],
+  display: 'swap'
+});
+
 const siteUrl = 'https://www.privana.club';
 
 export const metadata: Metadata = {
@@ -66,7 +74,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${inter.variable} ${cormorant.variable}`}>
+    <html lang="en" className={`${inter.variable} ${cormorant.variable} ${editorialItalic.variable}`}>
       <body>{children}</body>
     </html>
   );
