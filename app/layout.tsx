@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { Cormorant_Garamond, Inter } from 'next/font/google';
+import { Allura, Cormorant_Garamond, Inter } from 'next/font/google';
 import './globals.css';
 
 const inter = Inter({
@@ -15,11 +15,10 @@ const cormorant = Cormorant_Garamond({
   display: 'swap'
 });
 
-const editorialItalic = Cormorant_Garamond({
+const signatureEmphasis = Allura({
   subsets: ['latin'],
-  variable: '--font-editorial-emphasis',
-  weight: ['500', '600'],
-  style: ['italic'],
+  variable: '--font-signature-emphasis',
+  weight: '400',
   display: 'swap'
 });
 
@@ -74,7 +73,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${inter.variable} ${cormorant.variable} ${editorialItalic.variable}`}>
+    <html lang="en" className={`${inter.variable} ${cormorant.variable} ${signatureEmphasis.variable}`}>
       <body>{children}</body>
     </html>
   );

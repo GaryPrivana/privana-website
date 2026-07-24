@@ -14,6 +14,10 @@ const globals = readFileSync(
   new URL("../app/globals.css", import.meta.url),
   "utf8",
 );
+const layout = readFileSync(
+  new URL("../app/layout.tsx", import.meta.url),
+  "utf8",
+);
 const homepageIntro = readFileSync(
   new URL("../components/homepage-intro-reveal.tsx", import.meta.url),
   "utf8",
@@ -90,7 +94,7 @@ test("image reveal keeps exact current URLs and uses opacity instead of a flip",
   );
 });
 
-test("editorial emphasis words share the dedicated font token without generic italic markup", () => {
+test("signature emphasis words share the dedicated font token without generic italic styling", () => {
   assert.match(
     homepage,
     /Built for the World’s Most <span className="editorial-emphasis">Exceptional<\/span> Clubs/,
@@ -99,8 +103,11 @@ test("editorial emphasis words share the dedicated font token without generic it
     cards,
     /Tailored <span className="editorial-emphasis">Exclusively<\/span> for Your Club/,
   );
-  assert.match(globals, /\.editorial-emphasis \{[\s\S]*var\(--font-editorial-emphasis\)/);
-  assert.match(globals, /\.editorial-emphasis \{[\s\S]*font-style: italic;/);
+  assert.match(globals, /\.editorial-emphasis \{[\s\S]*var\(--font-signature-emphasis\)/);
+  assert.match(globals, /\.editorial-emphasis \{[\s\S]*font-style: normal;/);
+  assert.match(layout, /Allura\(\{[\s\S]*variable: '--font-signature-emphasis'/);
+  assert.doesNotMatch(layout, /--font-editorial-emphasis|const editorialItalic/);
+  assert.doesNotMatch(globals, /--font-editorial-emphasis|font-style: italic;/);
   assert.doesNotMatch(homepage, /<em>Exceptional<\/em>|className="[^"]*\bitalic\b[^"]*"[^>]*>Exceptional/);
   assert.doesNotMatch(cards, /<em>Exclusively<\/em>|className="[^"]*\bitalic\b[^"]*"[^>]*>Exclusively/);
 });
