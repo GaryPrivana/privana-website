@@ -264,17 +264,22 @@ test("homepage intro removes the broken CSS scroll timeline mechanism", () => {
   assert.doesNotMatch(globals, /44cqw/);
 });
 
-test("homepage intro desktop uses a scrubbed GSAP ScrollTrigger pin", () => {
+test("homepage intro desktop uses an early non-pinned scrubbed ScrollTrigger", () => {
   assert.match(homepageIntro, /"use client"/);
   assert.match(homepageIntro, /import gsap from "gsap"/);
   assert.match(homepageIntro, /import \{ ScrollTrigger \} from "gsap\/ScrollTrigger"/);
   assert.match(homepageIntro, /gsap\.registerPlugin\(ScrollTrigger\)/);
-  assert.match(homepageIntro, /const DESKTOP_INTRO_SCROLL_DISTANCE = 1\.1/);
-  assert.match(homepageIntro, /gsap\.timeline\(\{[\s\S]*scrollTrigger: \{[\s\S]*trigger: section,[\s\S]*start: "top top",[\s\S]*end: \(\) => `\+=\$\{window\.innerHeight \* DESKTOP_INTRO_SCROLL_DISTANCE\}`,[\s\S]*pin: scene,[\s\S]*pinSpacing: true,[\s\S]*scrub: true,[\s\S]*anticipatePin: 1,[\s\S]*invalidateOnRefresh: true/);
-  assert.match(globals, /@media \(min-width: 1024px\) and \(prefers-reduced-motion: no-preference\)[\s\S]*\.homepage-intro-sticky \{[\s\S]*min-height: 100svh;[\s\S]*display: flex;[\s\S]*align-items: center;[\s\S]*overflow: hidden;/);
+  assert.doesNotMatch(homepageIntro, /DESKTOP_INTRO_SCROLL_DISTANCE/);
+  assert.match(homepageIntro, /gsap\.timeline\(\{[\s\S]*scrollTrigger: \{[\s\S]*trigger: section,[\s\S]*start: "top 92%",[\s\S]*end: "top 22%",[\s\S]*scrub: true,[\s\S]*invalidateOnRefresh: true/);
+  assert.doesNotMatch(homepageIntro, /pin:\s*scene/);
+  assert.doesNotMatch(homepageIntro, /pinSpacing/);
+  assert.doesNotMatch(homepageIntro, /anticipatePin/);
+  assert.doesNotMatch(homepageIntro, /window\.innerHeight \*/);
+  assert.doesNotMatch(globals, /\.homepage-intro-sticky \{[^}]*min-height:\s*100svh/);
+  assert.doesNotMatch(globals, /@media \(min-width: 1024px\) and \(prefers-reduced-motion: no-preference\)[\s\S]*\.homepage-intro-sticky \{[\s\S]*display: flex;[\s\S]*align-items: center;[\s\S]*overflow: hidden;/);
 });
 
-test("homepage intro measures brand travel and sequences all reveal fragments", () => {
+test("homepage intro uses vertical-first brand motion and sequences all reveal fragments", () => {
   assert.match(homepageIntro, /const sectionRef = useRef<HTMLElement>\(null\)/);
   assert.match(homepageIntro, /const sceneRef = useRef<HTMLDivElement>\(null\)/);
   assert.match(homepageIntro, /const brandRef = useRef<HTMLSpanElement>\(null\)/);
@@ -284,17 +289,18 @@ test("homepage intro measures brand travel and sequences all reveal fragments", 
   assert.match(homepageIntro, /const line4Ref = useRef<HTMLSpanElement>\(null\)/);
   assert.match(homepageIntro, /const line5Ref = useRef<HTMLSpanElement>\(null\)/);
   assert.match(homepageIntro, /const copyRef = useRef<HTMLParagraphElement>\(null\)/);
-  assert.match(homepageIntro, /brand\.getBoundingClientRect\(\)/);
-  assert.match(homepageIntro, /prominentRightStart - rect\.left/);
-  assert.match(homepageIntro, /gsap\.set\(brand, \{ autoAlpha: 0, x: measureBrandStartX, y: "0\.65em", scale: 1\.16/);
-  assert.match(homepageIntro, /\.to\(brand,[\s\S]*duration: 0\.16[\s\S]*, 0\)/);
-  assert.match(homepageIntro, /\.to\(brand,[\s\S]*x: 0, scale: 1,[\s\S]*, 0\.16\)/);
-  assert.match(homepageIntro, /\.to\(fragment,[\s\S]*, 0\.38\)/);
-  assert.match(homepageIntro, /\.to\(line2,[\s\S]*, 0\.46\)/);
-  assert.match(homepageIntro, /\.to\(line3,[\s\S]*, 0\.55\)/);
-  assert.match(homepageIntro, /\.to\(line4,[\s\S]*, 0\.64\)/);
-  assert.match(homepageIntro, /\.to\(line5,[\s\S]*, 0\.72\)/);
-  assert.match(homepageIntro, /\.to\(copy,[\s\S]*, 0\.82\)[\s\S]*\.to\(\{\}, \{ duration: 0\.08 \}, 0\.92\)/);
+  assert.doesNotMatch(homepageIntro, /getBoundingClientRect\(\)/);
+  assert.doesNotMatch(homepageIntro, /prominentRightStart - rect\.left/);
+  assert.match(homepageIntro, /const brandSettleX = \(\) => Math\.min\(96, Math\.max\(48, window\.innerWidth \* 0\.055\)\)/);
+  assert.match(homepageIntro, /gsap\.set\(brand, \{ autoAlpha: 0, x: brandSettleX, y: "1\.35em", scale: 1\.12/);
+  assert.match(homepageIntro, /\.to\(brand,[\s\S]*autoAlpha: 1, y: 0,[\s\S]*duration: 0\.2[\s\S]*, 0\)/);
+  assert.match(homepageIntro, /\.to\(brand,[\s\S]*x: 0, scale: 1,[\s\S]*, 0\.2\)/);
+  assert.match(homepageIntro, /\.to\(fragment,[\s\S]*, 0\.34\)/);
+  assert.match(homepageIntro, /\.to\(line2,[\s\S]*, 0\.42\)/);
+  assert.match(homepageIntro, /\.to\(line3,[\s\S]*, 0\.5\)/);
+  assert.match(homepageIntro, /\.to\(line4,[\s\S]*, 0\.58\)/);
+  assert.match(homepageIntro, /\.to\(line5,[\s\S]*, 0\.66\)/);
+  assert.match(homepageIntro, /\.to\(copy,[\s\S]*, 0\.76\)[\s\S]*\.to\(\{\}, \{ duration: 0\.15 \}, 0\.85\)/);
 });
 
 test("homepage intro cleanup, reduced-motion, and mobile variants avoid desktop pinning", () => {

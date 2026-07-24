@@ -395,14 +395,6 @@ body {
   }
 }
 
-@media (min-width: 1024px) and (prefers-reduced-motion: no-preference) {
-  .homepage-intro-sticky {
-    min-height: 100svh;
-    display: flex;
-    align-items: center;
-    overflow: hidden;
-  }
-}
 
 @media (max-width: 1023px) and (prefers-reduced-motion: no-preference) {
   .homepage-intro-line,
