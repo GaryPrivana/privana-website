@@ -50,8 +50,8 @@ export function ClubOverlappingCards({ segments }: ClubOverlappingCardsProps) {
 
   return (
     <div className="w-full">
-      <h3 className="mx-auto max-w-[18ch] text-center text-pretty text-[2.15rem] font-semibold leading-[1.03] tracking-[-0.03em] text-white sm:text-[2.75rem] lg:text-[3.05rem]">
-        Tailored Exclusively for Your Club
+      <h3 className="mx-auto max-w-[18ch] text-center text-pretty text-[2.15rem] font-semibold leading-[1.03] tracking-[-0.03em] text-white sm:text-[2.75rem] lg:max-w-none lg:whitespace-nowrap lg:text-[3.05rem]">
+        Tailored <em>Exclusively</em> for Your Club
       </h3>
 
       <div className="mx-auto w-[min(88vw,86rem)] max-w-full">

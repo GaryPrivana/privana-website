@@ -91,7 +91,7 @@ test("image reveal keeps exact current URLs and uses opacity instead of a flip",
 });
 
 test("homepage keeps the required club section heading and existing section background", () => {
-  assert.match(cards, /Tailored Exclusively for Your Club/);
+  assert.match(cards, /Tailored <em>Exclusively<\/em> for Your Club/);
   assert.match(homepage, /id="solutions"/);
   assert.match(
     homepage,
