@@ -6,7 +6,6 @@ import { useEffect, useRef } from "react";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const DESKTOP_INTRO_SCROLL_DISTANCE = 1.1;
 
 type HomepageIntroRevealProps = {
   heroFontClassName: string;
@@ -26,7 +25,6 @@ export function HomepageIntroReveal({ heroFontClassName }: HomepageIntroRevealPr
 
   useEffect(() => {
     const section = sectionRef.current;
-    const scene = sceneRef.current;
     const brand = brandRef.current;
     const fragment = fragmentRef.current;
     const line2 = line2Ref.current;
@@ -35,47 +33,38 @@ export function HomepageIntroReveal({ heroFontClassName }: HomepageIntroRevealPr
     const line5 = line5Ref.current;
     const copy = copyRef.current;
 
-    if (!section || !scene || !brand || !fragment || !line2 || !line3 || !line4 || !line5 || !copy) return;
+    if (!section || !brand || !fragment || !line2 || !line3 || !line4 || !line5 || !copy) return;
 
     const revealTargets = [fragment, line2, line3, line4, line5, copy];
-    const measureBrandStartX = () => {
-      const rect = brand.getBoundingClientRect();
-      const viewportWidth = window.innerWidth;
-      const safeRightPadding = Math.max(32, viewportWidth * 0.04);
-      const prominentRightStart = Math.min(viewportWidth * 0.68, viewportWidth - rect.width - safeRightPadding);
-      return Math.max(96, prominentRightStart - rect.left);
-    };
+    const brandSettleX = () => Math.min(96, Math.max(48, window.innerWidth * 0.055));
 
     const mm = gsap.matchMedia();
     const context = gsap.context(() => {
       mm.add("(min-width: 1024px) and (prefers-reduced-motion: no-preference)", () => {
-        gsap.set(brand, { autoAlpha: 0, x: measureBrandStartX, y: "0.65em", scale: 1.16, transformOrigin: "left center" });
+        gsap.set(brand, { autoAlpha: 0, x: brandSettleX, y: "1.35em", scale: 1.12, transformOrigin: "left center" });
         gsap.set(revealTargets, { autoAlpha: 0, y: "0.28em" });
         gsap.set(copy, { y: "1.25rem" });
 
         const timeline = gsap.timeline({
           scrollTrigger: {
             trigger: section,
-            start: "top top",
-            end: () => `+=${window.innerHeight * DESKTOP_INTRO_SCROLL_DISTANCE}`,
-            pin: scene,
-            pinSpacing: true,
+            start: "top 92%",
+            end: "top 22%",
             scrub: true,
-            anticipatePin: 1,
             invalidateOnRefresh: true,
           },
         });
 
         timeline
-          .to(brand, { autoAlpha: 1, y: 0, duration: 0.16, ease: "power2.out" }, 0)
-          .to(brand, { x: 0, scale: 1, duration: 0.22, ease: "power2.inOut" }, 0.16)
-          .to(fragment, { autoAlpha: 1, y: 0, duration: 0.08, ease: "power2.out" }, 0.38)
-          .to(line2, { autoAlpha: 1, y: 0, duration: 0.09, ease: "power2.out" }, 0.46)
-          .to(line3, { autoAlpha: 1, y: 0, duration: 0.09, ease: "power2.out" }, 0.55)
-          .to(line4, { autoAlpha: 1, y: 0, duration: 0.08, ease: "power2.out" }, 0.64)
-          .to(line5, { autoAlpha: 1, y: 0, duration: 0.08, ease: "power2.out" }, 0.72)
-          .to(copy, { autoAlpha: 1, y: 0, duration: 0.1, ease: "power2.out" }, 0.82)
-          .to({}, { duration: 0.08 }, 0.92);
+          .to(brand, { autoAlpha: 1, y: 0, duration: 0.2, ease: "power2.out" }, 0)
+          .to(brand, { x: 0, scale: 1, duration: 0.16, ease: "power2.inOut" }, 0.2)
+          .to(fragment, { autoAlpha: 1, y: 0, duration: 0.08, ease: "power2.out" }, 0.34)
+          .to(line2, { autoAlpha: 1, y: 0, duration: 0.08, ease: "power2.out" }, 0.42)
+          .to(line3, { autoAlpha: 1, y: 0, duration: 0.08, ease: "power2.out" }, 0.5)
+          .to(line4, { autoAlpha: 1, y: 0, duration: 0.08, ease: "power2.out" }, 0.58)
+          .to(line5, { autoAlpha: 1, y: 0, duration: 0.08, ease: "power2.out" }, 0.66)
+          .to(copy, { autoAlpha: 1, y: 0, duration: 0.09, ease: "power2.out" }, 0.76)
+          .to({}, { duration: 0.15 }, 0.85);
 
         let active = true;
         const refresh = () => {
