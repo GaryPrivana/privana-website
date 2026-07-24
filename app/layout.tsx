@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { Allura, Cormorant_Garamond, Inter } from 'next/font/google';
+import { Cormorant_Garamond, Inter, Mea_Culpa } from 'next/font/google';
 import './globals.css';
 
 const inter = Inter({
@@ -15,7 +15,7 @@ const cormorant = Cormorant_Garamond({
   display: 'swap'
 });
 
-const signatureEmphasis = Allura({
+const signatureEmphasis = Mea_Culpa({
   subsets: ['latin'],
   variable: '--font-signature-emphasis',
   weight: '400',

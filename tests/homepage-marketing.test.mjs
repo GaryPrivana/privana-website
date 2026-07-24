@@ -97,16 +97,16 @@ test("image reveal keeps exact current URLs and uses opacity instead of a flip",
 test("signature emphasis words share the dedicated font token without generic italic styling", () => {
   assert.match(
     homepage,
-    /Built for the World’s Most <span className="editorial-emphasis">Exceptional<\/span> Clubs/,
+    /Built for the World’s Most <span className="signature-emphasis">Exceptional<\/span> Clubs/,
   );
   assert.match(
     cards,
-    /Tailored <span className="editorial-emphasis">Exclusively<\/span> for Your Club/,
+    /Tailored <span className="signature-emphasis">Exclusively<\/span> for Your Club/,
   );
-  assert.match(globals, /\.editorial-emphasis \{[\s\S]*var\(--font-signature-emphasis\)/);
-  assert.match(globals, /\.editorial-emphasis \{[\s\S]*font-style: normal;/);
-  assert.match(layout, /Allura\(\{[\s\S]*variable: '--font-signature-emphasis'/);
-  assert.doesNotMatch(layout, /--font-editorial-emphasis|const editorialItalic/);
+  assert.match(globals, /\.signature-emphasis \{[\s\S]*var\(--signature-emphasis-font\)/);
+  assert.match(globals, /\.signature-emphasis \{[\s\S]*font-style: normal;/);
+  assert.match(layout, /Mea_Culpa\(\{[\s\S]*variable: '--font-signature-emphasis'/);
+  assert.doesNotMatch(layout, /Allura\(|const editorialItalic/);
   assert.doesNotMatch(globals, /--font-editorial-emphasis|font-style: italic;/);
   assert.doesNotMatch(homepage, /<em>Exceptional<\/em>|className="[^"]*\bitalic\b[^"]*"[^>]*>Exceptional/);
   assert.doesNotMatch(cards, /<em>Exclusively<\/em>|className="[^"]*\bitalic\b[^"]*"[^>]*>Exclusively/);
@@ -115,7 +115,7 @@ test("signature emphasis words share the dedicated font token without generic it
 test("homepage keeps the required club section heading and existing section background", () => {
   assert.match(
     cards,
-    /Tailored <span className="editorial-emphasis">Exclusively<\/span> for Your Club/,
+    /Tailored <span className="signature-emphasis">Exclusively<\/span> for Your Club/,
   );
   assert.match(homepage, /id="solutions"/);
   assert.match(
