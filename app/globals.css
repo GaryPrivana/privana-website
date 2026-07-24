@@ -377,96 +377,11 @@ body {
   will-change: transform, opacity;
 }
 
-.homepage-intro-layout {
-  container-type: inline-size;
-}
 
 .homepage-intro-line,
 .homepage-intro-brand,
 .homepage-intro-fragment {
   display: inline-block;
-}
-
-@keyframes intro-brand-scroll-reveal {
-  0% {
-    opacity: 0;
-    transform: translate3d(min(44cqw, 34rem), 1.15em, 0) scale(1.16);
-  }
-  18% {
-    opacity: 1;
-    transform: translate3d(min(44cqw, 34rem), 0, 0) scale(1.16);
-  }
-  38%,
-  100% {
-    opacity: 1;
-    transform: translate3d(0, 0, 0) scale(1);
-  }
-}
-
-@keyframes intro-is-the-scroll-reveal {
-  0% {
-    opacity: 0;
-    transform: translate3d(0, 0.28em, 0);
-  }
-  100% {
-    opacity: 1;
-    transform: translate3d(0, 0, 0);
-  }
-}
-
-@keyframes intro-line-2-scroll-reveal {
-  0% {
-    opacity: 0;
-    transform: translate3d(0, 0.28em, 0);
-  }
-  100% {
-    opacity: 1;
-    transform: translate3d(0, 0, 0);
-  }
-}
-
-@keyframes intro-line-3-scroll-reveal {
-  0% {
-    opacity: 0;
-    transform: translate3d(0, 0.28em, 0);
-  }
-  100% {
-    opacity: 1;
-    transform: translate3d(0, 0, 0);
-  }
-}
-
-@keyframes intro-line-4-scroll-reveal {
-  0% {
-    opacity: 0;
-    transform: translate3d(0, 0.28em, 0);
-  }
-  100% {
-    opacity: 1;
-    transform: translate3d(0, 0, 0);
-  }
-}
-
-@keyframes intro-line-5-scroll-reveal {
-  0% {
-    opacity: 0;
-    transform: translate3d(0, 0.28em, 0);
-  }
-  100% {
-    opacity: 1;
-    transform: translate3d(0, 0, 0);
-  }
-}
-
-@keyframes intro-copy-scroll-reveal {
-  0% {
-    opacity: 0;
-    transform: translate3d(0, 1.25rem, 0);
-  }
-  100% {
-    opacity: 1;
-    transform: translate3d(0, 0, 0);
-  }
 }
 
 @keyframes intro-mobile-reveal {
@@ -481,72 +396,11 @@ body {
 }
 
 @media (min-width: 1024px) and (prefers-reduced-motion: no-preference) {
-  .homepage-intro-reveal {
-    min-height: 175svh;
-    view-timeline-name: --homepage-intro-reveal;
-    view-timeline-axis: block;
-  }
-
   .homepage-intro-sticky {
-    position: sticky;
-    top: 0;
     min-height: 100svh;
     display: flex;
     align-items: center;
     overflow: hidden;
-  }
-
-  .homepage-intro-brand {
-    opacity: 0;
-    transform-origin: left center;
-    animation: intro-brand-scroll-reveal linear both;
-    animation-timeline: --homepage-intro-reveal;
-    animation-range: entry 0% cover 100%;
-  }
-
-  .homepage-intro-fragment,
-  .homepage-intro-line-2,
-  .homepage-intro-line-3,
-  .homepage-intro-line-4,
-  .homepage-intro-line-5,
-  .homepage-intro-copy {
-    opacity: 0;
-  }
-
-  .homepage-intro-fragment {
-    animation: intro-is-the-scroll-reveal linear both;
-    animation-timeline: --homepage-intro-reveal;
-    animation-range: entry 38% cover 45%;
-  }
-
-  .homepage-intro-line-2 {
-    animation: intro-line-2-scroll-reveal linear both;
-    animation-timeline: --homepage-intro-reveal;
-    animation-range: entry 45% cover 54%;
-  }
-
-  .homepage-intro-line-3 {
-    animation: intro-line-3-scroll-reveal linear both;
-    animation-timeline: --homepage-intro-reveal;
-    animation-range: entry 54% cover 63%;
-  }
-
-  .homepage-intro-line-4 {
-    animation: intro-line-4-scroll-reveal linear both;
-    animation-timeline: --homepage-intro-reveal;
-    animation-range: entry 63% cover 70%;
-  }
-
-  .homepage-intro-line-5 {
-    animation: intro-line-5-scroll-reveal linear both;
-    animation-timeline: --homepage-intro-reveal;
-    animation-range: entry 70% cover 77%;
-  }
-
-  .homepage-intro-copy {
-    animation: intro-copy-scroll-reveal linear both;
-    animation-timeline: --homepage-intro-reveal;
-    animation-range: entry 80% cover 90%;
   }
 }
 
