@@ -94,7 +94,7 @@ test("image reveal keeps exact current URLs and uses opacity instead of a flip",
   );
 });
 
-test("signature emphasis words share the dedicated font token without generic italic styling", () => {
+test("signature emphasis words use inline scale-only primary typography", () => {
   assert.match(
     homepage,
     /Built for the World’s Most <span className="signature-emphasis">Exceptional<\/span> Clubs/,
@@ -103,11 +103,15 @@ test("signature emphasis words share the dedicated font token without generic it
     cards,
     /Tailored <span className="signature-emphasis">Exclusively<\/span> for Your Club/,
   );
-  assert.match(globals, /\.signature-emphasis \{[\s\S]*var\(--signature-emphasis-font\)/);
-  assert.match(globals, /\.signature-emphasis \{[\s\S]*font-style: normal;/);
-  assert.match(layout, /Mea_Culpa\(\{[\s\S]*variable: '--font-signature-emphasis'/);
-  assert.doesNotMatch(layout, /Allura\(|const editorialItalic/);
-  assert.doesNotMatch(globals, /--font-editorial-emphasis|font-style: italic;/);
+  assert.match(globals, /\.signature-emphasis \{[\s\S]*display: inline;/);
+  assert.match(globals, /\.signature-emphasis \{[\s\S]*font-family: inherit;/);
+  assert.match(globals, /\.signature-emphasis \{[\s\S]*font-weight: inherit;/);
+  assert.match(globals, /\.signature-emphasis \{[\s\S]*color: inherit;/);
+  assert.match(globals, /\.signature-emphasis \{[\s\S]*font-size: 1\.1em;/);
+  assert.doesNotMatch(layout, /Mea_Culpa|--font-signature-emphasis|signatureEmphasis|Allura\(|const editorialItalic/);
+  const signatureBlock = globals.match(/\.signature-emphasis \{[\s\S]*?\n\}/)?.[0] ?? "";
+  assert.doesNotMatch(globals, /--signature-emphasis-font|--font-signature-emphasis|--font-editorial-emphasis|font-style: italic|cursive/);
+  assert.doesNotMatch(signatureBlock, /rotate\(|translateY|margin-inline|margin-left|margin-right|font-family: var/);
   assert.doesNotMatch(homepage, /<em>Exceptional<\/em>|className="[^"]*\bitalic\b[^"]*"[^>]*>Exceptional/);
   assert.doesNotMatch(cards, /<em>Exclusively<\/em>|className="[^"]*\bitalic\b[^"]*"[^>]*>Exclusively/);
 });
