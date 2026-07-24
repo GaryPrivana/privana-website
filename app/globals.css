@@ -59,38 +59,46 @@ body {
   letter-spacing: -0.01em;
 }
 
-.editorial-emphasis {
+:root {
+  --signature-emphasis-font: var(--font-signature-emphasis), "Brittany Signature", "Northwell", cursive;
+}
+
+.signature-emphasis {
   display: inline-block;
-  font-family: var(--font-signature-emphasis), cursive;
+  font-family: var(--signature-emphasis-font);
   font-weight: 400;
   font-style: normal;
-  line-height: 0.75;
-  letter-spacing: normal;
+  line-height: 0.68;
+  letter-spacing: -0.025em;
   white-space: nowrap;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
 }
 
-.hero-editorial-line .editorial-emphasis {
-  font-size: clamp(1.3em, 1.45em, 1.5em);
-  margin-left: -0.015em;
-  margin-right: 0.04em;
-  transform: translateY(0.12em);
+.hero-editorial-line .signature-emphasis {
+  font-size: clamp(1.45em, 1.5em, 1.55em);
+  margin-left: -0.02em;
+  margin-right: 0.055em;
+  transform: translateY(0.145em) rotate(-0.35deg);
 }
 
-.club-types-heading .editorial-emphasis {
-  font-size: clamp(1.3em, 1.36em, 1.42em);
-  margin-inline: -0.01em 0.02em;
-  transform: translateY(0.1em);
+.club-types-heading .signature-emphasis {
+  font-size: clamp(1.45em, 1.5em, 1.53em);
+  margin-inline: -0.03em 0.035em;
+  transform: translateY(0.15em) rotate(-0.4deg);
 }
 
 @media (max-width: 420px) {
-  .hero-editorial-line .editorial-emphasis {
-    font-size: 1.3em;
-    margin-inline: 0 0.03em;
+  .hero-editorial-line .signature-emphasis {
+    font-size: 1.45em;
+    margin-inline: 0 0.04em;
+    transform: translateY(0.14em) rotate(-0.35deg);
   }
 
-  .club-types-heading .editorial-emphasis {
-    font-size: 1.24em;
-    margin-inline: 0 0.02em;
+  .club-types-heading .signature-emphasis {
+    font-size: 1.45em;
+    margin-inline: 0 0.03em;
+    transform: translateY(0.145em) rotate(-0.4deg);
   }
 }
 

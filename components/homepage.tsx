@@ -191,7 +191,7 @@ export function Homepage() {
                 />
               </div>
               <p className="hero-editorial-line mx-auto mt-11 max-w-4xl text-balance text-lg font-normal leading-[1.24] tracking-[-0.008em] text-white/84 sm:text-[1.65rem] lg:max-w-none lg:text-[2.08rem] lg:whitespace-nowrap">
-                Built for the World’s Most <span className="editorial-emphasis">Exceptional</span> Clubs
+                Built for the World’s Most <span className="signature-emphasis">Exceptional</span> Clubs
               </p>
               <div className="mt-16">
                 <Link href={demoLink} className={sharedDemoCtaClass}>
