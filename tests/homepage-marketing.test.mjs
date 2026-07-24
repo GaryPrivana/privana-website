@@ -235,6 +235,48 @@ test("comparison section keeps the approved content and premium paired rows", ()
   assert.match(homepage, /Privana/);
 });
 
+
+test("homepage intro has scroll reveal structure without changing final desktop layout classes", () => {
+  assert.match(homepage, /id="about"/);
+  assert.match(homepage, /className=\{`homepage-intro-reveal bg-\[#fbfafe\] \$\{heroFont\.className\}`\}/);
+  assert.match(homepage, /className="homepage-intro-sticky section-pad"/);
+  assert.match(homepage, /homepage-intro-layout container-shell grid items-center gap-12 lg:grid-cols-\[1\.3fr_1fr\] lg:gap-20/);
+  assert.match(homepage, /homepage-intro-brand text-\[#af8bda\]">Privana/);
+  assert.match(homepage, /homepage-intro-line-2">world leading, fully/);
+  assert.match(homepage, /homepage-intro-line-3">[\s\S]*text-\[#5888d9\]">AI powered/);
+  assert.match(homepage, /homepage-intro-copy max-w-xl justify-self-end text-pretty text-xl leading-relaxed text-\[#201a2d\]\/92/);
+});
+
+test("homepage intro desktop reveal is scroll-linked, sticky, bounded, and overflow safe", () => {
+  assert.match(globals, /\.homepage-intro-reveal \{[\s\S]*overflow: clip;/);
+  assert.match(globals, /@media \(min-width: 1024px\) and \(prefers-reduced-motion: no-preference\)[\s\S]*\.homepage-intro-reveal \{[\s\S]*min-height: 175svh;[\s\S]*view-timeline-name: --homepage-intro-reveal;/);
+  assert.match(globals, /\.homepage-intro-sticky \{[\s\S]*position: sticky;[\s\S]*top: 0;[\s\S]*min-height: 100svh;[\s\S]*overflow: hidden;/);
+  assert.match(globals, /animation-timeline: --homepage-intro-reveal;/);
+  assert.match(globals, /container-type: inline-size;/);
+  assert.match(globals, /@keyframes intro-brand-scroll-reveal[\s\S]*0% \{[\s\S]*opacity: 0;[\s\S]*translate3d\(min\(44cqw, 34rem\), 1\.15em, 0\) scale\(1\.16\)/);
+  assert.match(globals, /@keyframes intro-brand-scroll-reveal[\s\S]*18% \{[\s\S]*translate3d\(min\(44cqw, 34rem\), 0, 0\) scale\(1\.16\)[\s\S]*38%,[\s\S]*translate3d\(0, 0, 0\) scale\(1\)/);
+  assert.doesNotMatch(globals, /\.homepage-intro-reveal \{[\s\S]{0,160}overflow-x: visible/);
+});
+
+test("homepage intro reveals each headline fragment in strict ordered scroll ranges", () => {
+  assert.match(globals, /\.homepage-intro-brand \{[\s\S]*animation: intro-brand-scroll-reveal linear both;[\s\S]*animation-range: entry 0% cover 100%;/);
+  assert.match(globals, /\.homepage-intro-fragment \{[\s\S]*animation: intro-is-the-scroll-reveal linear both;[\s\S]*animation-range: entry 38% cover 45%;/);
+  assert.match(globals, /\.homepage-intro-line-2 \{[\s\S]*animation: intro-line-2-scroll-reveal linear both;[\s\S]*animation-range: entry 45% cover 54%;/);
+  assert.match(globals, /\.homepage-intro-line-3 \{[\s\S]*animation: intro-line-3-scroll-reveal linear both;[\s\S]*animation-range: entry 54% cover 63%;/);
+  assert.match(globals, /\.homepage-intro-line-4 \{[\s\S]*animation: intro-line-4-scroll-reveal linear both;[\s\S]*animation-range: entry 63% cover 70%;/);
+  assert.match(globals, /\.homepage-intro-line-5 \{[\s\S]*animation: intro-line-5-scroll-reveal linear both;[\s\S]*animation-range: entry 70% cover 77%;/);
+  assert.match(globals, /\.homepage-intro-copy \{[\s\S]*animation: intro-copy-scroll-reveal linear both;[\s\S]*animation-range: entry 80% cover 90%;/);
+  assert.match(globals, /\.homepage-intro-fragment,[\s\S]*\.homepage-intro-copy \{[\s\S]*opacity: 0;/);
+  assert.doesNotMatch(globals, /intro-line-scroll-reveal/);
+});
+
+test("homepage intro reduced-motion and mobile variants avoid desktop pinning and horizontal motion", () => {
+  assert.match(globals, /@media \(max-width: 1023px\) and \(prefers-reduced-motion: no-preference\)[\s\S]*intro-mobile-reveal/);
+  assert.match(globals, /@media \(prefers-reduced-motion: reduce\)[\s\S]*\.homepage-intro-sticky \{[\s\S]*position: static;[\s\S]*min-height: auto;/);
+  assert.match(globals, /@media \(prefers-reduced-motion: reduce\)[\s\S]*\.homepage-intro-line,[\s\S]*\.homepage-intro-copy \{[\s\S]*opacity: 1 !important;[\s\S]*transform: none !important;[\s\S]*animation: none !important;/);
+  assert.doesNotMatch(globals, /@media \(max-width: 1023px\)[\s\S]*translate3d\(clamp/);
+});
+
 test("assist demo flows directly into the authority value cards", () => {
   const intro = homepage.indexOf('id="about"');
   const showcase = homepage.indexOf("<PrivanaFeatureShowcase />");
