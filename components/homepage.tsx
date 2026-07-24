@@ -208,29 +208,40 @@ export function Homepage() {
 
         <section
           id="about"
-          className={`section-pad bg-[#fbfafe] ${heroFont.className}`}
+          className={`homepage-intro-reveal bg-[#fbfafe] ${heroFont.className}`}
+          aria-labelledby="homepage-intro-heading"
         >
-          <div className="container-shell grid items-center gap-12 lg:grid-cols-[1.3fr_1fr] lg:gap-20">
-            <h2 className="max-w-4xl text-4xl font-semibold leading-[1.04] tracking-[-0.02em] text-[#111017] sm:text-6xl">
-              <span className="text-[#af8bda]">Privana</span> is the
-              <br className="hidden lg:block" />
-              <span className="lg:hidden"> </span>
-              world leading, fully
-              <br className="hidden lg:block" />
-              <span className="lg:hidden"> </span>
-              <span className="text-[#5888d9]">AI powered</span> Club
-              <br className="hidden lg:block" />
-              <span className="lg:hidden"> </span>
-              Management
-              <br className="hidden lg:block" />
-              <span className="lg:hidden"> </span>
-              Software
-            </h2>
-            <p className="max-w-xl justify-self-end text-pretty text-xl leading-relaxed text-[#201a2d]/92">
-              Connect departments, elevate hospitality, and make better
-              decisions with one modern system built for premium clubs, private
-              hospitality, and lifestyle-driven communities.
-            </p>
+          <div className="homepage-intro-sticky section-pad">
+            <div className="homepage-intro-layout container-shell grid items-center gap-12 lg:grid-cols-[1.3fr_1fr] lg:gap-20">
+              <h2
+                id="homepage-intro-heading"
+                className="homepage-intro-heading max-w-4xl text-4xl font-semibold leading-[1.04] tracking-[-0.02em] text-[#111017] sm:text-6xl"
+              >
+                <span className="homepage-intro-line homepage-intro-line-primary">
+                  <span className="homepage-intro-brand text-[#af8bda]">Privana</span>{" "}
+                  <span className="homepage-intro-fragment">is the</span>
+                </span>
+                <br className="hidden lg:block" />
+                <span className="lg:hidden"> </span>
+                <span className="homepage-intro-line homepage-intro-line-2">world leading, fully</span>
+                <br className="hidden lg:block" />
+                <span className="lg:hidden"> </span>
+                <span className="homepage-intro-line homepage-intro-line-3">
+                  <span className="text-[#5888d9]">AI powered</span> Club
+                </span>
+                <br className="hidden lg:block" />
+                <span className="lg:hidden"> </span>
+                <span className="homepage-intro-line homepage-intro-line-4">Management</span>
+                <br className="hidden lg:block" />
+                <span className="lg:hidden"> </span>
+                <span className="homepage-intro-line homepage-intro-line-5">Software</span>
+              </h2>
+              <p className="homepage-intro-copy max-w-xl justify-self-end text-pretty text-xl leading-relaxed text-[#201a2d]/92">
+                Connect departments, elevate hospitality, and make better
+                decisions with one modern system built for premium clubs, private
+                hospitality, and lifestyle-driven communities.
+              </p>
+            </div>
           </div>
         </section>
 
