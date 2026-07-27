@@ -70,7 +70,7 @@ test("editorial image break follows the club section with exact accessible copy"
   assert.doesNotMatch(editorialImageBreak, /<link|rel="preload"/);
   assert.match(
     editorialImageBreak,
-    /<span>Deliver exceptional member experiences<\/span>[\s\S]*<span>with Privana<\/span>/,
+    /<span className="editorial-line-1">[\s\S]*Deliver exceptional member experiences[\s\S]*<\/span>[\s\S]*<span className="editorial-line-2">with Privana<\/span>/,
   );
   assert.match(
     editorialImageBreak,
@@ -106,13 +106,17 @@ test("editorial image break follows the club section with exact accessible copy"
   assert.match(imageBreakHeadingStyles, /font-weight: 600;/);
   assert.match(
     imageBreakHeadingStyles,
-    /font-size: clamp\(2\.2rem, 4\.2vw, 4\.6rem\);/,
+    /font-size: clamp\(2rem, 3\.8vw, 4rem\);/,
   );
-  assert.match(imageBreakHeadingStyles, /max-width: min\(80vw, 18ch\);/);
+  assert.match(imageBreakHeadingStyles, /max-width: min\(90vw, 24ch\);/);
   assert.match(globals, /\.editorial-image-break-top-transition[\s\S]*?height: clamp\(5rem, 12vh, 9rem\);/);
   assert.match(globals, /\.editorial-image-break-bottom-transition[\s\S]*?rgba\(0, 0, 0, 0\.82\)[\s\S]*?#000 100%/);
   assert.doesNotMatch(imageBreakSpanStyles, /white-space:\s*nowrap/);
   assert.doesNotMatch(imageBreakHeadingStyles, /white-space:\s*nowrap/);
+  assert.match(
+    globals,
+    /@media \(min-width: 1024px\) \{[\s\S]*?\.editorial-line-1 \{[\s\S]*?white-space: nowrap;/,
+  );
 });
 
 test("obsolete marketing sections stay removed and the final CTA follows the editorial break", () => {

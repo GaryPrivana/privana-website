@@ -16,8 +16,10 @@ export function EditorialImageBreak() {
         id="editorial-image-break-heading"
         className="editorial-image-break-heading"
       >
-        <span>Deliver exceptional member experiences</span>
-        <span>with Privana</span>
+        <span className="editorial-line-1">
+          Deliver exceptional member experiences
+        </span>
+        <span className="editorial-line-2">with Privana</span>
       </h2>
     </section>
   );
