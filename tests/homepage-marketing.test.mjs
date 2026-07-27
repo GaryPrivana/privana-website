@@ -54,10 +54,10 @@ const categories = [
 test("editorial image break follows the club section with exact accessible copy", () => {
   const clubSectionIndex = homepage.indexOf('id="solutions"');
   const editorialBreakIndex = homepage.indexOf("<EditorialImageBreak />");
-  const productSectionIndex = homepage.indexOf('id="product-showcase"');
+  const finalCtaIndex = homepage.indexOf('id="demo"');
 
   assert.ok(clubSectionIndex < editorialBreakIndex);
-  assert.ok(editorialBreakIndex < productSectionIndex);
+  assert.ok(editorialBreakIndex < finalCtaIndex);
   assert.match(
     marketingAssets,
     /privana-website-images\.s3\.eu-north-1\.amazonaws\.com\/websection\.png/,
@@ -102,6 +102,27 @@ test("editorial image break follows the club section with exact accessible copy"
     /font-size: clamp\(2\.65rem, 5\.4vw, 5\.8rem\);/,
   );
   assert.doesNotMatch(imageBreakSpanStyles, /white-space:\s*nowrap/);
+});
+
+test("obsolete marketing sections stay removed and the final CTA follows the editorial break", () => {
+  const editorialBreakIndex = homepage.indexOf("<EditorialImageBreak />");
+  const finalCtaIndex = homepage.indexOf('id="demo"');
+
+  for (const obsoleteCopy of [
+    "The Most Powerful Club Management Platform Ever Built.",
+    "All the tools.",
+    "None of the admin.",
+    "Platform Modules",
+    "Legacy systems become intelligent operations",
+    "Member Journeys, Booking Flows, and Revenue Operations",
+  ]) {
+    assert.doesNotMatch(homepage, new RegExp(obsoleteCopy.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")));
+  }
+
+  assert.ok(editorialBreakIndex >= 0);
+  assert.ok(finalCtaIndex > editorialBreakIndex);
+  assert.match(homepage, /Your Club Deserves Better Software\./);
+  assert.doesNotMatch(homepage, /id="(?:product-showcase|intelligence|platform|comparison|experience-preview)"/);
 });
 
 test("admin-time card copy uses the requested two-line copy", () => {
@@ -315,20 +336,6 @@ test("reduced-motion behaviour remains supported", () => {
     /@media \(prefers-reduced-motion: reduce\)[\s\S]*flex-basis: 25%;/,
   );
 });
-
-test("comparison section keeps the approved content and premium paired rows", () => {
-  assert.match(homepage, /Built for the Next Generation/);
-  assert.match(homepage, /of Club Operations\./);
-  assert.match(
-    homepage,
-    /Replace disconnected systems and repetitive administration/,
-  );
-  assert.match(homepage, /Fragmented tools and disconnected teams/);
-  assert.match(homepage, /One connected platform across every department/);
-  assert.match(homepage, /Before/);
-  assert.match(homepage, /Privana/);
-});
-
 
 test("homepage intro has scroll reveal structure without changing final desktop layout classes", () => {
   assert.match(homepage, /<HomepageIntroReveal heroFontClassName=\{heroFont\.className\} \/>/);

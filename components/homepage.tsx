@@ -1,20 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Manrope } from "next/font/google";
-import {
-  FeatureMediaPlaceholder,
-  ProductShowcasePlaceholder,
-  VideoPreviewPlaceholder,
-} from "./media-placeholders";
-import {
-  CrmIcon,
-  HotelIcon,
-  InventoryIcon,
-  MembershipIcon,
-  OperationsIcon,
-  ReservationsIcon,
-} from "./icons";
-import { aiChips, platformModules } from "./site-data";
 import { ClubOverlappingCards, type ClubSegment } from "./club-overlapping-cards";
 import { ContactFormSection } from "./contact-form-section";
 import { HeroScrollPrompt } from "./hero-scroll-prompt";
@@ -33,15 +19,6 @@ const heroFont = Manrope({
 });
 const sharedDemoCtaClass =
   "inline-flex items-center justify-center rounded-full bg-white px-8 py-3 text-xs font-semibold tracking-[0.1em] text-[#10131a] transition duration-300 hover:bg-white/92 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/80 focus-visible:ring-offset-2 focus-visible:ring-offset-black";
-
-const iconMap = {
-  operations: OperationsIcon,
-  crm: CrmIcon,
-  reservations: ReservationsIcon,
-  membership: MembershipIcon,
-  hotel: HotelIcon,
-  inventory: InventoryIcon,
-} as const;
 
 const authorityValueCards = [
   {
@@ -66,15 +43,6 @@ const authorityValueCards = [
     description:
       "Designed for the world’s leading golf, country and lifestyle clubs.",
   },
-];
-
-const valuePillars = [
-  "AI Concierge & Automation",
-  "CRM & Lead Intelligence",
-  "Reservations & Experience Management",
-  "Membership Lifecycle Management",
-  "Hospitality & Revenue Operations",
-  "Finance, Reporting & Insights",
 ];
 
 const clubSegments: ClubSegment[] = [
@@ -129,29 +97,6 @@ const clubSegments: ClubSegment[] = [
       "Wellness Resorts",
     ],
     supportingCopy: "Coastal, leisure and resort-style private clubs.",
-  },
-];
-
-const comparisonRows = [
-  {
-    legacy: "Fragmented tools and disconnected teams",
-    modern: "One connected platform across every department",
-  },
-  {
-    legacy: "Manual workflows and repetitive admin",
-    modern: "Intelligent automation with AI assistance",
-  },
-  {
-    legacy: "Static monthly reporting",
-    modern: "Real-time operational and member insight",
-  },
-  {
-    legacy: "Generic software not built for clubs",
-    modern: "Hospitality-first product design for premium clubs",
-  },
-  {
-    legacy: "Systems optimized for admin tasks",
-    modern: "Operations designed around member experience",
   },
 ];
 
@@ -246,205 +191,6 @@ export function Homepage() {
 
         <EditorialImageBreak />
 
-        <section
-          id="product-showcase"
-          className="section-pad bg-[#121018] text-white"
-        >
-          <div className="container-shell grid items-center gap-12 lg:grid-cols-[1.15fr_0.85fr]">
-            <ProductShowcasePlaceholder
-              title="Primary Platform Experience"
-              label="Enterprise Product Showcase"
-              aspectRatio="16 / 10"
-              previewLabel="Swap with dashboard screenshot or video"
-            />
-            <div className="space-y-7">
-              <h3 className="text-balance font-display text-4xl font-medium leading-[1.08] tracking-[-0.02em] sm:text-5xl">
-                The Most Powerful Club Management Platform Ever Built.
-              </h3>
-              <p className="text-base leading-relaxed text-white/72">
-                Privana unifies every operational layer of a premium club into
-                one intelligent control system built for leadership teams,
-                hospitality teams, and member-facing teams.
-              </p>
-              <ul className="grid gap-3 text-sm sm:grid-cols-2">
-                {valuePillars.map((pillar) => (
-                  <li
-                    key={pillar}
-                    className="rounded-xl border border-white/15 bg-white/[0.04] px-4 py-3"
-                  >
-                    {pillar}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-        </section>
-
-        <section id="intelligence" className="section-pad bg-[#f4f0fa]">
-          <div className="container-shell grid gap-12 lg:grid-cols-[1fr_1.1fr]">
-            <div>
-              <h3 className="text-balance font-display text-4xl font-medium leading-[1.08] tracking-[-0.02em] text-[#191522] sm:text-6xl">
-                <span className="text-[#ae89da]">All</span> the tools.
-                <br />
-                <span className="text-[#5787d8]">None</span> of the admin.
-              </h3>
-            </div>
-            <div className="space-y-7">
-              <div className="flex flex-wrap gap-3">
-                {aiChips.map((chip, chipIndex) => (
-                  <span
-                    key={chip}
-                    className={`rounded-full px-4 py-2 text-sm text-[#2c2840]/85 shadow-sm ${
-                      chipIndex % 2 === 0
-                        ? "border border-[#ded8ec] bg-[#f9f7fc]"
-                        : "border border-[#e8e1f3] bg-[#f1edf8]"
-                    }`}
-                  >
-                    {chip}
-                  </span>
-                ))}
-              </div>
-              <FeatureMediaPlaceholder
-                title="AI Assistant & Insight Workspace"
-                label="AI Product Preview"
-                aspectRatio="16 / 9"
-                previewLabel="Drop in AI screenshot / short recording"
-              />
-              <aside className="max-w-xl rounded-[28px] border border-[#d7cee8] bg-[#13111a] p-7 text-[#efebf8] shadow-[0_18px_55px_rgba(21,14,39,0.28)]">
-                <p className="text-sm leading-relaxed text-[#efebf8]/90 sm:text-base">
-                  Give club leaders real-time insight into member behaviour,
-                  operational performance, and retention opportunities — without
-                  adding manual reporting overhead.
-                </p>
-              </aside>
-            </div>
-          </div>
-        </section>
-
-        <section id="platform" className="section-pad bg-[#ede7f8]">
-          <div className="container-shell space-y-10">
-            <h3 className="font-display text-3xl font-medium tracking-[-0.01em] text-[#1a1722] sm:text-4xl">
-              Platform Modules
-            </h3>
-            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              {platformModules.map((module) => {
-                const Icon = iconMap[module.icon];
-                return (
-                  <article
-                    key={module.title}
-                    className="rounded-[24px] border border-[#ddd2ef] bg-[#f8f4ff] px-7 pb-7 pt-7 transition hover:-translate-y-0.5 hover:shadow-[0_16px_36px_rgba(72,45,112,0.12)]"
-                  >
-                    <Icon className="mb-5 h-6 w-6 text-[#a68ed0]" />
-                    <h4 className="mb-3 text-[1.15rem] font-medium tracking-[-0.01em] text-[#201a2b]">
-                      {module.title}
-                    </h4>
-                    <p className="mb-5 text-sm leading-7 text-[#3d3550]/75">
-                      {module.description}
-                    </p>
-                    <FeatureMediaPlaceholder
-                      title={`${module.title} Preview`}
-                      label="Module Preview"
-                      aspectRatio="16 / 10"
-                      glowMode="neutral"
-                      previewLabel="Replace with module screenshot"
-                    />
-                  </article>
-                );
-              })}
-            </div>
-          </div>
-        </section>
-
-        <section id="comparison" className="section-pad bg-[#fbf9ff]">
-          <div className="container-shell">
-            <div className="relative overflow-hidden rounded-[34px] border border-[#ded5ee] bg-[radial-gradient(circle_at_14%_10%,rgba(88,136,217,0.14),transparent_34%),radial-gradient(circle_at_88%_4%,rgba(175,139,218,0.2),transparent_34%),linear-gradient(160deg,#fffefe,#f6f1fc_58%,#eef4ff)] px-6 py-10 shadow-[0_30px_80px_rgba(62,45,91,0.12)] sm:px-10 sm:py-14 lg:px-14">
-              <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-white/70 via-white/20 to-transparent" />
-              <div className="relative z-10 mx-auto max-w-4xl text-center">
-                <p className="mb-4 text-xs font-semibold uppercase tracking-[0.18em] text-[#725aa0]">
-                  Legacy systems become intelligent operations
-                </p>
-                <h3 className="text-balance font-display text-4xl font-medium leading-[1.04] tracking-[-0.03em] text-[#16121f] sm:text-5xl lg:text-6xl">
-                  Built for the Next Generation
-                  <br />
-                  of Club Operations.
-                </h3>
-                <p className="mx-auto mt-6 max-w-2xl text-base leading-7 text-[#393047]/76 sm:text-lg">
-                  Replace disconnected systems and repetitive administration
-                  with one intelligent platform designed around your club, your
-                  team and your members.
-                </p>
-              </div>
-
-              <div className="relative z-10 mt-10 space-y-4 lg:mt-12">
-                {comparisonRows.map((row, index) => (
-                  <article
-                    key={row.legacy}
-                    className="group grid gap-4 rounded-[24px] border border-white/70 bg-white/70 p-4 shadow-[0_12px_36px_rgba(85,66,118,0.08)] transition duration-300 ease-out hover:-translate-y-0.5 hover:bg-white/86 hover:shadow-[0_18px_46px_rgba(85,66,118,0.12)] sm:p-5 lg:grid-cols-[1fr_auto_1.18fr] lg:items-center"
-                    style={{ transitionDelay: `${index * 35}ms` }}
-                  >
-                    <div className="rounded-[18px] border border-[#e7e0f2] bg-[#faf8fe] p-5">
-                      <p className="mb-2 text-[0.68rem] font-semibold uppercase tracking-[0.16em] text-[#6d637d]/68">
-                        Before
-                      </p>
-                      <p className="text-sm font-medium leading-6 text-[#4e455e]/82 sm:text-base">
-                        {row.legacy}
-                      </p>
-                    </div>
-                    <div
-                      className="flex h-10 w-10 items-center justify-center justify-self-center rounded-full border border-[#d9cdec] bg-white text-[#7f60b1] shadow-sm transition duration-300 group-hover:translate-x-1 lg:h-12 lg:w-12"
-                      aria-hidden="true"
-                    >
-                      →
-                    </div>
-                    <div className="rounded-[18px] border border-[#d9c9f0] bg-[linear-gradient(135deg,#ffffff,#f3effb)] p-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.85)]">
-                      <p className="mb-2 text-[0.68rem] font-semibold uppercase tracking-[0.16em] text-[#725aa0]">
-                        Privana
-                      </p>
-                      <p className="text-sm font-semibold leading-6 text-[#171322] sm:text-base">
-                        {row.modern}
-                      </p>
-                    </div>
-                  </article>
-                ))}
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section
-          id="experience-preview"
-          className="section-pad bg-[#121018] text-white"
-        >
-          <div className="container-shell grid items-center gap-12 lg:grid-cols-[0.9fr_1.1fr]">
-            <div className="space-y-6">
-              <h3 className="text-balance font-display text-4xl font-medium leading-[1.08] tracking-[-0.02em] sm:text-5xl">
-                Member Journeys, Booking Flows, and Revenue Operations — In
-                Motion.
-              </h3>
-              <p className="text-base leading-relaxed text-white/72">
-                Use this section for a full screen recording of your booking
-                experience, member app, CRM workflow, or executive reporting
-                sequence.
-              </p>
-              <ul className="space-y-2 text-sm text-white/80">
-                <li>
-                  • Perfect placement for future high-impact product film.
-                </li>
-                <li>• Supports AWS-hosted MP4 recording and poster frame.</li>
-                <li>
-                  • Works for both desktop and mobile workflow demonstrations.
-                </li>
-              </ul>
-            </div>
-            <VideoPreviewPlaceholder
-              title="Screen Recording Showcase"
-              label="Motion Product Preview"
-              aspectRatio="16 / 10"
-              previewLabel="Attach videoSrc + posterSrc from AWS"
-            />
-          </div>
-        </section>
-
         <section id="demo" className="section-pad bg-black text-white">
           <div className="container-shell">
             <div className="relative overflow-hidden rounded-[34px] border border-white/15 bg-[radial-gradient(circle_at_15%_15%,rgba(98,213,206,0.2),transparent_45%),radial-gradient(circle_at_85%_10%,rgba(175,139,218,0.2),transparent_35%),linear-gradient(160deg,#0f0f15,#0a0a0f)] p-10 text-center shadow-[0_32px_80px_rgba(8,8,12,0.45)] sm:p-14">
@@ -492,12 +238,12 @@ export function Homepage() {
           <FooterColumn
             title="Information"
             links={[
-              { label: "Club Operations", href: "#platform" },
-              { label: "CRM", href: "#platform" },
-              { label: "Reservations", href: "#platform" },
-              { label: "Membership", href: "#platform" },
-              { label: "Hotel", href: "#platform" },
-              { label: "Inventory", href: "#platform" },
+              { label: "Club Operations", href: "#connected-platform" },
+              { label: "CRM", href: "#connected-platform" },
+              { label: "Reservations", href: "#connected-platform" },
+              { label: "Membership", href: "#connected-platform" },
+              { label: "Hotel", href: "#connected-platform" },
+              { label: "Inventory", href: "#connected-platform" },
             ]}
           />
           <FooterColumn
