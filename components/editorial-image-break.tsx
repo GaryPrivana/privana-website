@@ -10,6 +10,8 @@ export function EditorialImageBreak() {
       }}
     >
       <div className="editorial-image-break-shade" aria-hidden="true" />
+      <div className="editorial-image-break-top-transition" aria-hidden="true" />
+      <div className="editorial-image-break-bottom-transition" aria-hidden="true" />
       <h2
         id="editorial-image-break-heading"
         className="editorial-image-break-heading"

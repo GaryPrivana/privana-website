@@ -58,6 +58,7 @@ test("editorial image break follows the club section with exact accessible copy"
 
   assert.ok(clubSectionIndex < editorialBreakIndex);
   assert.ok(editorialBreakIndex < finalCtaIndex);
+  assert.match(homepage, /id="solutions"[\s\S]*?className="club-editorial-transition/);
   assert.match(
     marketingAssets,
     /privana-website-images\.s3\.eu-north-1\.amazonaws\.com\/websection\.png/,
@@ -74,6 +75,12 @@ test("editorial image break follows the club section with exact accessible copy"
   assert.match(
     editorialImageBreak,
     /aria-labelledby="editorial-image-break-heading"/,
+  );
+  assert.match(editorialImageBreak, /editorial-image-break-top-transition/);
+  assert.match(editorialImageBreak, /editorial-image-break-bottom-transition/);
+  assert.equal(
+    (editorialImageBreak.match(/privana-website-images\.s3/g) ?? []).length,
+    0,
   );
 
   const imageBreakStyles =
@@ -94,14 +101,18 @@ test("editorial image break follows the club section with exact accessible copy"
   assert.match(imageBreakShadeStyles, /rgba\(18, 9, 6, 0\.82\)/);
   assert.match(
     imageBreakHeadingStyles,
-    /bottom: clamp\(2rem, 7vh, 5rem\);/,
+    /bottom: clamp\(4\.5rem, 10vh, 7rem\);/,
   );
   assert.match(imageBreakHeadingStyles, /font-weight: 600;/);
   assert.match(
     imageBreakHeadingStyles,
-    /font-size: clamp\(2\.65rem, 5\.4vw, 5\.8rem\);/,
+    /font-size: clamp\(2\.2rem, 4\.2vw, 4\.6rem\);/,
   );
+  assert.match(imageBreakHeadingStyles, /max-width: min\(80vw, 18ch\);/);
+  assert.match(globals, /\.editorial-image-break-top-transition[\s\S]*?height: clamp\(5rem, 12vh, 9rem\);/);
+  assert.match(globals, /\.editorial-image-break-bottom-transition[\s\S]*?rgba\(0, 0, 0, 0\.82\)[\s\S]*?#000 100%/);
   assert.doesNotMatch(imageBreakSpanStyles, /white-space:\s*nowrap/);
+  assert.doesNotMatch(imageBreakHeadingStyles, /white-space:\s*nowrap/);
 });
 
 test("obsolete marketing sections stay removed and the final CTA follows the editorial break", () => {
