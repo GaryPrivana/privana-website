@@ -22,6 +22,14 @@ const homepageIntro = readFileSync(
   new URL("../components/homepage-intro-reveal.tsx", import.meta.url),
   "utf8",
 );
+const editorialImageBreak = readFileSync(
+  new URL("../components/editorial-image-break.tsx", import.meta.url),
+  "utf8",
+);
+const marketingAssets = readFileSync(
+  new URL("../components/marketing-assets.ts", import.meta.url),
+  "utf8",
+);
 
 const imageUrls = [
   "https://privana-website-images.s3.amazonaws.com/GRID_Sporting+and+Lifestyle+Clubs.png",
@@ -42,6 +50,59 @@ const categories = [
   ],
   ["Beach & Leisure Clubs", "Coastal, leisure and resort-style private clubs."],
 ];
+
+test("editorial image break follows the club section with exact accessible copy", () => {
+  const clubSectionIndex = homepage.indexOf('id="solutions"');
+  const editorialBreakIndex = homepage.indexOf("<EditorialImageBreak />");
+  const productSectionIndex = homepage.indexOf('id="product-showcase"');
+
+  assert.ok(clubSectionIndex < editorialBreakIndex);
+  assert.ok(editorialBreakIndex < productSectionIndex);
+  assert.match(
+    marketingAssets,
+    /privana-website-images\.s3\.eu-north-1\.amazonaws\.com\/websection\.png/,
+  );
+  assert.match(
+    editorialImageBreak,
+    /import \{ EDITORIAL_IMAGE_BREAK_BACKGROUND \} from "\.\/marketing-assets"/,
+  );
+  assert.doesNotMatch(editorialImageBreak, /<link|rel="preload"/);
+  assert.match(
+    editorialImageBreak,
+    /<span>Deliver exceptional member experiences<\/span>[\s\S]*<span>with Privana<\/span>/,
+  );
+  assert.match(
+    editorialImageBreak,
+    /aria-labelledby="editorial-image-break-heading"/,
+  );
+
+  const imageBreakStyles =
+    globals.match(/\.editorial-image-break \{[\s\S]*?\n\}/)?.[0] ?? "";
+  const imageBreakShadeStyles =
+    globals.match(/\.editorial-image-break-shade \{[\s\S]*?\n\}/)?.[0] ?? "";
+  const imageBreakHeadingStyles =
+    globals.match(/\.editorial-image-break-heading \{[\s\S]*?\n\}/)?.[0] ?? "";
+  const imageBreakSpanStyles =
+    globals.match(/\.editorial-image-break-heading span \{[\s\S]*?\n\}/)?.[0] ??
+    "";
+
+  assert.match(imageBreakStyles, /min-height: 100svh;/);
+  assert.match(imageBreakStyles, /min-height: 100dvh;/);
+  assert.match(imageBreakStyles, /background-position: center;/);
+  assert.match(imageBreakStyles, /background-size: cover;/);
+  assert.match(imageBreakShadeStyles, /radial-gradient\(ellipse 82% 76% at 0% 100%/);
+  assert.match(imageBreakShadeStyles, /rgba\(18, 9, 6, 0\.82\)/);
+  assert.match(
+    imageBreakHeadingStyles,
+    /bottom: clamp\(2rem, 7vh, 5rem\);/,
+  );
+  assert.match(imageBreakHeadingStyles, /font-weight: 600;/);
+  assert.match(
+    imageBreakHeadingStyles,
+    /font-size: clamp\(2\.65rem, 5\.4vw, 5\.8rem\);/,
+  );
+  assert.doesNotMatch(imageBreakSpanStyles, /white-space:\s*nowrap/);
+});
 
 test("admin-time card copy uses the requested two-line copy", () => {
   assert.match(homepage, /Assisted member communications\./);
