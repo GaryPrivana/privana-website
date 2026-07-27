@@ -42,6 +42,70 @@ body {
   @apply py-20 sm:py-24 lg:py-28;
 }
 
+.editorial-image-break {
+  position: relative;
+  isolation: isolate;
+  min-height: 100svh;
+  min-height: 100dvh;
+  overflow: hidden;
+  background-color: #35271f;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  color: white;
+}
+
+.editorial-image-break-shade {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    radial-gradient(ellipse 82% 76% at 0% 100%, rgba(18, 9, 6, 0.82) 0%, rgba(23, 12, 8, 0.52) 46%, rgba(27, 16, 11, 0.16) 68%, transparent 82%),
+    linear-gradient(180deg, rgba(27, 17, 12, 0.1) 30%, rgba(20, 11, 8, 0.56) 100%),
+    linear-gradient(105deg, rgba(30, 18, 12, 0.25) 0%, rgba(28, 17, 12, 0.08) 58%, rgba(28, 18, 13, 0.02) 100%);
+}
+
+.editorial-image-break-heading {
+  position: absolute;
+  left: clamp(1.5rem, 6vw, 6rem);
+  bottom: clamp(2rem, 7vh, 5rem);
+  max-width: min(88vw, 26ch);
+  margin: 0;
+  font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
+  font-size: clamp(2.65rem, 5.4vw, 5.8rem);
+  font-weight: 600;
+  letter-spacing: -0.045em;
+  line-height: 0.98;
+  text-wrap: balance;
+  text-shadow: 0 2px 28px rgba(10, 5, 3, 0.3);
+}
+
+.editorial-image-break-heading span {
+  display: block;
+}
+
+.editorial-image-break-heading span:last-child {
+  margin-top: 0.12em;
+  font-size: 0.88em;
+  font-weight: 500;
+}
+
+@media (max-width: 767px) {
+  .editorial-image-break {
+    min-height: 88svh;
+    min-height: 88dvh;
+    background-position: center;
+  }
+
+  .editorial-image-break-heading {
+    right: 1.5rem;
+    max-width: none;
+    font-size: clamp(1.8rem, 7.8vw, 2.85rem);
+    letter-spacing: -0.04em;
+    line-height: 1.02;
+  }
+}
+
 .card-glass {
   background: linear-gradient(
     145deg,

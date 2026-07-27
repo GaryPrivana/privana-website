@@ -23,6 +23,7 @@ import { PrivanaLogo } from "./privana-logo";
 import { PrivanaFeatureShowcase } from "./privana-feature-showcase";
 import { HomepageIntroReveal } from "./homepage-intro-reveal";
 import { PrivanaAssistInteractiveDemo } from "./privana-assist-interactive-demo";
+import { EditorialImageBreak } from "./editorial-image-break";
 
 const demoLink = "#demo";
 const heroFont = Manrope({
@@ -242,6 +243,8 @@ export function Homepage() {
             <ClubOverlappingCards segments={clubSegments} />
           </div>
         </section>
+
+        <EditorialImageBreak />
 
         <section
           id="product-showcase"
