@@ -113,10 +113,10 @@ body {
   z-index: 2;
   left: clamp(1.5rem, 6vw, 6rem);
   bottom: clamp(4.5rem, 10vh, 7rem);
-  max-width: min(80vw, 18ch);
+  max-width: min(90vw, 24ch);
   margin: 0;
   font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
-  font-size: clamp(2.2rem, 4.2vw, 4.6rem);
+  font-size: clamp(2rem, 3.8vw, 4rem);
   font-weight: 600;
   letter-spacing: -0.045em;
   line-height: 0.98;
@@ -128,10 +128,16 @@ body {
   display: block;
 }
 
-.editorial-image-break-heading span:last-child {
+.editorial-line-2 {
   margin-top: 0.12em;
   font-size: 0.88em;
   font-weight: 500;
+}
+
+@media (min-width: 1024px) {
+  .editorial-line-1 {
+    white-space: nowrap;
+  }
 }
 
 @media (max-width: 767px) {
