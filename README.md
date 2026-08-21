@@ -77,6 +77,13 @@ Set these environment variables in Vercel (Project Settings → Environment Vari
 
 Before going live, verify your sender domain/email in Resend and set `CONTACT_FORM_FROM` to that verified identity.
 
+## Marketing Website Access Gate
+
+Configure both access-gate values as server-side environment variables (do not expose them with a browser-visible prefix):
+
+- `PRIVANA_MARKETING_WEBSITE_CODE_REQUIRED`: set to `true` to require an access code or `false` to make the website public. Only an explicit, case-insensitive `false` disables the gate; omitting this variable, leaving it blank, or setting any other value keeps the gate enabled.
+- `PRIVANA_MARKETING_WEBSITE`: the six-digit access code used by the `/unlock` screen while the gate is enabled. If the enabled gate's code is missing or blank, access is denied.
+
 ## Notes
 
 - Primary navigation and CTAs are wired to section anchors plus a demo booking placeholder URL for quick replacement.
