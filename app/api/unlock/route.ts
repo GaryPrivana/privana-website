@@ -1,30 +1,40 @@
 import { NextResponse } from 'next/server';
 import {
-  SITE_UNLOCK_CODE,
   SITE_UNLOCK_COOKIE_NAME,
-  getUnlockCookieValue
+  getUnlockCookieValue,
+  isMarketingWebsiteGateRequired,
+  isValidAccessCode
 } from '@/lib/temp-site-gate';
 
 // TEMPORARY PRE-LAUNCH PROTECTION
 // Validates unlock code and stores unlocked state in an HTTP-only cookie.
 export async function POST(request: Request) {
+  if (!isMarketingWebsiteGateRequired()) {
+    return NextResponse.json({ ok: true });
+  }
+
   let code = '';
 
   try {
     const body = await request.json();
     code = typeof body?.code === 'string' ? body.code.trim() : '';
   } catch {
-    return NextResponse.json({ error: 'Invalid request.' }, { status: 400 });
+    return NextResponse.json({ ok: false }, { status: 400 });
   }
 
-  if (!/^\d{6}$/.test(code) || code !== SITE_UNLOCK_CODE) {
-    return NextResponse.json({ error: 'Invalid code.' }, { status: 401 });
+  if (!isValidAccessCode(code)) {
+    return NextResponse.json({ ok: false }, { status: 401 });
+  }
+
+  const cookieValue = await getUnlockCookieValue();
+  if (!cookieValue) {
+    return NextResponse.json({ ok: false }, { status: 401 });
   }
 
   const response = NextResponse.json({ ok: true });
   response.cookies.set({
     name: SITE_UNLOCK_COOKIE_NAME,
-    value: getUnlockCookieValue(),
+    value: cookieValue,
     httpOnly: true,
     sameSite: 'lax',
     secure: process.env.NODE_ENV === 'production',

@@ -2,23 +2,33 @@ import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 import {
   SITE_UNLOCK_COOKIE_NAME,
+  isMarketingWebsiteGateRequired,
   isValidUnlockCookie
 } from '@/lib/temp-site-gate';
+import { sanitizeRedirectPath } from '@/lib/sanitize-redirect-path';
 
 // TEMPORARY PRE-LAUNCH PROTECTION
 // Redirect every request to /unlock until a valid unlock cookie is present.
-export function middleware(request: NextRequest) {
+export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
   const isUnlockPath = pathname === '/unlock';
-  const hasValidUnlockCookie = isValidUnlockCookie(
+
+  if (!isMarketingWebsiteGateRequired()) {
+    if (isUnlockPath) {
+      const redirectTarget = sanitizeRedirectPath(request.nextUrl.searchParams.get('next'));
+      return NextResponse.redirect(new URL(redirectTarget, request.url));
+    }
+
+    return NextResponse.next();
+  }
+
+  const hasValidUnlockCookie = await isValidUnlockCookie(
     request.cookies.get(SITE_UNLOCK_COOKIE_NAME)?.value
   );
 
   if (isUnlockPath) {
     if (hasValidUnlockCookie) {
-      const requestedPath = request.nextUrl.searchParams.get('next');
-      const redirectTarget =
-        requestedPath && requestedPath.startsWith('/') ? requestedPath : '/';
+      const redirectTarget = sanitizeRedirectPath(request.nextUrl.searchParams.get('next'));
       return NextResponse.redirect(new URL(redirectTarget, request.url));
     }
 
